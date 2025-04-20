@@ -1,0 +1,103 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --page-bg: #E3EBF2;
+  --olive-green: #1eb37f;
+  --text-color: #333333;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  background-color: var(--page-bg);
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--page-bg);
+}
+
+.full-width-container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--page-bg);
+}
+
+/* Ensure images are fully responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Improve container fluidity on different screens */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (max-width: 991px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .no-top-space {
+    margin-top: -10px !important;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Remove any potential padding from Bootstrap container */
+  .container-fluid, .container {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  /* Force carousel to start immediately after header */
+  .App > div:nth-child(2) {
+    margin-top: -10px !important;
+    padding-top: 0 !important;
+  }
+  
+  /* Make header overlap carousel slightly */
+  .navbar {
+    position: relative;
+    z-index: 10;
+  }
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    margin-top: 1rem;
+  }
+  
+  .navbar-nav {
+    padding-bottom: 0.5rem;
+  }
+}
+
+.no-top-space {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}

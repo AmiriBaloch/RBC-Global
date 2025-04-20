@@ -1,0 +1,99 @@
+.progress-chart-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  transform: scale(0.95);
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  will-change: opacity, transform;
+  padding: 15px;
+}
+
+.progress-chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-value {
+  position: absolute;
+  bottom: 5px;
+  right: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1eb37f;
+}
+
+.progress-value.dark-mode {
+  color: #ffa94d;
+}
+
+.progress-chart-title {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.dark-mode .progress-chart-title {
+  color: #fff;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-progress {
+  animation: fadeIn 1s ease-in-out forwards;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Label for progress chart */
+.progress-label {
+  /* Label styling is now handled in WhereWeStand.css */
+}
+
+.dark-mode .progress-label {
+  /* Label styling is now handled in WhereWeStand.css */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .progress-chart-container {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .progress-value {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .progress-chart-container {
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+  }
+  
+  .progress-value {
+    font-size: 14px;
+    right: 15px;
+  }
+} 

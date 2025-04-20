@@ -1,0 +1,54 @@
+.careers-hero {
+  position: relative;
+  background: linear-gradient(45deg, #198754, #20c997);
+  padding: 4rem 0;
+}
+
+.careers-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4rem;
+  background: linear-gradient(to bottom right, transparent 49%, #E3EBF2 50%);
+}
+
+.careers-hero h1 {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.careers-hero .lead {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .careers-hero {
+    padding: 3rem 0;
+  }
+
+  .careers-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .careers-hero .lead {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .careers-hero {
+    padding: 2rem 0;
+  }
+
+  .careers-hero h1 {
+    font-size: 2rem;
+  }
+
+  .careers-hero .lead {
+    font-size: 1rem;
+  }
+} 

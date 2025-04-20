@@ -1,0 +1,151 @@
+.clients-ticker-section {
+  padding: 0;
+  overflow: hidden;
+  background-color: #fff;
+  margin-bottom: 1.5rem;
+  margin-top: -10px;
+}
+
+/* These styles should be already defined globally, but we'll include them here for reference */
+.section-heading-container {
+  width: calc(100% - 20px);
+  margin: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin-bottom: 0;
+}
+
+.section-heading {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 0;
+  text-align: left;
+  padding-left: 15px;
+  line-height: 1.5;
+  font-size: 1.4rem;
+}
+/* End of reference styles */
+
+.ticker-container {
+  padding: 1.5rem 0;
+  overflow: hidden;
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  border-radius: 5px;
+  margin: 0 auto;
+  width: calc(100% - 20px);
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.ticker {
+  display: flex;
+  animation: ticker-scroll 40s linear infinite;
+  padding: 10px 0;
+  width: max-content; /* Ensures the content dictates width */
+}
+
+.ticker-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 2.5rem;
+  transition: transform 0.3s ease;
+  flex-shrink: 0; /* Prevents logos from shrinking */
+  height: 80px;
+  width: 150px;
+}
+
+.ticker-item:hover {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+.client-logo {
+  max-height: 75px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  filter: grayscale(20%);
+  transition: filter 0.3s ease;
+}
+
+.ticker-item:hover .client-logo {
+  filter: grayscale(0%);
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Only move half way as we duplicated the items */
+  }
+}
+
+/* Dark mode support */
+body.dark-mode .clients-ticker-section {
+  background-color: #212529;
+}
+
+body.dark-mode .ticker-container {
+  background-color: #212529;
+}
+
+body.dark-mode .client-logo {
+  filter: grayscale(10%) brightness(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .ticker-container,
+  .section-heading-container {
+    width: calc(100% - 16px);
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ticker {
+    animation-duration: 25s; /* Speed up on mobile */
+  }
+  
+  .ticker-item {
+    margin: 0 2rem;
+    height: 85px;
+    width: 150px;
+  }
+  
+  .client-logo {
+    max-height: 80px;
+    max-width: 140px;
+  }
+}
+
+@media (max-width: 576px) {
+  .ticker {
+    animation-duration: 20s; /* Even faster on small screens */
+  }
+  
+  .ticker-item {
+    margin: 0 1.5rem;
+    height: 70px;
+    width: 130px;
+  }
+  
+  .client-logo {
+    max-height: 65px;
+    max-width: 120px;
+  }
+  
+  .section-heading-container,
+  .ticker-container {
+    width: calc(100% - 10px);
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+} 
