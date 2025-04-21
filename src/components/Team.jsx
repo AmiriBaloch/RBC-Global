@@ -10,13 +10,14 @@ import drNaveedHaider from '../assets/10.png';
 import muhammadAmir from '../assets/1.png';
 import drTariqSaif from '../assets/13.png';
 import muneebRehman from '../assets/12.png';
-import drSfButt from '../assets/8.png';
+import sfButt from '../assets/8.png';
 import nasikBangash from '../assets/7.png';
 import mudassirAli from '../assets/4.png';
 import sunirAshnae from '../assets/6.png';
 import Imran from "../assets/3.png";
 import shaguftaShaheen from "../assets/11.png";
 import nabghaHashmi from "../assets/9.png";
+import muhammadShahroze from "../assets/14.png";
 
 const Team = () => {
   const location = useLocation();
@@ -159,13 +160,13 @@ const Team = () => {
   const researchers = [
     {
       id: 8,
-      name: "Dr. S.F.Butt",
+      name: "S.F. Butt",
       role: "Lead Researcher",
-      image: drSfButt,
+      image: sfButt,
       description: "A researcher driven by a deep commitment to advancing knowledge through rigorous investigation and thoughtful reflection.",
       linkedin: "#",
       twitter: "#",
-      email: "dr.sfbutt@rosebeltconsultants.com"
+      email: "sfbutt@rosebeltconsultants.com"
     },
     {
       id: 9,
@@ -196,6 +197,16 @@ const Team = () => {
       linkedin: "#",
       twitter: "#",
       email: "sunir@rosebeltconsultants.com"
+    },
+    {
+      id: 12,
+      name: "Muhammad Shahroze Iqbal",
+      role: "Research Associate",
+      image: muhammadShahroze,
+      description: "An MPhil scholar in Sociology with a strong focus on security strategies and strategic counseling. Contributes to projects centered around sustainable development with a passion for community engagement and social impact initiatives. Leverages strong problem-solving and leadership skills to address complex challenges effectively.",
+      linkedin: "#",
+      twitter: "#",
+      email: "shahroze@rosebeltconsultants.com"
     }
   ];
 

@@ -24,6 +24,21 @@ const EmailButton = () => {
       .email-btn {
         animation: pulse-email 2s infinite;
       }
+      
+      /* Responsive styles for mobile */
+      @media (max-width: 576px) {
+        .email-btn {
+          width: 35px !important;
+          height: 35px !important;
+          right: 15px !important;
+          bottom: 105px !important;
+        }
+        
+        .email-btn svg {
+          width: 16px !important;
+          height: 16px !important;
+        }
+      }
     `;
     document.head.appendChild(buttonStyle);
 

@@ -15,7 +15,7 @@ import drNaveedHaider from '../assets/10.png';
 import muhammadAmir from '../assets/1.png';
 import drTariqSaif from '../assets/13.png';
 import muneebRehman from '../assets/12.png';
-import drSfButt from '../assets/8.png';
+import sfButt from '../assets/8.png';
 import nasikBangash from '../assets/7.png';
 import mudassirAli from '../assets/4.png';
 import sunirAshnae from '../assets/6.png';
@@ -96,10 +96,10 @@ const AboutUs = () => {
   const researchers = [
     {
       id: 8,
-      name: "Dr. S.F.Butt",
+      name: "S.F. Butt",
       role: "Lead Researcher",
       expertise: ["Research Methodology", "Strategic Analysis", "Academic Leadership"],
-      image: drSfButt,
+      image: sfButt,
       bio: "A researcher driven by a deep commitment to advancing knowledge through rigorous investigation and thoughtful reflection."
     },
     {

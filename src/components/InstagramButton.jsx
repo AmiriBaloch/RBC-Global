@@ -24,6 +24,21 @@ const InstagramButton = () => {
         animation: pulse-ig 2s infinite;
         background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
       }
+      
+      /* Responsive styles for mobile */
+      @media (max-width: 576px) {
+        .instagram-btn {
+          width: 35px !important;
+          height: 35px !important;
+          right: 15px !important;
+          bottom: 150px !important;
+        }
+        
+        .instagram-btn svg {
+          width: 16px !important;
+          height: 16px !important;
+        }
+      }
     `;
     document.head.appendChild(buttonStyle);
 

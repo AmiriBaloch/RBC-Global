@@ -108,6 +108,32 @@
   transition: all 0.3s ease;
 }
 
+/* Office cards */
+.office-card {
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+  border-left: 3px solid #f59e0b;
+  cursor: pointer;
+}
+
+.office-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selected-office {
+  border-left-width: 5px !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2) !important;
+  background-color: #f9f0e1 !important;
+}
+
+.map-container {
+  height: 400px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e0e0e0;
+}
+
 /* Responsive adjustments */
 @media (max-width: 991px) {
   .careers-hero h1 {

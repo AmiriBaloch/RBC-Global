@@ -1,0 +1,253 @@
+.trust-container {
+  font-family: 'Roboto', sans-serif;
+  padding: 2rem 0;
+}
+
+.trust-hero {
+  background: linear-gradient(135deg, #333333 0%, #1a242f 100%);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.trust-hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.trust-hero p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.trust-section {
+  margin-bottom: 80px;
+}
+
+.trust-section h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 600;
+  color: #333333;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.trust-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: #f59e0b;
+}
+
+.client-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  margin-bottom: 30px;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
+}
+
+.client-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: #f59e0b;
+}
+
+.client-logo {
+  max-width: 100%;
+  max-height: 100px;
+  object-fit: contain;
+}
+
+.client-name {
+  font-weight: 500;
+  color: #333333;
+  text-align: center;
+}
+
+.client-badge {
+  background-color: #fbf3e2;
+  color: #f59e0b;
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.trust-badge-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.trust-badge {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.trust-badge:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  border-color: #f59e0b;
+}
+
+.trust-badge-icon {
+  font-size: 2.5rem;
+  color: #f59e0b;
+  margin-bottom: 20px;
+}
+
+.trust-badge h4 {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333333;
+}
+
+.trust-badge p {
+  color: #6c757d;
+}
+
+.testimonial-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  border-left: 4px solid #f59e0b;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+}
+
+.testimonial-card:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+}
+
+.testimonial-quote {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #4a5568;
+  font-style: italic;
+  margin-bottom: 20px;
+  position: relative;
+  padding-left: 25px;
+}
+
+.testimonial-quote::before {
+  content: '"';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 2.5rem;
+  color: #f59e0b;
+  opacity: 0.4;
+  line-height: 1;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+}
+
+.testimonial-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+  border: 3px solid #f8f9fa;
+}
+
+.testimonial-info h4 {
+  font-weight: 600;
+  margin: 0;
+  font-size: 1rem;
+  color: #333333;
+}
+
+.testimonial-info p {
+  margin: 5px 0 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Add a CTA section at the bottom similar to AboutOverview */
+.trust-cta {
+  background-color: #333333;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: white;
+  padding: 3rem 0;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.trust-cta h2 {
+  margin-bottom: 1rem;
+}
+
+.trust-cta .highlight {
+  color: #f59e0b;
+}
+
+.contact-btn {
+  background-color: transparent;
+  border: 2px solid #f59e0b;
+  color: #f59e0b;
+  padding: 10px 25px;
+  border-radius: 30px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.contact-btn:hover {
+  background-color: #f59e0b;
+  color: white;
+}
+
+/* Responsive adjustments for clients section */
+@media (max-width: 991px) {
+  .client-logo {
+    max-height: 80px;
+  }
+}
+
+@media (max-width: 767px) {
+  .client-logo {
+    max-height: 70px;
+  }
+}
+
+@media (max-width: 576px) {
+  .client-logo {
+    max-height: 60px;
+  }
+  
+  .client-badge {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+} 

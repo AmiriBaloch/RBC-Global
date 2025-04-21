@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { FaBullhorn, FaAngleDown, FaAngleUp, FaTimes } from 'react-icons/fa';
 import { collection, query, orderBy, onSnapshot, limit } from 'firebase/firestore';
 import { db } from '../firebase';
+import { useLocation } from 'react-router-dom';
 import './Announcements.css';
 
 const Announcements = () => {
@@ -10,6 +11,7 @@ const Announcements = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [latestAnnouncement, setLatestAnnouncement] = useState(null);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
   
   // Fetch announcements from Firestore
   useEffect(() => {
@@ -40,6 +42,36 @@ const Announcements = () => {
 
     return () => unsubscribe();
   }, []);
+
+  // Close announcements when page changes
+  useEffect(() => {
+    // Close the announcements box when the route changes
+    setIsOpen(false);
+  }, [location]);
+
+  // Add scroll event listener to close announcements when scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    // Add scroll event listener with a very short debounce time for immediate response
+    let scrollTimer;
+    const scrollHandler = () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(handleScroll, 50); // Reduced from 200ms to 50ms for faster response
+    };
+
+    window.addEventListener('scroll', scrollHandler);
+
+    // Clean up on unmount
+    return () => {
+      window.removeEventListener('scroll', scrollHandler);
+      clearTimeout(scrollTimer);
+    };
+  }, [isOpen]);
 
   // Toggle announcements box
   const toggleAnnouncements = () => {
@@ -80,8 +112,18 @@ const Announcements = () => {
         <>
           {!isOpen && latestAnnouncement && (
             <div className="latest-announcement" onClick={toggleAnnouncements}>
-              <h6 style={{ color: '#2AA96B', fontWeight: 600, fontSize: '0.85rem', margin: '0 0 2px 0' }}>{latestAnnouncement.title}</h6>
-              <p style={{ fontSize: '0.75rem', margin: 0, lineHeight: 1.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <h6 style={{ 
+                color: '#2AA96B', 
+                fontWeight: 600, 
+                fontSize: '0.85rem', 
+                margin: '0 0 2px 0',
+                width: '100%', 
+                boxSizing: 'border-box',
+                wordBreak: 'break-word'
+              }}>
+                {latestAnnouncement.title}
+              </h6>
+              <p className="announcement-preview">
                 {latestAnnouncement.content}
               </p>
             </div>
@@ -93,8 +135,20 @@ const Announcements = () => {
                 {announcements.length > 0 ? (
                   announcements.map(announcement => (
                     <div key={announcement.id} className="announcement-item">
-                      <h6 style={{ color: '#2AA96B', fontWeight: 600 }}>{announcement.title}</h6>
-                      <p>{announcement.content}</p>
+                      <h6 style={{ 
+                        color: '#2AA96B', 
+                        fontWeight: 600,
+                        wordBreak: 'break-word',
+                        width: '100%'
+                      }}>
+                        {announcement.title}
+                      </h6>
+                      <p style={{
+                        wordBreak: 'break-word',
+                        width: '100%'
+                      }}>
+                        {announcement.content}
+                      </p>
                       <small className="text-muted">{formatDate(announcement.date)}</small>
                     </div>
                   ))

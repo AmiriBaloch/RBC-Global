@@ -57,9 +57,14 @@ img {
 
 @media (max-width: 576px) {
   .no-top-space {
-    margin-top: -10px !important;
+    margin-top: 0 !important;
     position: relative;
     z-index: 1;
+  }
+  
+  .no-bottom-space {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
   }
   
   /* Remove any potential padding from Bootstrap container */
@@ -72,7 +77,7 @@ img {
   
   /* Force carousel to start immediately after header */
   .App > div:nth-child(2) {
-    margin-top: -10px !important;
+    margin-top: 0 !important;
     padding-top: 0 !important;
   }
   
@@ -80,6 +85,12 @@ img {
   .navbar {
     position: relative;
     z-index: 10;
+  }
+  
+  /* Ensure sections connect */
+  .full-width-container {
+    margin: 0 !important;
+    padding: 0 !important;
   }
 }
 
@@ -100,4 +111,46 @@ img {
 .no-top-space {
   margin-top: 0 !important;
   padding-top: 0 !important;
+}
+
+.no-bottom-space {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Coming Soon Page Styles */
+.coming-soon-page {
+  min-height: 70vh;
+  background-color: var(--page-bg);
+}
+
+.coming-soon-page .page-hero {
+  background-color: #333333;
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.coming-soon-page .page-hero h1 {
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.coming-soon-page .page-hero .lead {
+  font-size: 1.3rem;
+  max-width: 800px;
+  margin: 0 auto;
+  font-weight: 300;
+  color: #f59e0b;
+}
+
+.coming-soon-page .container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin-top: 40px;
+  margin-bottom: 40px;
 }

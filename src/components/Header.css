@@ -20,17 +20,17 @@ body {
 
 /* Nav container for unified background */
 .nav-container {
-  background-color: var(--page-bg);
-  border-radius: 25px;
+  background-color: transparent;
+  border-radius: 0;
   padding: 5px 15px;
   display: flex;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   transition: all 0.3s ease;
 }
 
 .nav-container:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 }
 
 .brand-logo {
@@ -60,7 +60,7 @@ body {
   }
   
   .navbar-light {
-    background-color: white !important;
+    background-color: #E4EBF2 !important;
   }
   
   .navbar-light .navbar-brand,
@@ -77,7 +77,7 @@ body {
     flex-direction: column;
     width: 100%;
     padding: 10px;
-    background-color: white;
+    background-color: transparent;
   }
   
   .logo-image {
@@ -126,7 +126,7 @@ body {
 
 @media (max-width: 576px) {
   .navbar-light {
-    background-color: white !important;
+    background-color: #E4EBF2 !important;
   }
   
   .navbar-light .navbar-brand {
@@ -134,12 +134,12 @@ body {
   }
   
   .nav-container {
-    border-radius: 15px;
-    background-color: white;
+    border-radius: 0;
+    background-color: transparent;
   }
   
   .navbar-collapse {
-    background-color: white;
+    background-color: transparent;
     box-shadow: none;
     padding: 15px 0;
     margin-top: 10px;
@@ -165,12 +165,13 @@ body {
   .connect-button {
     margin: 5px 0;
     color: var(--dark-bg) !important;
+    background-color: transparent;
   }
 }
 
 .navbar-light {
-  background-color: var(--dark-bg) !important;
-  transition: background-color 0.3s;
+  background-color: #E4EBF2 !important;
+  transition: background-color 0.3s, transform 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   position: fixed !important;
   top: 0;
@@ -178,6 +179,15 @@ body {
   right: 0;
   width: 100%;
   z-index: 1000;
+}
+
+/* Header visibility classes */
+.navbar-visible {
+  transform: translateY(0);
+}
+
+.navbar-hidden {
+  transform: translateY(-100%);
 }
 
 /* Removing the amber gradient line 
@@ -194,7 +204,7 @@ body {
 
 .navbar-light .navbar-brand,
 .navbar-light .nav-link {
-  color: var(--light-text) !important;
+  color: var(--dark-bg) !important;
   transition: color 0.3s;
 }
 
@@ -235,7 +245,7 @@ body {
 .navbar-light .nav-link.active {
   color: var(--primary-color) !important;
   font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 }
 
 .navbar-light .nav-link.active::after {
@@ -255,38 +265,20 @@ body {
   text-transform: uppercase;
   font-size: 0.9rem;
   margin: 0 4px;
+  box-shadow: none !important;
 }
 
 .connect-button:hover {
   background-color: transparent !important;
   color: var(--primary-color) !important;
   transform: translateY(0);
-  box-shadow: none;
-}
-
-.connect-button::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background-color: var(--primary-color);
-  transform: translateX(-50%);
-  transition: width 0.3s ease;
-}
-
-.connect-button:hover::after {
-  width: 40%;
+  box-shadow: none !important;
 }
 
 .connect-button.active {
   color: var(--primary-color) !important;
   font-weight: bold;
-}
-
-.connect-button.active::after {
-  width: 70%;
+  box-shadow: none !important;
 }
 
 /* Logo image */
@@ -300,8 +292,8 @@ body {
 .navbar-light .navbar-brand {
   padding: 0;
   margin: 0;
-  background-color: var(--page-bg);
-  border-radius: 8px;
+  background-color: transparent;
+  border-radius: 0;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -311,7 +303,7 @@ body {
 
 .navbar-light .navbar-brand:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
 }
 
 @media (max-width: 991px) {
@@ -354,10 +346,10 @@ body {
 }
 
 .dropdown-menu {
-  background-color: var(--page-bg);
+  background-color: #E4EBF2;
   border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--primary-color);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: none;
   padding: 8px;
   margin-top: 10px;
 }
@@ -381,4 +373,446 @@ body {
 
 .navbar-light .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(245, 158, 11, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Main dropdown styles */
+.main-dropdown .dropdown-toggle {
+  color: var(--dark-bg) !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  margin: 0 4px;
+  background: transparent;
+}
+
+.main-dropdown .dropdown-toggle:hover,
+.main-dropdown .dropdown-toggle:focus {
+  color: var(--primary-color) !important;
+}
+
+.main-dropdown.show .dropdown-toggle {
+  color: var(--primary-color) !important;
+}
+
+/* Mega menu styles */
+.mega-menu-content {
+  width: 280px;
+  padding: 10px 0;
+  background-color: white;
+  border-radius: 0;
+  border: none;
+  margin-top: 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Mega menu item styles */
+.mega-menu-item {
+  color: #555;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  background: transparent;
+  border-left: 3px solid transparent;
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.mega-menu-item:hover {
+  background-color: #f8f9fa;
+  color: var(--primary-color);
+  border-left: 3px solid var(--primary-color);
+}
+
+/* Fix dropdown appearance */
+.dropdown-menu {
+  border-radius: 0;
+  padding: 0;
+  margin-top: 0;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile styles for mega menu */
+@media (max-width: 991px) {
+  .mega-menu-content {
+    width: 100%;
+    box-shadow: none;
+    background-color: transparent;
+  }
+  
+  .mega-menu-item {
+    padding: 10px 15px;
+    border-left: none;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  
+  .mega-menu-item:hover {
+    border-left: none;
+  }
+  
+  .main-dropdown .dropdown-toggle {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    margin: 0;
+  }
+}
+
+/* Navigation link styles */
+.navbar-light .nav-link,
+.main-dropdown .dropdown-toggle,
+#admin-dropdown {
+  color: #333333 !important;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  padding: 0.5rem 0.8rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-light .nav-link:hover,
+.main-dropdown .dropdown-toggle:hover,
+#admin-dropdown:hover {
+  color: var(--primary-color) !important;
+}
+
+/* Mega menu heading styles */
+.mega-menu-section-title {
+  font-weight: 600;
+  color: #333;
+  padding: 12px 16px 8px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+}
+
+/* Remove dropdown toggle caret */
+.main-dropdown .dropdown-toggle::after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+  opacity: 0.5;
+}
+
+/* Custom Dropdown Styles */
+.custom-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 0.75rem 0;
+  min-width: 220px;
+  margin-top: 5px;
+  transform: translateY(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-left: 3px solid var(--primary-color);
+}
+
+.main-dropdown.show .dropdown-menu {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Mega Menu Enhanced Styling */
+.mega-menu-content {
+  padding: 1rem;
+  background: linear-gradient(145deg, rgba(255,255,255,1) 0%, rgba(248,249,250,1) 100%);
+  border-radius: 6px;
+  position: relative;
+  width: 280px;
+}
+
+.mega-menu-content:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), transparent);
+  border-radius: 3px 3px 0 0;
+}
+
+.mega-menu-item {
+  color: var(--dark-bg);
+  padding: 12px 18px;
+  margin: 3px 0;
+  border-radius: 6px;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.mega-menu-item:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+
+.mega-menu-item:hover {
+  color: var(--primary-color);
+  background-color: rgba(245, 158, 11, 0.06);
+  transform: translateX(5px);
+}
+
+.mega-menu-item:hover:before {
+  width: 100%;
+}
+
+/* Enhance dropdown toggle */
+.main-dropdown .dropdown-toggle {
+  position: relative;
+  padding: 0.5rem 1rem;
+  margin: 0 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.main-dropdown .dropdown-toggle::after {
+  transition: transform 0.3s ease;
+  margin-left: 6px;
+  vertical-align: middle;
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-left: 0.3em solid transparent;
+}
+
+.main-dropdown:hover .dropdown-toggle::after,
+.main-dropdown.show .dropdown-toggle::after {
+  transform: rotate(180deg);
+}
+
+.main-dropdown .dropdown-toggle:hover,
+.main-dropdown.show .dropdown-toggle {
+  color: var(--primary-color) !important;
+}
+
+/* Add hover indicator for dropdown items */
+.dropdown-item:hover {
+  background-color: rgba(245, 158, 11, 0.1);
+}
+
+/* Mobile optimizations */
+@media (max-width: 991px) {
+  .mega-menu-content {
+    padding: 0.5rem;
+  }
+  
+  .dropdown-menu {
+    box-shadow: none;
+    border-left: none;
+    margin-top: 0;
+    padding: 0;
+    background-color: transparent;
+    backdrop-filter: none;
+  }
+  
+  .mega-menu-item {
+    padding: 10px 15px;
+  }
+  
+  .mega-menu-item:hover {
+    transform: translateX(0);
+  }
+  
+  .custom-dropdown-wrapper {
+    width: 100%;
+  }
+}
+
+/* Fix the admin dropdown items visibility issue by updating CSS */
+
+/* Update the dropdown menu visibility to show on hover */
+.dropdown-menu {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 0.75rem 0;
+  min-width: 220px;
+  margin-top: 5px;
+  transform: translateY(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-left: 3px solid var(--primary-color);
+  display: block;
+}
+
+/* Make the dropdown visible when show class is present */
+.main-dropdown.show .dropdown-menu,
+#admin-dropdown.show + .dropdown-menu {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  display: block;
+}
+
+/* Force admin dropdown to be visible when shown */
+#admin-dropdown.show ~ .dropdown-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* Improve the admin dropdown items */
+#admin-dropdown + .dropdown-menu .dropdown-item {
+  color: var(--dark-bg);
+  padding: 12px 18px;
+  margin: 3px 0;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+#admin-dropdown + .dropdown-menu .dropdown-item:hover {
+  color: var(--primary-color);
+  background-color: rgba(245, 158, 11, 0.06);
+  transform: translateX(5px);
+}
+
+/* Custom dropdown wrapper - ensure it spans properly */
+.custom-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Fix menu position for admin dropdown */
+.custom-dropdown-wrapper:hover .dropdown-menu {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  display: block;
+}
+
+/* Improve mobile menu functionality */
+
+/* Mobile responsive styles - ensure dropdowns work properly */
+@media (max-width: 991px) {
+  /* Ensure navbar collapse is fully visible */
+  .navbar-collapse {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  /* Fix dropdown menu visibility on mobile */
+  .dropdown-menu {
+    position: static !important;
+    float: none;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    transform: none !important;
+    opacity: 1;
+    transition: max-height 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+    display: block;
+    visibility: visible;
+  }
+  
+  /* Show mobile dropdown when active */
+  .main-dropdown.show .dropdown-menu,
+  #admin-dropdown.show + .dropdown-menu,
+  .show .dropdown-menu {
+    max-height: 500px;
+    padding: 8px 0;
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Improve dropdown wrapper on mobile */
+  .custom-dropdown-wrapper {
+    width: 100%;
+    display: block;
+  }
+  
+  /* Style for dropdown toggle on mobile */
+  .main-dropdown .dropdown-toggle,
+  #admin-dropdown {
+    width: 100%;
+    text-align: left;
+    padding: 12px 15px;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Arrow indicator animation for mobile */
+  .main-dropdown .dropdown-toggle::after,
+  #admin-dropdown::after {
+    float: right;
+    margin-top: 8px;
+  }
+  
+  /* Better hover effects for mobile */
+  .mega-menu-item {
+    padding: 12px 15px;
+    margin: 2px 0;
+    border-radius: 4px;
+    background-color: rgba(245, 158, 11, 0.03);
+  }
+  
+  .mega-menu-item:hover {
+    transform: none;
+    background-color: rgba(245, 158, 11, 0.08);
+  }
+  
+  /* Mobile-friendly mega menu content */
+  .mega-menu-content {
+    width: 100%;
+    border-radius: 4px;
+    padding: 5px;
+    background: transparent;
+  }
+  
+  /* Improve admin dropdown items on mobile */
+  #admin-dropdown + .dropdown-menu .dropdown-item {
+    padding: 12px 15px;
+    margin: 2px 0;
+    border-radius: 4px;
+    background-color: rgba(245, 158, 11, 0.03);
+  }
+  
+  #admin-dropdown + .dropdown-menu .dropdown-item:hover {
+    transform: none;
+    background-color: rgba(245, 158, 11, 0.08);
+  }
+
+  /* Remove before/after decorative elements that don't work well on mobile */
+  .mega-menu-content:before {
+    display: none;
+  }
+  
+  .mega-menu-item:before {
+    display: none;
+  }
 } 

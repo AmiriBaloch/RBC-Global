@@ -9,6 +9,7 @@
   transition: all 0.3s ease;
   z-index: 1000;
   border: 1px solid #e0e0e0;
+  overflow: hidden;
 }
 
 .announcements-box.closed {
@@ -41,10 +42,29 @@
 .latest-announcement {
   padding: 8px 15px;
   cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .latest-announcement:hover {
   background-color: rgba(42, 169, 107, 0.05);
+}
+
+.announcement-preview {
+  font-size: 0.75rem;
+  margin: 0;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  max-height: 2.4em;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .announcements-content {
@@ -57,6 +77,8 @@
   margin-bottom: 15px;
   padding-bottom: 15px;
   border-bottom: 1px solid #eee;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .announcement-item:last-child {
@@ -66,11 +88,20 @@
 
 .announcement-item h6 {
   margin-bottom: 5px;
+  word-wrap: break-word;
+  word-break: break-word;
+  width: 100%;
 }
 
 .announcement-item p {
   margin-bottom: 5px;
   font-size: 0.9rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.4;
+  word-break: break-word;
+  width: 100%;
 }
 
 .announcement-actions {
@@ -93,9 +124,58 @@
     width: 250px;
     bottom: 15px;
     left: 15px;
+    max-width: calc(100% - 120px);
   }
   
   .announcements-box.closed {
     width: 220px;
+    max-width: calc(100% - 120px);
+  }
+  
+  .announcements-header {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .latest-announcement h6 {
+    font-size: 0.8rem !important;
+    margin-bottom: 2px !important;
+    word-break: break-word;
+    width: 100%;
+    max-width: 100%;
+    display: block;
+  }
+  
+  .latest-announcement p {
+    font-size: 0.7rem !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    word-break: break-word;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .announcement-item h6 {
+    font-size: 0.85rem;
+    word-break: break-word;
+  }
+  
+  .announcement-item p {
+    font-size: 0.8rem;
+    word-break: break-word;
+  }
+  
+  .announcement-item small {
+    font-size: 0.7rem;
+  }
+  
+  .announcement-actions button {
+    font-size: 0.8rem !important;
+    padding: 2px 6px !important;
   }
 } 

@@ -177,6 +177,91 @@
   border-bottom: none;
 }
 
+/* Expert Ticker Styles */
+.expert-ticker {
+  display: flex;
+  animation: expert-ticker-scroll 60s linear infinite;
+  padding: 10px 0;
+  width: max-content;
+}
+
+.expert-ticker-item {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  margin: 0 15px;
+}
+
+.expert-ticker-item:hover {
+  transform: scale(1.03);
+  z-index: 1;
+}
+
+.expert-card {
+  width: 280px;
+  height: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.expert-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-color: #2AA96B;
+}
+
+.expert-card .card-img-container {
+  height: 260px;
+  overflow: hidden;
+}
+
+/* Changed animation direction from right-to-left to left-to-right */
+@keyframes expert-ticker-scroll {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+/* Responsive adjustments for expert ticker */
+@media (max-width: 991px) {
+  .expert-ticker {
+    animation-duration: 45s; /* Speed up on tablets */
+  }
+  
+  .expert-card {
+    width: 240px;
+  }
+  
+  .expert-card .card-img-container {
+    height: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .expert-ticker {
+    animation-duration: 30s; /* Speed up more on mobile */
+  }
+  
+  .expert-card {
+    width: 200px;
+  }
+  
+  .expert-card .card-img-container {
+    height: 180px;
+  }
+}
+
+@media (max-width: 576px) {
+  .expert-card {
+    width: 180px;
+  }
+  
+  .expert-card .card-img-container {
+    height: 160px;
+  }
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .careers-hero {

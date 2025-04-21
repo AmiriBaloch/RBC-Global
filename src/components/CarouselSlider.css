@@ -22,6 +22,24 @@
   background-color: transparent;
 }
 
+.mobile-video-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mobile-image-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mobile-carousel-media {
+  width: 100% !important;
+  object-fit: contain;
+  background-color: transparent;
+}
+
 .carousel-inner {
   background-color: #E3EBF2;
 }
@@ -73,7 +91,9 @@
   .carousel-container {
     max-height: none;
     height: auto;
-    margin-top: -5px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
     position: relative;
     z-index: 0;
     width: 100vw;
@@ -107,6 +127,14 @@
     padding: 0;
   }
   
+  .mobile-carousel-media {
+    width: 100vw !important;
+    height: auto !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
   .carousel-caption {
     bottom: 20px;
     padding: 15px;
@@ -125,31 +153,41 @@
   .carousel-container {
     max-height: none;
     height: auto;
-    margin-top: -10px !important;
+    margin: 0 !important;
+    padding: 0 !important;
     position: relative;
-    top: -10px;
+    top: 0;
     z-index: 0;
   }
   
   .carousel {
-    margin-top: 0;
-    padding-top: 0;
+    margin: 0;
+    padding: 0;
     position: relative;
     top: 0;
   }
   
   .carousel-inner {
-    margin-top: 0;
-    padding-top: 0;
+    margin: 0;
+    padding: 0;
   }
   
   .carousel-image {
-    height: 250px;
+    height: auto;
     width: 100%;
     object-fit: contain;
     object-position: center;
-    margin-top: 0;
-    padding-top: 0;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .mobile-carousel-media {
+    height: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
   .carousel-caption {
