@@ -127,40 +127,6 @@ function App() {
     
     // Force scroll to top on first load
     window.scrollTo(0, 0);
-    
-    // Handle redirects from 404.html for mobile devices
-    const params = new URLSearchParams(window.location.search);
-    const redirectPath = params.get('redirect_path');
-    
-    // If we have a redirect_path parameter, navigate to that path
-    if (redirectPath) {
-      // Remove the query parameter to prevent infinite redirects
-      window.history.replaceState(null, '', '/');
-      
-      // Wait a brief moment for the router to initialize, then navigate
-      setTimeout(() => {
-        window.location.href = redirectPath;
-      }, 100);
-    }
-    
-    // Fix for mobile navigation - ensure proper history handling
-    const handlePopState = () => {
-      const path = window.location.pathname;
-      // Force a refresh if we detect a direct navigation to a deeper route on mobile
-      if (path !== '/' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        // Don't refresh if we're already on the correct page (prevents infinite loops)
-        const currentPath = window.location.pathname;
-        if (currentPath === path) return;
-        
-        // Force navigation to ensure proper page loading
-        window.location.href = path;
-      }
-    };
-    
-    window.addEventListener('popstate', handlePopState);
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
   }, []);
 
   return (
