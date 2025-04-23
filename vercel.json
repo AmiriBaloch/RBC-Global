@@ -2,8 +2,17 @@
   "version": 2,
   "routes": [
     {
+      "src": "^/assets/(.*)\\.js$",
+      "headers": { "content-type": "application/javascript" },
+      "dest": "/assets/$1.js"
+    },
+    {
       "src": "^/static/(.*)",
       "dest": "/static/$1"
+    },
+    {
+      "src": "^/assets/(.*)",
+      "dest": "/assets/$1"
     },
     {
       "src": "^/favicon.ico",
@@ -20,6 +29,26 @@
     {
       "src": "^/(.*)",
       "dest": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)\\.js",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)\\.css",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/css"
+        }
+      ]
     }
   ]
 } 
