@@ -135,22 +135,31 @@ function App() {
         <Header />
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
-            {/* HOME/WHO WE ARE as the home page */}
+            {/* WHO WE ARE as the home page */}
             <Route path="/" element={<WhoWeAre />} />
             
-            {/* WHO WE ARE routes */}
-            <Route path="/about">
-              <Route index element={<Navigate to="/about/overview" replace />} />
-              <Route path="overview" element={<AboutOverview />} />
-              <Route path="trust" element={<OurTrust />} />
+            {/* OUR WORKPLACE routes (previously WHO WE ARE / ABOUT) */}
+            <Route path="/our-workplace">
+              <Route index element={<Navigate to="/our-workplace/offices" replace />} />
+              <Route path="offices" element={<AboutOverview />} />
+              <Route path="accredited" element={<OurTrust />} />
               <Route path="values" element={<OurValues />} />
-              {/* Catch any other /about/* paths and redirect to overview */}
-              <Route path="*" element={<Navigate to="/about/overview" replace />} />
+              {/* Catch any other /our-workplace/* paths and redirect to offices */}
+              <Route path="*" element={<Navigate to="/our-workplace/offices" replace />} />
             </Route>
             
-            {/* WHAT WE DO / SERVICES routes */}
-            <Route path="/services">
-              <Route index element={<Navigate to="/services/overview" replace />} />
+            {/* Legacy ABOUT routes for backward compatibility */}
+            <Route path="/about">
+              <Route index element={<Navigate to="/our-workplace/offices" replace />} />
+              <Route path="overview" element={<Navigate to="/our-workplace/offices" replace />} />
+              <Route path="trust" element={<Navigate to="/our-workplace/accredited" replace />} />
+              <Route path="values" element={<Navigate to="/our-workplace/values" replace />} />
+              <Route path="*" element={<Navigate to="/our-workplace/offices" replace />} />
+            </Route>
+            
+            {/* WHAT WE DO routes */}
+            <Route path="/what-we-do">
+              <Route index element={<Navigate to="/what-we-do/overview" replace />} />
               <Route path="overview" element={<ServicesOverview />} />
               <Route path="consultants" element={<ServicesConsultants />} />
               <Route path="health-experts" element={<ServicesHealthExperts />} />
@@ -158,40 +167,57 @@ function App() {
               <Route path="researchers" element={<ServicesResearchers />} />
               <Route path="advisors" element={<ServicesAdvisors />} />
               <Route path="data" element={<ServicesData />} />
-              <Route path="implement" element={<ComingSoon title="RoseBelt Implement" />} />
-              <Route path="research" element={<ComingSoon title="RoseBelt Research" />} />
-              {/* Catch any other /services/* paths and redirect to overview */}
-              <Route path="*" element={<Navigate to="/services/overview" replace />} />
+              {/* Catch any other /what-we-do/* paths and redirect to overview */}
+              <Route path="*" element={<Navigate to="/what-we-do/overview" replace />} />
             </Route>
             
-            {/* TEAM routes */}
-            <Route path="/team">
-              <Route index element={<Team />} />
-              <Route path="board" element={<Team />} />
-              <Route path="consultants" element={<Team />} />
-              <Route path="health" element={<Team />} />
-              <Route path="it" element={<Team />} />
-              <Route path="researchers" element={<Team />} />
-              {/* Catch any other /team/* paths and redirect to team index */}
-              <Route path="*" element={<Navigate to="/team" replace />} />
+            {/* Legacy SERVICES routes for backward compatibility */}
+            <Route path="/services">
+              <Route index element={<Navigate to="/what-we-do/overview" replace />} />
+              <Route path="overview" element={<Navigate to="/what-we-do/overview" replace />} />
+              <Route path="consultants" element={<Navigate to="/what-we-do/consultants" replace />} />
+              <Route path="health-experts" element={<Navigate to="/what-we-do/health-experts" replace />} />
+              <Route path="it-experts" element={<Navigate to="/what-we-do/it-experts" replace />} />
+              <Route path="researchers" element={<Navigate to="/what-we-do/researchers" replace />} />
+              <Route path="advisors" element={<Navigate to="/what-we-do/advisors" replace />} />
+              <Route path="data" element={<Navigate to="/what-we-do/data" replace />} />
+              <Route path="*" element={<Navigate to="/what-we-do/overview" replace />} />
             </Route>
             
-            {/* IDEAS routes */}
-            <Route path="/ideas">
+            {/* OUR IDEAS routes */}
+            <Route path="/our-ideas">
               <Route index element={<OurIdeas />} />
               <Route path="details/:id" element={<IdeaDetails />} />
               <Route path="article/:id" element={<ArticleDetails />} />
               <Route path="articles" element={<AllArticles />} />
-              {/* Catch any other /ideas/* paths and redirect to ideas index */}
-              <Route path="*" element={<Navigate to="/ideas" replace />} />
+              {/* Catch any other /our-ideas/* paths and redirect to ideas index */}
+              <Route path="*" element={<Navigate to="/our-ideas" replace />} />
             </Route>
+            
+            {/* Legacy IDEAS routes for backward compatibility */}
+            <Route path="/ideas">
+              <Route index element={<Navigate to="/our-ideas" replace />} />
+              <Route path="details/:id" element={<Navigate to={to => `/our-ideas/details/${to.params.id}`} replace />} />
+              <Route path="article/:id" element={<Navigate to={to => `/our-ideas/article/${to.params.id}`} replace />} />
+              <Route path="articles" element={<Navigate to="/our-ideas/articles" replace />} />
+              <Route path="*" element={<Navigate to="/our-ideas" replace />} />
+            </Route>
+            
+            {/* JOIN OUR TEAM routes */}
+            <Route path="/join-our-team" element={<Careers />} />
+            
+            {/* Legacy CAREERS route for backward compatibility */}
+            <Route path="/careers" element={<Navigate to="/join-our-team" replace />} />
+            
+            {/* CONTACT route */}
+            <Route path="/contact" element={<ContactUs />} />
             
             {/* Other main routes */}
             <Route path="/projects" element={<Projects />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="/experience" element={<ComingSoon title="Our Experience" />} />
-            <Route path="/press" element={<ComingSoon title="Press" />} />
+            <Route path="/team">
+              <Route index element={<Team />} />
+              <Route path="*" element={<Navigate to="/team" replace />} />
+            </Route>
             
             {/* Legacy route for AboutUsSimple */}
             <Route path="/about-us" element={<AboutUsSimple />} />

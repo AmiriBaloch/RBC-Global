@@ -30,14 +30,14 @@ const Header = () => {
   useEffect(() => {
     // Update active link based on current path
     const path = location.pathname;
-    if (path === '/' || path === '/about/overview') setActiveLink('who-we-are');
+    if (path === '/' || path === '/our-workplace/offices') setActiveLink('who-we-are');
     else if (path === '/projects') setActiveLink('projects');
-    else if (path.startsWith('/about')) setActiveLink('about-us');
+    else if (path.startsWith('/our-workplace')) setActiveLink('about-us');
     else if (path.startsWith('/team')) setActiveLink('team');
     else if (path === '/contact') setActiveLink('contact');
-    else if (path.startsWith('/services')) setActiveLink('services');
-    else if (path.startsWith('/ideas')) setActiveLink('ideas');
-    else if (path === '/careers') setActiveLink('careers');
+    else if (path.startsWith('/what-we-do')) setActiveLink('services');
+    else if (path.startsWith('/our-ideas')) setActiveLink('ideas');
+    else if (path === '/join-our-team') setActiveLink('careers');
     else if (path === '/experience') setActiveLink('experience');
     else if (path === '/press') setActiveLink('press');
   }, [location]);
@@ -196,7 +196,7 @@ const Header = () => {
                           <Col xs={12}>
                             <NavDropdown.Item 
                               as={Link} 
-                              to="/about/overview"
+                              to="/our-workplace/offices"
                               onClick={() => {
                                 handleNavClick('about-us');
                                 setHoveredDropdown(null);
@@ -208,7 +208,7 @@ const Header = () => {
                             </NavDropdown.Item>
                             <NavDropdown.Item 
                               as={Link} 
-                              to="/about/trust"
+                              to="/our-workplace/accredited"
                               onClick={() => {
                                 handleNavClick('about-us');
                                 setHoveredDropdown(null);
@@ -220,7 +220,7 @@ const Header = () => {
                             </NavDropdown.Item>
                             <NavDropdown.Item 
                               as={Link} 
-                              to="/about/values"
+                              to="/our-workplace/values"
                               onClick={() => {
                                 handleNavClick('about-us');
                                 setHoveredDropdown(null);
@@ -239,28 +239,28 @@ const Header = () => {
               ) : (
                 <>
                   <Link
-                    to="/about"
+                    to="/our-workplace"
                     className={`nav-link fw-bold mobile-menu-item ${activeLink === 'about-us' ? 'active' : ''}`}
                     onClick={() => handleNavClick('about-us')}
                   >
                     OUR WORKPLACE
                   </Link>
                   <Link
-                    to="/about/overview"
+                    to="/our-workplace/offices"
                     className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'about-us' ? 'active' : ''}`}
                     onClick={() => handleNavClick('about-us')}
                   >
                     Our Offices
                   </Link>
                   <Link
-                    to="/about/trust"
+                    to="/our-workplace/accredited"
                     className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'about-us' ? 'active' : ''}`}
                     onClick={() => handleNavClick('about-us')}
                   >
                     The RoseBelt Accredited
                   </Link>
                   <Link
-                    to="/about/values"
+                    to="/our-workplace/values"
                     className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'about-us' ? 'active' : ''}`}
                     onClick={() => handleNavClick('about-us')}
                   >
@@ -293,7 +293,7 @@ const Header = () => {
                           <Col xs={12}>
                             <NavDropdown.Item 
                               as={Link} 
-                              to="/services/overview"
+                              to="/what-we-do/overview"
                               onClick={() => {
                                 handleNavClick('services-overview');
                                 setHoveredDropdown(null);
@@ -305,7 +305,7 @@ const Header = () => {
                             </NavDropdown.Item>
                             <NavDropdown.Item 
                               as={Link} 
-                              to="/services/consultants"
+                              to="/what-we-do/consultants"
                               onClick={() => {
                                 handleNavClick('services-consultants');
                                 setHoveredDropdown(null);
@@ -317,7 +317,7 @@ const Header = () => {
                             </NavDropdown.Item>
                             <NavDropdown.Item 
                               as={Link} 
-                              to="/services/health-experts"
+                              to="/what-we-do/health-experts"
                               onClick={() => {
                                 handleNavClick('services-health');
                                 setHoveredDropdown(null);
@@ -329,7 +329,7 @@ const Header = () => {
                             </NavDropdown.Item>
                             <NavDropdown.Item 
                               as={Link} 
-                              to="/services/it-experts"
+                              to="/what-we-do/it-experts"
                               onClick={() => {
                                 handleNavClick('services-it');
                                 setHoveredDropdown(null);
@@ -341,7 +341,7 @@ const Header = () => {
                             </NavDropdown.Item>
                             <NavDropdown.Item 
                               as={Link} 
-                              to="/services/researchers"
+                              to="/what-we-do/researchers"
                               onClick={() => {
                                 handleNavClick('services-researchers');
                                 setHoveredDropdown(null);
@@ -360,42 +360,42 @@ const Header = () => {
               ) : (
                 <>
                   <Link
-                    to="/services"
+                    to="/what-we-do"
                     className={`nav-link fw-bold mobile-menu-item ${activeLink === 'services' ? 'active' : ''}`}
                     onClick={() => handleNavClick('services')}
                   >
                     WHAT WE DO
                   </Link>
                   <Link
-                    to="/services/overview"
+                    to="/what-we-do/overview"
                     className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-overview' ? 'active' : ''}`}
                     onClick={() => handleNavClick('services-overview')}
                   >
                     Overview
                   </Link>
                   <Link
-                    to="/services/consultants"
+                    to="/what-we-do/consultants"
                     className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-consultants' ? 'active' : ''}`}
                     onClick={() => handleNavClick('services-consultants')}
                   >
                     RoseBelt Consultants
                   </Link>
                   <Link
-                    to="/services/health-experts"
+                    to="/what-we-do/health-experts"
                     className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-health' ? 'active' : ''}`}
                     onClick={() => handleNavClick('services-health')}
                   >
                     RoseBelt Health Experts
                   </Link>
                   <Link
-                    to="/services/it-experts"
+                    to="/what-we-do/it-experts"
                     className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-it' ? 'active' : ''}`}
                     onClick={() => handleNavClick('services-it')}
                   >
                     RoseBelt IT Experts
                   </Link>
                   <Link
-                    to="/services/researchers"
+                    to="/what-we-do/researchers"
                     className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-researchers' ? 'active' : ''}`}
                     onClick={() => handleNavClick('services-researchers')}
                   >
@@ -406,7 +406,7 @@ const Header = () => {
               
               {/* Our Ideas */}
               <Link 
-                to="/ideas" 
+                to="/our-ideas" 
                 className={`nav-link fw-bold ${activeLink === 'ideas' ? 'active' : ''}`}
                 onClick={() => handleNavClick('ideas')}
               >
@@ -415,7 +415,7 @@ const Header = () => {
               
               {/* Join Our Team */}
               <Link 
-                to="/careers" 
+                to="/join-our-team" 
                 className={`nav-link fw-bold ${activeLink === 'careers' ? 'active' : ''}`}
                 onClick={() => handleNavClick('careers')}
               >
