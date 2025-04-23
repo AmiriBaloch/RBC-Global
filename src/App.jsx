@@ -130,7 +130,7 @@ function App() {
   }, []);
 
   return (
-    <Router>
+    <Router basename="/">
       <ScrollToTop />
       <div className="App">
         <Header />
@@ -171,6 +171,9 @@ function App() {
           <Route path="/ideas/article/:id" element={<ArticleDetails />} />
           <Route path="/ideas/articles" element={<AllArticles />} />
           <Route path="/press" element={<ComingSoon title="Press" />} />
+          
+          {/* Catch-all route to handle 404 errors */}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         
         {/* Social media buttons */}
