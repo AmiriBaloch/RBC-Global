@@ -204,20 +204,10 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/about/overview"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                e.preventDefault();
-                                handleNavClick('about-us');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                                setTimeout(() => {
-                                  window.location.replace('/about/overview');
-                                }, 50);
-                              } else {
-                                handleNavClick('about-us');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                              }
+                            onClick={() => {
+                              handleNavClick('about-us');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
                             }}
                             className="mega-menu-item"
                           >
@@ -226,20 +216,10 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/about/trust"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                e.preventDefault();
-                                handleNavClick('about-us');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                                setTimeout(() => {
-                                  window.location.replace('/about/trust');
-                                }, 50);
-                              } else {
-                                handleNavClick('about-us');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                              }
+                            onClick={() => {
+                              handleNavClick('about-us');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
                             }}
                             className="mega-menu-item"
                           >
@@ -248,20 +228,10 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/about/values"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                e.preventDefault();
-                                handleNavClick('about-us');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                                setTimeout(() => {
-                                  window.location.replace('/about/values');
-                                }, 50);
-                              } else {
-                                handleNavClick('about-us');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                              }
+                            onClick={() => {
+                              handleNavClick('about-us');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
                             }}
                             className="mega-menu-item"
                           >
@@ -306,20 +276,10 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/services/overview"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                e.preventDefault();
-                                handleNavClick('services-overview');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                                setTimeout(() => {
-                                  window.location.replace('/services/overview');
-                                }, 50);
-                              } else {
-                                handleNavClick('services-overview');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                              }
+                            onClick={() => {
+                              handleNavClick('services-overview');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
                             }}
                             className="mega-menu-item"
                           >
@@ -328,20 +288,10 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/services/consultants"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                e.preventDefault();
-                                handleNavClick('services-consultants');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                                setTimeout(() => {
-                                  window.location.replace('/services/consultants');
-                                }, 50);
-                              } else {
-                                handleNavClick('services-consultants');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                              }
+                            onClick={() => {
+                              handleNavClick('services-consultants');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
                             }}
                             className="mega-menu-item"
                           >
@@ -350,20 +300,10 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/services/health-experts"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                e.preventDefault();
-                                handleNavClick('services-health');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                                setTimeout(() => {
-                                  window.location.replace('/services/health-experts');
-                                }, 50);
-                              } else {
-                                handleNavClick('services-health');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                              }
+                            onClick={() => {
+                              handleNavClick('services-health');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
                             }}
                             className="mega-menu-item"
                           >
@@ -372,20 +312,10 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/services/it-experts"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                e.preventDefault();
-                                handleNavClick('services-it');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                                setTimeout(() => {
-                                  window.location.replace('/services/it-experts');
-                                }, 50);
-                              } else {
-                                handleNavClick('services-it');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                              }
+                            onClick={() => {
+                              handleNavClick('services-it');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
                             }}
                             className="mega-menu-item"
                           >
@@ -394,20 +324,10 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/services/researchers"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                e.preventDefault();
-                                handleNavClick('services-researchers');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                                setTimeout(() => {
-                                  window.location.replace('/services/researchers');
-                                }, 50);
-                              } else {
-                                handleNavClick('services-researchers');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                              }
+                            onClick={() => {
+                              handleNavClick('services-researchers');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
                             }}
                             className="mega-menu-item"
                           >
