@@ -51,4 +51,41 @@
   .careers-hero .lead {
     font-size: 1rem;
   }
+}
+
+/* NotFound Page Styles */
+.not-found-page {
+  padding: 80px 0;
+  background-color: #f8f9fa;
+  min-height: 70vh;
+}
+
+.not-found-page .page-hero {
+  background-color: #E3EBF2;
+  padding: 50px 0;
+  margin-bottom: 30px;
+}
+
+.not-found-page h1 {
+  color: #2c4a87;
+  font-weight: 700;
+}
+
+.not-found-page h2 {
+  font-size: 72px;
+  color: #2c4a87;
+  font-weight: 700;
+}
+
+.not-found-page .btn-primary {
+  background-color: #2c4a87;
+  border-color: #2c4a87;
+  padding: 10px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.not-found-page .btn-primary:hover {
+  background-color: #1c3366;
+  border-color: #1c3366;
 } 

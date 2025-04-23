@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 // Components
@@ -46,15 +46,14 @@ import InstagramButton from './components/InstagramButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-// Debug component for About
-const AboutDebug = () => {
-  return (
-    <div style={{ padding: '50px', textAlign: 'center' }}>
-      <h1>About Debug Page</h1>
-      <p>This is a simple debug page to test routing to the About page.</p>
+// Loading spinner component for lazy-loaded routes
+const LoadingSpinner = () => (
+  <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+    <div className="spinner-border text-primary" role="status">
+      <span className="visually-hidden">Loading...</span>
     </div>
-  );
-};
+  </div>
+);
 
 // Placeholder for pages not yet implemented
 const ComingSoon = ({ title }) => {
@@ -134,47 +133,73 @@ function App() {
       <ScrollToTop />
       <div className="App">
         <Header />
-        <Routes>
-          {/* WHO WE ARE as the home page */}
-          <Route path="/" element={<WhoWeAre />} />
-          
-          {/* Legacy routes */}
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/about" element={<AboutUsSimple />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/team/board" element={<Team />} />
-          <Route path="/team/consultants" element={<Team />} />
-          <Route path="/team/health" element={<Team />} />
-          <Route path="/team/it" element={<Team />} />
-          <Route path="/team/researchers" element={<Team />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/contact" element={<ContactUs />} />
-          
-          {/* Who We Are routes */}
-          <Route path="/about/overview" element={<AboutOverview />} />
-          <Route path="/about/trust" element={<OurTrust />} />
-          <Route path="/about/values" element={<OurValues />} />
-          
-          {/* What We Do routes */}
-          <Route path="/services/overview" element={<ServicesOverview />} />
-          <Route path="/services/consultants" element={<ServicesConsultants />} />
-          <Route path="/services/health-experts" element={<ServicesHealthExperts />} />
-          <Route path="/services/it-experts" element={<ServicesITExperts />} />
-          <Route path="/services/researchers" element={<ServicesResearchers />} />
-          <Route path="/services/implement" element={<ComingSoon title="RoseBelt Implement" />} />
-          <Route path="/services/research" element={<ComingSoon title="RoseBelt Research" />} />
-          
-          {/* New main routes */}
-          <Route path="/experience" element={<ComingSoon title="Our Experience" />} />
-          <Route path="/ideas" element={<OurIdeas />} />
-          <Route path="/ideas/details/:id" element={<IdeaDetails />} />
-          <Route path="/ideas/article/:id" element={<ArticleDetails />} />
-          <Route path="/ideas/articles" element={<AllArticles />} />
-          <Route path="/press" element={<ComingSoon title="Press" />} />
-          
-          {/* Catch-all route to handle 404 errors */}
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes>
+            {/* HOME/WHO WE ARE as the home page */}
+            <Route path="/" element={<WhoWeAre />} />
+            
+            {/* WHO WE ARE routes */}
+            <Route path="/about">
+              <Route index element={<Navigate to="/about/overview" replace />} />
+              <Route path="overview" element={<AboutOverview />} />
+              <Route path="trust" element={<OurTrust />} />
+              <Route path="values" element={<OurValues />} />
+              {/* Catch any other /about/* paths and redirect to overview */}
+              <Route path="*" element={<Navigate to="/about/overview" replace />} />
+            </Route>
+            
+            {/* WHAT WE DO / SERVICES routes */}
+            <Route path="/services">
+              <Route index element={<Navigate to="/services/overview" replace />} />
+              <Route path="overview" element={<ServicesOverview />} />
+              <Route path="consultants" element={<ServicesConsultants />} />
+              <Route path="health-experts" element={<ServicesHealthExperts />} />
+              <Route path="it-experts" element={<ServicesITExperts />} />
+              <Route path="researchers" element={<ServicesResearchers />} />
+              <Route path="advisors" element={<ServicesAdvisors />} />
+              <Route path="data" element={<ServicesData />} />
+              <Route path="implement" element={<ComingSoon title="RoseBelt Implement" />} />
+              <Route path="research" element={<ComingSoon title="RoseBelt Research" />} />
+              {/* Catch any other /services/* paths and redirect to overview */}
+              <Route path="*" element={<Navigate to="/services/overview" replace />} />
+            </Route>
+            
+            {/* TEAM routes */}
+            <Route path="/team">
+              <Route index element={<Team />} />
+              <Route path="board" element={<Team />} />
+              <Route path="consultants" element={<Team />} />
+              <Route path="health" element={<Team />} />
+              <Route path="it" element={<Team />} />
+              <Route path="researchers" element={<Team />} />
+              {/* Catch any other /team/* paths and redirect to team index */}
+              <Route path="*" element={<Navigate to="/team" replace />} />
+            </Route>
+            
+            {/* IDEAS routes */}
+            <Route path="/ideas">
+              <Route index element={<OurIdeas />} />
+              <Route path="details/:id" element={<IdeaDetails />} />
+              <Route path="article/:id" element={<ArticleDetails />} />
+              <Route path="articles" element={<AllArticles />} />
+              {/* Catch any other /ideas/* paths and redirect to ideas index */}
+              <Route path="*" element={<Navigate to="/ideas" replace />} />
+            </Route>
+            
+            {/* Other main routes */}
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/experience" element={<ComingSoon title="Our Experience" />} />
+            <Route path="/press" element={<ComingSoon title="Press" />} />
+            
+            {/* Legacy route for AboutUsSimple */}
+            <Route path="/about-us" element={<AboutUsSimple />} />
+            
+            {/* Redirect all unknown routes to home page */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
         
         {/* Social media buttons */}
         <div className="social-buttons">

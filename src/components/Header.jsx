@@ -32,15 +32,14 @@ const Header = () => {
     const path = location.pathname;
     if (path === '/' || path === '/about/overview') setActiveLink('who-we-are');
     else if (path === '/projects') setActiveLink('projects');
-    else if (path === '/about') setActiveLink('about-us');
-    else if (path === '/team') setActiveLink('team');
+    else if (path.startsWith('/about')) setActiveLink('about-us');
+    else if (path.startsWith('/team')) setActiveLink('team');
     else if (path === '/contact') setActiveLink('contact');
-    else if (path.startsWith('/about/')) setActiveLink('about-us');
-    else if (path.startsWith('/services/')) setActiveLink('services');
-    else if (path === '/ideas') setActiveLink('ideas');
+    else if (path.startsWith('/services')) setActiveLink('services');
+    else if (path.startsWith('/ideas')) setActiveLink('ideas');
     else if (path === '/careers') setActiveLink('careers');
-    // Remove admin reference
-    // Add more conditions for other routes as needed
+    else if (path === '/experience') setActiveLink('experience');
+    else if (path === '/press') setActiveLink('press');
   }, [location]);
 
   useEffect(() => {
@@ -124,38 +123,8 @@ const Header = () => {
       e.stopPropagation();
       handleOurClick.current = true;
       
-      // On mobile, if user is clicking the dropdown title, navigate to a summary page
-      if (id === 'about-us') {
-        // Redirect to the overview page instead of toggling the dropdown
-        setActiveLink('about-us');
-        setExpanded(false);
-        // Use history navigation instead of direct window.location for better compatibility
-        setTimeout(() => {
-          window.location.replace('/about/overview');
-        }, 50);
-        return;
-      } else if (id === 'services') {
-        // Redirect to the services overview page instead of toggling the dropdown
-        setActiveLink('services');
-        setExpanded(false);
-        // Use history navigation instead of direct window.location for better compatibility
-        setTimeout(() => {
-          window.location.replace('/services/overview');
-        }, 50);
-        return;
-      }
-      
       // Toggle the dropdown - explicitly set to null if currently open
-      if (hoveredDropdown === id) {
-        setHoveredDropdown(null);
-      } else {
-        // Close any other open dropdown first
-        setHoveredDropdown(null);
-        // Then open the clicked one (we need setTimeout to ensure the first operation completes)
-        setTimeout(() => {
-          setHoveredDropdown(id);
-        }, 10);
-      }
+      setHoveredDropdown(hoveredDropdown === id ? null : id);
     }
   };
 
@@ -217,7 +186,7 @@ const Header = () => {
                     >
                       OUR WORKPLACE
                       {isMobile && (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-down" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi bi-chevron-${hoveredDropdown === 'about-us' ? 'up' : 'down'}`} viewBox="0 0 16 16">
                           <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                         </svg>
                       )}
@@ -319,7 +288,7 @@ const Header = () => {
                     >
                       WHAT WE DO
                       {isMobile && (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-down" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi bi-chevron-${hoveredDropdown === 'services' ? 'up' : 'down'}`} viewBox="0 0 16 16">
                           <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                         </svg>
                       )}
