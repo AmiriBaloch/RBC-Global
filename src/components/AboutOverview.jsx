@@ -22,22 +22,15 @@ const AboutOverview = () => {
       embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108796.46626906144!2d74.25605614325706!3d31.491441916252946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391904f31f7bbc63%3A0xab566c07b81cf59a!2sPIA%20Housing%20Scheme%20Phase%201%2C%20Lahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1716390578600!5m2!1sen!2s"
     },
     {
-      city: "Rahim Yar Khan",
-      address: "Shop No 02 New Grain Market Near By Pass Road Rahim Yar Khan",
-      isPrimary: false,
-      mapUrl: "https://maps.app.goo.gl/jEe5EEP8rWbp7JSz7?g_st=aw",
-      embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3463.7168148009235!2d70.32171887618307!3d28.423431591826984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b98c73e82bfffb%3A0x255c72f951bdab6a!2sNew%20Grain%20Market%2C%20Rahim%20Yar%20Khan%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1716390810657!5m2!1sen!2s"
-    },
-    {
       city: "Peshawar",
-      address: "Flat 29, Near Khyber Teaching Hospital, Opp. University, Peshawar.",
+      address: "Office #29, Near Khyber Teaching Hospital, Opp. University, Peshawar.",
       isPrimary: true,
       mapUrl: "https://maps.app.goo.gl/FDQQm2HnY8kCsdWRA?g_st=aw",
       embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3307.4082471316835!2d71.49142627631553!3d34.00546132113016!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d917b75dad865d%3A0x2c8fbf0ed53e9e98!2sKhyber%20Teaching%20Hospital!5e0!3m2!1sen!2s!4v1716390855042!5m2!1sen!2s"
     },
     {
       city: "Karachi",
-      address: "House # 200 sector 4H Saeed Abad Baldia town Karachi.",
+      address: "Office #200 sector 4H Saeed Abad Baldia town Karachi.",
       isPrimary: true,
       mapUrl: "https://maps.app.goo.gl/J52y7orwEWsWcVT79?g_st=aw",
       embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57908.76967302843!2d67.01247761433072!3d24.892290947954358!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f90157042d3%3A0x93d609e8bec9a880!2sBALDIA%20TOWN%2C%20Karachi%2C%20Karachi%20City%2C%20Sindh%2C%20Pakistan!5e0!3m2!1sen!2s!4v1716390910209!5m2!1sen!2s"
@@ -115,22 +108,6 @@ const AboutOverview = () => {
               <div className="p-4 rounded-3 text-dark" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0' }}>
                 <h3 className="mb-3" style={{ color: '#333333', borderBottom: '2px solid #f59e0b', paddingBottom: '10px' }}>Primary Locations</h3>
                 {offices.filter(office => office.isPrimary).map((office, index) => (
-                  <Card 
-                    key={index} 
-                    className={`office-card ${selectedOffice === office.city ? 'selected-office' : ''}`}
-                    onClick={() => handleOfficeClick(office.city)}
-                  >
-                    <Card.Body>
-                      <Card.Title>{office.city}</Card.Title>
-                      <Card.Text>{office.address}</Card.Text>
-                      <div className="text-end">
-                        <small style={{ color: '#f59e0b' }}>Click to view on map</small>
-                      </div>
-                    </Card.Body>
-                  </Card>
-                ))}
-                <h3 className="mt-4 mb-3" style={{ color: '#333333', borderBottom: '2px solid #f59e0b', paddingBottom: '10px' }}>Additional Offices</h3>
-                {offices.filter(office => !office.isPrimary).map((office, index) => (
                   <Card 
                     key={index} 
                     className={`office-card ${selectedOffice === office.city ? 'selected-office' : ''}`}

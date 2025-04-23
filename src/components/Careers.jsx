@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
 import { FaBriefcase } from 'react-icons/fa';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, query, orderBy, getDocs, where } from 'firebase/firestore';
 import { db } from '../firebase';
+import Swal from 'sweetalert2';
 import './Careers.css';
 import './shared.css';
 
@@ -11,6 +12,7 @@ const Careers = () => {
     name: '',
     email: '',
     phone: '',
+    cnic: '',
     position: '',
     qualification: '',
     address: '',
@@ -21,85 +23,40 @@ const Careers = () => {
     coverLetter: '',
     submittedAt: ''
   });
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     document.title = "Careers | Rosebelt Consultants";
+    fetchJobs();
   }, []);
 
-  const jobListings = [
-    {
-      id: 1,
-      title: "Senior Business Consultant",
-      department: "Consulting",
-      location: "Lahore",
-      type: "Full-time",
-      experience: "5+ years",
-      salary: "Competitive",
-      description: "We're seeking an experienced business consultant to lead strategic initiatives and drive client success.",
-      requirements: [
-        "Bachelor's degree in Business, Economics, or related field",
-        "5+ years of consulting experience",
-        "Strong analytical and problem-solving skills",
-        "Excellent communication and presentation abilities",
-        "Project management expertise"
-      ],
-      responsibilities: [
-        "Lead client engagements and deliver high-impact solutions",
-        "Develop strategic recommendations and implementation plans",
-        "Mentor junior consultants and manage project teams",
-        "Build and maintain strong client relationships",
-        "Drive business development initiatives"
-      ]
-    },
-    {
-      id: 2,
-      title: "Technology Solutions Architect",
-      department: "IT Consulting",
-      location: "Karachi",
-      type: "Full-time",
-      experience: "4+ years",
-      salary: "Market Competitive",
-      description: "Join our technology team to design and implement innovative solutions for our clients.",
-      requirements: [
-        "Bachelor's/Master's in Computer Science or related field",
-        "4+ years of software architecture experience",
-        "Strong knowledge of modern tech stack",
-        "Experience with cloud platforms (AWS/Azure)",
-        "Excellent problem-solving skills"
-      ],
-      responsibilities: [
-        "Design scalable technology solutions",
-        "Lead technical implementation projects",
-        "Collaborate with cross-functional teams",
-        "Provide technical guidance and mentorship",
-        "Ensure solution quality and best practices"
-      ]
-    },
-    {
-      id: 3,
-      title: "Management Consultant",
-      department: "Management Consulting",
-      location: "Islamabad",
-      type: "Full-time",
-      experience: "3+ years",
-      salary: "Competitive",
-      description: "Help organizations optimize their operations and achieve strategic objectives.",
-      requirements: [
-        "MBA or equivalent business degree",
-        "3+ years of management consulting experience",
-        "Strong analytical and strategic thinking",
-        "Excellence in stakeholder management",
-        "Project management certification preferred"
-      ],
-      responsibilities: [
-        "Conduct organizational assessments",
-        "Develop strategic recommendations",
-        "Lead process improvement initiatives",
-        "Manage client relationships",
-        "Deliver impactful presentations"
-      ]
+  const fetchJobs = async () => {
+    try {
+      const jobsQuery = query(collection(db, 'jobs'), orderBy('createdAt', 'desc'));
+      const jobsSnapshot = await getDocs(jobsQuery);
+      
+      const jobsList = jobsSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      
+      setJobs(jobsList);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+      setLoading(false);
     }
-  ];
+  };
+
+  const handleShowApplicationForm = () => {
+    setShowApplicationForm(true);
+    setTimeout(() => {
+      document.getElementById('applicationForm').scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
 
   const benefits = [
     {
@@ -130,8 +87,24 @@ const Careers = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
     
     try {
+      // Validate CNIC format (Pakistani CNIC is 13 digits)
+      const cnicRegex = /^\d{5}-\d{7}-\d{1}$|^\d{13}$/;
+      if (!cnicRegex.test(formData.cnic)) {
+        throw new Error('Please enter a valid CNIC number (13 digits or in format 12345-1234567-1)');
+      }
+
+      // Check if CNIC already exists in the database
+      const talentPoolRef = collection(db, 'talentPool');
+      const q = query(talentPoolRef, where("cnic", "==", formData.cnic));
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        throw new Error('An application with this CNIC already exists. You cannot apply twice with the same CNIC.');
+      }
+
       const submissionData = {
         ...formData,
         submittedAt: new Date().toISOString()
@@ -145,6 +118,7 @@ const Careers = () => {
         name: '',
         email: '',
         phone: '',
+        cnic: '',
         position: '',
         qualification: '',
         address: '',
@@ -156,10 +130,28 @@ const Careers = () => {
         submittedAt: ''
       });
       
-      alert('Application submitted successfully! We will contact you when relevant opportunities arise.');
+      setShowApplicationForm(false);
+      
+      // Show success message with SweetAlert2
+      Swal.fire({
+        icon: 'success',
+        title: 'Application Submitted!',
+        text: 'Your application has been submitted successfully. We will contact you when relevant opportunities arise.',
+        confirmButtonColor: '#2AA96B',
+        timer: 3000
+      });
     } catch (error) {
       console.error('Error submitting application:', error);
-      alert('Failed to submit application. Please try again later.');
+      
+      // Show error message with SweetAlert2
+      Swal.fire({
+        icon: 'error',
+        title: 'Submission Failed',
+        text: error.message || 'We couldn\'t submit your application. Please try again later.',
+        confirmButtonColor: '#d33',
+      });
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -217,74 +209,164 @@ const Careers = () => {
         </div>
         <Container>
           <div className="p-4 border rounded mb-4" style={{ backgroundColor: '#ffffff' }}>
-          <Row className="justify-content-center">
-            <Col md={8}>
-                <Card className="no-jobs-card text-center p-5" style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)', border: '1px solid #dee2e6' }}>
-                <Card.Body>
-                  <div className="mb-4">
-                      <FaBriefcase className="no-jobs-icon" style={{ fontSize: '4rem', color: '#2AA96B' }} />
-                  </div>
-                    <h3 className="mb-3" style={{ color: '#2AA96B' }}>No Positions Available</h3>
-                  <p className="text-muted mb-4">
-                    We currently don't have any open positions. Please check back later or subscribe to our newsletter to be notified of future opportunities.
-                  </p>
-                  <div className="d-grid gap-2 col-md-8 mx-auto">
-                      <Button 
-                        style={{ 
-                          backgroundColor: '#2AA96B', 
-                          borderColor: '#2AA96B',
-                          transition: 'all 0.3s ease'
-                        }} 
-                        onClick={() => window.scrollTo({ top: document.getElementById('applicationForm').offsetTop, behavior: 'smooth' })}
-                      >
-                      Join Our Talent Pool
-                    </Button>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
+            {loading ? (
+              <div className="text-center py-5">
+                <div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            ) : jobs.length > 0 ? (
+              <Row>
+                {jobs.map(job => (
+                  <Col lg={6} key={job.id} className="mb-4">
+                    <Card className="job-card h-100" style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)', border: '1px solid #dee2e6' }}>
+                      <Card.Header style={{ backgroundColor: '#2AA96B', color: 'white' }}>
+                        <h3 className="h5 mb-0">{job.title}</h3>
+                      </Card.Header>
+                      <Card.Body>
+                        <p className="job-description">{job.description}</p>
+                        <Button
+                          style={{ 
+                            backgroundColor: '#2AA96B', 
+                            borderColor: '#2AA96B',
+                            transition: 'all 0.3s ease'
+                          }}
+                          onClick={handleShowApplicationForm}
+                        >
+                          Apply Now
+                        </Button>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            ) : (
+              <Row className="justify-content-center">
+                <Col md={8}>
+                  <Card className="no-jobs-card text-center p-5" style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)', border: '1px solid #dee2e6' }}>
+                    <Card.Body>
+                      <div className="mb-4">
+                        <FaBriefcase className="no-jobs-icon" style={{ fontSize: '4rem', color: '#2AA96B' }} />
+                      </div>
+                      <h3 className="mb-3" style={{ color: '#2AA96B' }}>No Positions Available</h3>
+                      <p className="text-muted mb-4">
+                        We currently don't have any open positions. Please check back later or subscribe to our newsletter to be notified of future opportunities.
+                      </p>
+                      <div className="d-grid gap-2 col-md-8 mx-auto">
+                        <Button 
+                          style={{ 
+                            backgroundColor: '#2AA96B', 
+                            borderColor: '#2AA96B',
+                            transition: 'all 0.3s ease'
+                          }} 
+                          onClick={handleShowApplicationForm}
+                        >
+                          Join Our Talent Pool
+                        </Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+            )}
           </div>
         </Container>
       </section>
 
       {/* Application Form Section */}
-      <section id="applicationForm" className="application-form-section py-5" style={{ backgroundColor: '#E3EBF2' }}>
-        <div className="section-heading-container mb-4" style={{ backgroundColor: '#333333', borderRadius: '4px' }}>
+      {showApplicationForm && (
+        <section id="applicationForm" className="application-form-section py-5" style={{ backgroundColor: '#E3EBF2' }}>
+          <div className="section-heading-container mb-4" style={{ backgroundColor: '#333333', borderRadius: '4px' }}>
+            <Container>
+              <h2 className="section-heading text-white py-2 px-3">
+                <span style={{ color: '#f59e0b' }}>Application</span> Form
+              </h2>
+            </Container>
+          </div>
           <Container>
-            <h2 className="section-heading text-white py-2 px-3">
-              <span style={{ color: '#f59e0b' }}>Join Our</span> Talent Pool
-            </h2>
-          </Container>
-        </div>
-        <Container>
-          <div className="p-4 border rounded mb-4" style={{ backgroundColor: '#ffffff' }}>
-          <Row className="justify-content-center">
-              <Col md={10}>
-                  <p className="text-center text-muted mb-4">
-                    While we don't have any current openings, we're always looking for talented individuals. Submit your information to be considered for future opportunities.
-                  </p>
-                  <Form onSubmit={handleSubmit}>
-                    <Row>
-                      <Col md={6}>
-                        <Form.Group className="mb-3">
-                          <Form.Label>Full Name</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleInputChange}
+            <div className="p-4 border rounded mb-4" style={{ backgroundColor: '#ffffff' }}>
+            <Row className="justify-content-center">
+                <Col md={10}>
+                    <p className="text-center text-muted mb-4">
+                      Please fill out the form below to apply for this position.
+                    </p>
+                    <Form onSubmit={handleSubmit}>
+                      <Row>
+                        <Col md={6}>
+                          <Form.Group className="mb-3">
+                            <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Full Name</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="name"
+                              value={formData.name}
+                              onChange={handleInputChange}
+                              required
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                          <Form.Group className="mb-3">
+                            <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Email</Form.Label>
+                            <Form.Control
+                              type="email"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleInputChange}
+                              required
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={6}>
+                          <Form.Group className="mb-3">
+                            <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Phone Number</Form.Label>
+                            <Form.Control
+                              type="tel"
+                              name="phone"
+                              value={formData.phone}
+                              onChange={handleInputChange}
+                              required
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                          <Form.Group className="mb-3">
+                            <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>CNIC Number</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="cnic"
+                              value={formData.cnic}
+                              onChange={handleInputChange}
+                              placeholder="12345-1234567-1"
+                              required
+                            />
+                            <Form.Text className="text-muted">
+                              Format: 12345-1234567-1 or 1234512345671
+                            </Form.Text>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={6}>
+                          <Form.Group className="mb-3">
+                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Desired Position</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="position"
+                              value={formData.position}
+                              onChange={handleInputChange}
                             required
                           />
                         </Form.Group>
                       </Col>
                       <Col md={6}>
                         <Form.Group className="mb-3">
-                          <Form.Label>Email</Form.Label>
+                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Qualification</Form.Label>
                           <Form.Control
-                            type="email"
-                            name="email"
-                            value={formData.email}
+                            type="text"
+                            name="qualification"
+                            value={formData.qualification}
                             onChange={handleInputChange}
                             required
                           />
@@ -292,139 +374,103 @@ const Careers = () => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col md={6}>
+                      <Col md={12}>
                         <Form.Group className="mb-3">
-                          <Form.Label>Phone Number</Form.Label>
-                          <Form.Control
-                            type="tel"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleInputChange}
-                            required
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col md={6}>
-                        <Form.Group className="mb-3">
-                        <Form.Label>Desired Position</Form.Label>
+                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Experience (Years)</Form.Label>
                           <Form.Control
                             type="text"
-                            name="position"
-                            value={formData.position}
+                            name="experience"
+                            value={formData.experience}
                             onChange={handleInputChange}
-                          required
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Qualification</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="qualification"
-                          value={formData.qualification}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Experience (Years)</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="experience"
-                          value={formData.experience}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md={12}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Address</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="address"
-                          value={formData.address}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md={4}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>District</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="district"
-                          value={formData.district}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Tehsil</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="tehsil"
-                          value={formData.tehsil}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>UC (Union Council)</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="uc"
-                          value={formData.uc}
-                          onChange={handleInputChange}
                             required
                           />
                         </Form.Group>
                       </Col>
                     </Row>
-                  <Form.Group className="mb-3">
-                      <Form.Label>Cover Letter / Additional Information</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                      rows={5}
-                        name="coverLetter"
-                        value={formData.coverLetter}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </Form.Group>
-                  <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <Button 
-                      type="submit" 
-                      style={{ 
-                        backgroundColor: '#2AA96B', 
-                        borderColor: '#2AA96B',
-                        transition: 'all 0.3s ease',
-                        padding: '10px 30px'
-                      }}
-                    >
-                        Submit Application
+                    <Row>
+                      <Col md={12}>
+                        <Form.Group className="mb-3">
+                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Address</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="address"
+                            value={formData.address}
+                            onChange={handleInputChange}
+                            required
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={4}>
+                        <Form.Group className="mb-3">
+                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>District</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="district"
+                            value={formData.district}
+                            onChange={handleInputChange}
+                            required
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col md={4}>
+                        <Form.Group className="mb-3">
+                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Tehsil</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="tehsil"
+                            value={formData.tehsil}
+                            onChange={handleInputChange}
+                            required
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col md={4}>
+                        <Form.Group className="mb-3">
+                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>UC (Union Council)</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="uc"
+                            value={formData.uc}
+                            onChange={handleInputChange}
+                              required
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                    <Form.Group className="mb-3">
+                        <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Cover Letter / Additional Information</Form.Label>
+                        <Form.Control
+                          as="textarea"
+                        rows={5}
+                          name="coverLetter"
+                          value={formData.coverLetter}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </Form.Group>
+                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <Button 
+                        type="submit" 
+                        style={{ 
+                          backgroundColor: '#2AA96B', 
+                          borderColor: '#2AA96B',
+                          transition: 'all 0.3s ease',
+                          padding: '10px 30px'
+                        }}
+                        disabled={submitting}
+                      >
+                        {submitting ? 'Submitting...' : 'Submit Application'}
                       </Button>
                     </div>
-                  </Form>
-              </Col>
-            </Row>
-          </div>
-        </Container>
-      </section>
+                    </Form>
+                </Col>
+              </Row>
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* Call to Action */}
       <section className="py-5 mb-0 text-white" style={{ backgroundColor: '#333333', borderRadius: '0' }}>

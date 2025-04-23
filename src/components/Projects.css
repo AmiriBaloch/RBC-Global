@@ -396,20 +396,6 @@
   text-align: left;
 }
 
-.admin-button {
-  background-color: transparent;
-  border: 1px solid #f59e0b;
-  color: #333333;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  padding: 8px 15px;
-}
-
-.admin-button:hover {
-  background-color: #f59e0b;
-  color: white;
-}
-
 .project-detail-metadata {
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;

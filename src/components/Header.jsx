@@ -15,6 +15,18 @@ const Header = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
   const location = useLocation();
 
+  // Use a ref to track if we're handling our own click
+  const handleOurClick = React.useRef(false);
+
+  // Prevent Bootstrap's built-in toggle
+  const handleDropdownSelect = (e) => {
+    if (handleOurClick.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleOurClick.current = false;
+    }
+  };
+
   useEffect(() => {
     // Update active link based on current path
     const path = location.pathname;
@@ -27,8 +39,7 @@ const Header = () => {
     else if (path.startsWith('/services/')) setActiveLink('services');
     else if (path === '/ideas') setActiveLink('ideas');
     else if (path === '/careers') setActiveLink('careers');
-    else if (path.startsWith('/admin/')) setActiveLink('admin');
-    // Remove experience and press
+    // Remove admin reference
     // Add more conditions for other routes as needed
   }, [location]);
 
@@ -80,6 +91,10 @@ const Header = () => {
   const handleNavClick = (link) => {
     setActiveLink(link);
     setExpanded(false);
+    // Close any open dropdown when clicking a regular nav item
+    if (isMobile) {
+      setHoveredDropdown(null);
+    }
   };
 
   // Custom dropdown hover handlers
@@ -95,10 +110,24 @@ const Header = () => {
     }
   };
 
-  // Toggle dropdown for mobile
-  const handleDropdownToggle = (id) => {
+  // Explicit click handler to ensure toggle works consistently
+  const handleMobileDropdownClick = (e, id) => {
     if (isMobile) {
-      setHoveredDropdown(hoveredDropdown === id ? null : id);
+      e.preventDefault();
+      e.stopPropagation();
+      handleOurClick.current = true;
+      
+      // Toggle the dropdown - explicitly set to null if currently open
+      if (hoveredDropdown === id) {
+        setHoveredDropdown(null);
+      } else {
+        // Close any other open dropdown first
+        setHoveredDropdown(null);
+        // Then open the clicked one (we need setTimeout to ensure the first operation completes)
+        setTimeout(() => {
+          setHoveredDropdown(id);
+        }, 10);
+      }
     }
   };
 
@@ -108,7 +137,13 @@ const Header = () => {
       className={`navbar-light shadow-sm ${scrolled ? 'scrolled' : ''} ${visible ? 'navbar-visible' : 'navbar-hidden'}`} 
       sticky="top"
       expanded={expanded}
-      onToggle={(isExpanded) => setExpanded(isExpanded)}
+      onToggle={(isExpanded) => {
+        setExpanded(isExpanded);
+        // Close any open dropdown when toggling the navbar
+        if (!isExpanded) {
+          setHoveredDropdown(null);
+        }
+      }}
     >
       <Container>
         <Link 
@@ -123,7 +158,10 @@ const Header = () => {
           />
         </Link>
         
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle 
+          aria-controls="basic-navbar-nav" 
+          className={`custom-toggler ${expanded ? 'open' : ''}`}
+        />
         
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <div className="nav-container">
@@ -144,11 +182,23 @@ const Header = () => {
                 onMouseLeave={handleDropdownMouseLeave}
               >
                 <NavDropdown 
-                  title="OUR WORKPLACE"
+                  title={
+                    <span 
+                      className="d-flex justify-content-between align-items-center w-100"
+                      onClick={(e) => isMobile && handleMobileDropdownClick(e, 'about-us')}
+                    >
+                      OUR WORKPLACE
+                      {isMobile && (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-down" viewBox="0 0 16 16">
+                          <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                      )}
+                    </span>
+                  }
                   id="about-us-dropdown"
                   className={`fw-bold main-dropdown ${activeLink === 'about-us' ? 'active' : ''}`}
                   show={hoveredDropdown === 'about-us'}
-                  onClick={() => handleDropdownToggle('about-us')}
+                  onSelect={handleDropdownSelect}
                 >
                   <div className="mega-menu-content">
                     <Container>
@@ -192,11 +242,23 @@ const Header = () => {
                 onMouseLeave={handleDropdownMouseLeave}
               >
                 <NavDropdown 
-                  title="WHAT WE DO"
+                  title={
+                    <span 
+                      className="d-flex justify-content-between align-items-center w-100"
+                      onClick={(e) => isMobile && handleMobileDropdownClick(e, 'services')}
+                    >
+                      WHAT WE DO
+                      {isMobile && (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-down" viewBox="0 0 16 16">
+                          <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                      )}
+                    </span>
+                  }
                   id="what-we-do-dropdown"
                   className={`fw-bold main-dropdown ${activeLink === 'services' ? 'active' : ''}`}
                   show={hoveredDropdown === 'services'}
-                  onClick={() => handleDropdownToggle('services')}
+                  onSelect={handleDropdownSelect}
                 >
                   <div className="mega-menu-content">
                     <Container>
@@ -249,6 +311,9 @@ const Header = () => {
                 </NavDropdown>
               </div>
               
+              {/* OUR EXPERIENCE - new menu item for mobile */}
+              {/* Removing OUR EXPERIENCE as requested */}
+              
               {/* Our Ideas */}
               <Link 
                 to="/ideas" 
@@ -267,55 +332,21 @@ const Header = () => {
                 JOIN OUR TEAM
               </Link>
               
-              {/* Contact - as a button */}
-              <Button 
-                variant="link"
-                as={Link}
-                to="/contact"
-                className={`nav-link fw-bold connect-button ${activeLink === 'contact' ? 'active' : ''}`}
-                onClick={() => handleNavClick('contact')}
-              >
-                Contact
-              </Button>
+              {/* Press - add new link from screenshot */}
+              {/* Removing PRESS as requested */}
               
-              {/* Admin dropdown - restored as requested */}
-              <div 
-                className="custom-dropdown-wrapper"
-                onMouseEnter={() => handleDropdownMouseEnter('admin')}
-                onMouseLeave={handleDropdownMouseLeave}
-              >
-                <NavDropdown 
-                  title={
-                    <span>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-shield-lock me-1" viewBox="0 0 16 16">
-                        <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
-                        <path d="M9.5 6.5a1.5 1.5 0 0 1-1 1.415l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99a1.5 1.5 0 1 1 2-1.415z"/>
-                      </svg>
-                      Admin
-                    </span>
-                  }
-                  id="admin-dropdown"
-                  className="ms-lg-2 mt-2 mt-lg-0"
-                  variant="outline-secondary"
-                  show={hoveredDropdown === 'admin'}
-                  onClick={() => handleDropdownToggle('admin')}
+              {/* Contact - as a button */}
+              {!isMobile && (
+                <Button 
+                  variant="link"
+                  as={Link}
+                  to="/contact"
+                  className={`nav-link fw-bold connect-button ${activeLink === 'contact' ? 'active' : ''}`}
+                  onClick={() => handleNavClick('contact')}
                 >
-                  <NavDropdown.Item 
-                    as={Link} 
-                    to="/admin/contacts"
-                    onClick={() => handleNavClick('admin')}
-                  >
-                    Contact Requests
-                  </NavDropdown.Item>
-                  <NavDropdown.Item 
-                    as={Link} 
-                    to="/admin/projects"
-                    onClick={() => handleNavClick('admin')}
-                  >
-                    Projects Management
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </div>
+                  Contact
+                </Button>
+              )}
             </Nav>
           </div>
         </Navbar.Collapse>

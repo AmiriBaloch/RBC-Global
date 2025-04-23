@@ -36,11 +36,11 @@ const CarouselSlider = () => {
         <Carousel.Item style={{ backgroundColor: '#E3EBF2' }}>
           {isMobile ? (
             <>
-              {/* First slide for mobile - mbgif.gif */}
+              {/* First slide for mobile - mbgif1.gif */}
               <div className="mobile-image-container">
                 <img
                   className="mobile-carousel-media"
-                  src={mbgif}
+                  src={mbgif1}
                   alt="Mobile Animation GIF"
                 />
               </div>
@@ -59,7 +59,7 @@ const CarouselSlider = () => {
             <div className="mobile-image-container">
               <img
                 className="mobile-carousel-media"
-                src={mbgif1}
+                src={mbgif}
                 alt="Mobile Animation"
               />
             </div>

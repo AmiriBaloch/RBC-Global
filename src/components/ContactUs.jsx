@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import emailjs from '@emailjs/browser';
+import Swal from 'sweetalert2';
 import './ContactUs.css';
 
 const ContactUs = () => {
@@ -22,7 +23,6 @@ const ContactUs = () => {
     newsletter: false
   });
 
-  const [status, setStatus] = useState({ message: '', type: '' });
   const [submitting, setSubmitting] = useState(false);
 
   const projectTypes = [
@@ -117,7 +117,6 @@ The RoseBelt Consultants Team`,
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    setStatus({ message: '', type: '' });
 
     try {
       // Basic validation
@@ -154,11 +153,6 @@ The RoseBelt Consultants Team`,
       // Send email notification
       await sendEmailNotification(contactData);
       
-      setStatus({
-        message: 'Thank you for your message! We will get back to you soon.',
-        type: 'success'
-      });
-
       // Reset form
       setFormData({
         firstName: '',
@@ -175,11 +169,23 @@ The RoseBelt Consultants Team`,
         howDidYouHear: '',
         newsletter: false
       });
+      
+      // Show success message with SweetAlert2
+      Swal.fire({
+        icon: 'success',
+        title: 'Message Sent!',
+        text: 'Thank you for your message! We will get back to you soon.',
+        confirmButtonColor: '#2AA96B',
+        timer: 3000
+      });
 
     } catch (error) {
-      setStatus({
-        message: error.message || 'Something went wrong. Please try again.',
-        type: 'danger'
+      // Show error message with SweetAlert2
+      Swal.fire({
+        icon: 'error',
+        title: 'Submission Failed',
+        text: error.message || 'Something went wrong. Please try again.',
+        confirmButtonColor: '#d33'
       });
     } finally {
       setSubmitting(false);
@@ -213,21 +219,11 @@ The RoseBelt Consultants Team`,
 
         <Row className="justify-content-center">
           <Col md={10} lg={8}>
-            {status.message && (
-              <Alert 
-                variant={status.type} 
-                dismissible 
-                onClose={() => setStatus({ message: '', type: '' })}
-              >
-                {status.message}
-              </Alert>
-            )}
-
             <Form onSubmit={handleSubmit} className="contact-form">
               <Row>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>First Name <span className="text-danger">*</span></Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold', color: '#fff' }}>First Name <span className="text-danger">*</span></Form.Label>
                     <Form.Control
                       type="text"
                       name="firstName"
@@ -239,7 +235,7 @@ The RoseBelt Consultants Team`,
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Last Name <span className="text-danger">*</span></Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold', color: '#fff' }}>Last Name <span className="text-danger">*</span></Form.Label>
                     <Form.Control
                       type="text"
                       name="lastName"
@@ -254,7 +250,7 @@ The RoseBelt Consultants Team`,
               <Row>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Email <span className="text-danger">*</span></Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold', color: '#fff' }}>Email <span className="text-danger">*</span></Form.Label>
                     <Form.Control
                       type="email"
                       name="email"
@@ -266,7 +262,7 @@ The RoseBelt Consultants Team`,
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Phone</Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold', color: '#fff' }}>Phone</Form.Label>
                     <Form.Control
                       type="tel"
                       name="phone"
@@ -281,7 +277,7 @@ The RoseBelt Consultants Team`,
               <Row>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Company</Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold', color: '#fff' }}>Company</Form.Label>
                     <Form.Control
                       type="text"
                       name="company"
@@ -292,7 +288,7 @@ The RoseBelt Consultants Team`,
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Job Title</Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold', color: '#fff' }}>Job Title</Form.Label>
                     <Form.Control
                       type="text"
                       name="jobTitle"
@@ -306,7 +302,7 @@ The RoseBelt Consultants Team`,
               <Row>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Project Type</Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold', color: '#fff' }}>Project Type</Form.Label>
                     <Form.Select
                       name="projectType"
                       value={formData.projectType}
@@ -321,7 +317,7 @@ The RoseBelt Consultants Team`,
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Budget Range</Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold', color: '#fff' }}>Budget Range</Form.Label>
                     <Form.Select
                       name="budget"
                       value={formData.budget}
@@ -339,7 +335,7 @@ The RoseBelt Consultants Team`,
               <Row>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Timeframe</Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold', color: '#fff' }}>Timeframe</Form.Label>
                     <Form.Select
                       name="timeframe"
                       value={formData.timeframe}
@@ -354,7 +350,7 @@ The RoseBelt Consultants Team`,
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3">
-                    <Form.Label>Preferred Contact Method</Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold', color: '#fff' }}>Preferred Contact Method</Form.Label>
                     <Form.Select
                       name="preferredContact"
                       value={formData.preferredContact}
@@ -368,7 +364,7 @@ The RoseBelt Consultants Team`,
               </Row>
 
               <Form.Group className="mb-3">
-                <Form.Label>Project Description <span className="text-danger">*</span></Form.Label>
+                <Form.Label style={{ fontWeight: 'bold', color: '#fff' }}>Project Description <span className="text-danger">*</span></Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={5}
@@ -381,7 +377,7 @@ The RoseBelt Consultants Team`,
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>How did you hear about us?</Form.Label>
+                <Form.Label style={{ fontWeight: 'bold', color: '#fff' }}>How did you hear about us?</Form.Label>
                 <Form.Control
                   type="text"
                   name="howDidYouHear"
@@ -397,7 +393,7 @@ The RoseBelt Consultants Team`,
                   name="newsletter"
                   checked={formData.newsletter}
                   onChange={handleChange}
-                  label="Subscribe to our newsletter for updates and insights"
+                  label={<span style={{ color: '#fff' }}>Subscribe to our newsletter for updates and insights</span>}
                 />
               </Form.Group>
 

@@ -433,29 +433,130 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Mobile styles for mega menu */
+/* Mobile optimizations */
 @media (max-width: 991px) {
+  /* Mobile Menu Styling to match design */
+  .navbar-collapse {
+    background-color: white;
+    border-radius: 0;
+    padding: 0;
+    margin-top: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+  }
+  
+  .navbar-light .nav-link,
+  .main-dropdown .dropdown-toggle {
+    color: #000 !important;
+    font-weight: 600;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+  
+  /* SVG right arrow icons */
+  .navbar-light .nav-link svg,
+  .main-dropdown .dropdown-toggle svg {
+    color: #888;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Rotate chevron when dropdown is open */
+  .main-dropdown.show .dropdown-toggle svg {
+    transform: rotate(180deg);
+  }
+  
+  /* Remove default dropdown arrow */
+  .main-dropdown .dropdown-toggle::after {
+    display: none;
+  }
+  
+  /* Dropdown menu animation */
+  .dropdown-menu {
+    display: block !important;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: #f8f8f8;
+    padding: 0 !important;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  /* Show dropdown when active */
+  .main-dropdown.show .dropdown-menu {
+    max-height: 500px;
+  }
+  
+  /* Custom fix to ensure dropdown content is always hidden when not active */
+  .main-dropdown:not(.show) .dropdown-menu {
+    max-height: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
+  }
+  
   .mega-menu-content {
+    padding: 0;
     width: 100%;
     box-shadow: none;
     background-color: transparent;
   }
   
   .mega-menu-item {
-    padding: 10px 15px;
-    border-left: none;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 15px 30px;
+    margin: 0;
+    border-bottom: 1px solid #e0e0e0;
+    border-radius: 0;
+    background-color: transparent;
+    color: #000;
+    font-weight: 500;
+    font-size: 14px;
   }
   
   .mega-menu-item:hover {
-    border-left: none;
+    background-color: #f0f0f0;
+    transform: none;
   }
   
-  .main-dropdown .dropdown-toggle {
+  /* Custom dropdown wrapper for mobile */
+  .custom-dropdown-wrapper {
     width: 100%;
-    text-align: left;
-    padding: 10px;
-    margin: 0;
+    display: block;
+  }
+  
+  /* Hide admin section on mobile menu */
+  #admin-dropdown {
+    display: none;
+  }
+  
+  /* No hover effects on mobile */
+  .navbar-light .nav-link:hover::after,
+  .navbar-light .nav-link.active::after {
+    width: 0;
+  }
+  
+  /* Ensure navbar toggle button is styled properly */
+  .navbar-toggler {
+    border: none;
+    padding: 0.25rem 0.5rem;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  
+  .navbar-toggler:focus {
+    box-shadow: none;
   }
 }
 
@@ -815,4 +916,34 @@ body {
   .mega-menu-item:before {
     display: none;
   }
-} 
+}
+
+/* Custom toggler styling */
+.custom-toggler {
+  border: none !important;
+  padding: 8px !important;
+  outline: none !important;
+  background: none !important;
+  border-radius: 4px !important;
+  transition: all 0.3s ease !important;
+  margin-right: 8px !important;
+}
+
+.custom-toggler:focus {
+  box-shadow: none !important;
+}
+
+/* Change toggler icon color to default dark and make it bolder and larger */
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+  transition: all 0.3s ease !important;
+  width: 1.8em !important;
+  height: 1.8em !important;
+}
+
+/* Transform to X when open */
+.custom-toggler.open .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M6 6L24 24M6 24L24 6'/%3e%3c/svg%3e") !important;
+}
+
+/* End of file */ 

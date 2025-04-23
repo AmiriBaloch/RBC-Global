@@ -11,23 +11,8 @@ const Projects = () => {
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({
-    title: '',
-    type: '',
-    sector: '',
-    description: '',
-    conclusion: ''
-  });
-  const [status, setStatus] = useState({ message: '', type: '' });
-  const [submitting, setSubmitting] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [showAdminModal, setShowAdminModal] = useState(false);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [adminCredentials, setAdminCredentials] = useState({
-    email: '',
-    passcode: ''
-  });
+  const [showModal, setShowModal] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
 
@@ -106,87 +91,6 @@ const Projects = () => {
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
-
-  const handleAdminCredentialsChange = (e) => {
-    const { name, value } = e.target;
-    setAdminCredentials(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleAdminLogin = (e) => {
-    e.preventDefault();
-    if (adminCredentials.email === 'mamiribaloch@gmail.com' && adminCredentials.passcode === 'xyz.com') {
-      setShowAddForm(true);
-      setShowAdminModal(false);
-      Swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'Admin authentication successful',
-        timer: 1500
-      });
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Authentication Failed',
-        text: 'Invalid email or passcode',
-      });
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-    setStatus({ message: '', type: '' });
-
-    try {
-      if (!formData.title.trim() || !formData.description.trim() || !formData.type.trim() || !formData.sector.trim()) {
-        throw new Error('Title, Type, Sector, and Description are required');
-      }
-
-      const postData = {
-        ...formData,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
-
-      await addDoc(collection(db, 'posts'), postData);
-      
-      setFormData({
-        title: '',
-        type: '',
-        sector: '',
-        description: '',
-        conclusion: ''
-      });
-      
-      setShowAddForm(false);
-      Swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'Project added successfully!',
-        timer: 1500
-      });
-    } catch (error) {
-      console.error('Submit error:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: error.message || 'Failed to add project. Please try again.',
-      });
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   const handleReadMore = (project) => {
     setSelectedProject(project);
     setShowModal(true);
@@ -195,17 +99,6 @@ const Projects = () => {
   const handleCloseModal = () => {
     setShowModal(false);
     setSelectedProject(null);
-  };
-
-  const handleCloseAddForm = () => {
-    setShowAddForm(false);
-    setFormData({
-      title: '',
-      type: '',
-      sector: '',
-      description: '',
-      conclusion: ''
-    });
   };
 
   console.log('Current state:', { loading, posts, status });
@@ -444,138 +337,6 @@ const Projects = () => {
           </>
         )}
       </Modal>
-
-      {/* Admin Login Modal */}
-      <Modal 
-        show={showAdminModal} 
-        onHide={() => setShowAdminModal(false)} 
-        centered
-      >
-        <Modal.Header closeButton style={{ backgroundColor: '#333333', color: 'white' }}>
-          <Modal.Title>Admin Login</Modal.Title>
-        </Modal.Header>
-        <Modal.Body style={{ backgroundColor: '#ffffff' }}>
-          <Form onSubmit={handleAdminLogin}>
-            <Form.Group className="mb-3">
-              <Form.Label>Email</Form.Label>
-              <Form.Control 
-                type="email" 
-                name="email"
-                value={adminCredentials.email}
-                onChange={handleAdminCredentialsChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Passcode</Form.Label>
-              <Form.Control 
-                type="password" 
-                name="passcode"
-                value={adminCredentials.passcode}
-                onChange={handleAdminCredentialsChange}
-                required
-              />
-            </Form.Group>
-            <div className="d-grid gap-2">
-              <Button 
-                variant="primary" 
-                type="submit"
-                style={{ backgroundColor: '#f59e0b', borderColor: '#f59e0b' }}
-              >
-                Login
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
-
-      {/* Project Add Form */}
-      {showAddForm && (
-        <Container className="mt-4">
-          <div className="form-container" style={{ backgroundColor: 'white', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', borderRadius: '8px' }}>
-            <h2 style={{ color: '#f59e0b' }}>Add New Project</h2>
-            <Form onSubmit={handleSubmit}>
-              <Row>
-                <Col md={6}>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Project Title</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      name="title"
-                      value={formData.title}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={3}>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Project Type</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      name="type"
-                      value={formData.type}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={3}>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Project Sector</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      name="sector"
-                      value={formData.sector}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Form.Group className="mb-3">
-                <Form.Label>Project Description</Form.Label>
-                <Form.Control 
-                  as="textarea" 
-                  rows={4}
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Project Conclusion (Optional)</Form.Label>
-                <Form.Control 
-                  as="textarea" 
-                  rows={3}
-                  name="conclusion"
-                  value={formData.conclusion}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <div className="d-flex justify-content-end gap-2">
-                <Button 
-                  variant="secondary" 
-                  onClick={handleCloseAddForm}
-                  disabled={submitting}
-                  style={{ backgroundColor: '#333333', borderColor: '#333333' }}
-                >
-                  Cancel
-                </Button>
-                <Button 
-                  variant="primary" 
-                  type="submit"
-                  disabled={submitting}
-                  style={{ backgroundColor: '#f59e0b', borderColor: '#f59e0b' }}
-                >
-                  {submitting ? 'Submitting...' : 'Add Project'}
-                </Button>
-              </div>
-            </Form>
-          </div>
-        </Container>
-      )}
       
       {/* Add CSS for the contact button */}
       <style>{`
@@ -584,12 +345,6 @@ const Projects = () => {
           color: #333333 !important;
           transform: translateY(-3px);
           box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
-        }
-        
-        .admin-button:hover {
-          background-color: #f59e0b !important;
-          color: white !important;
-          transform: translateY(-2px);
         }
         
         .read-more-btn:hover {

@@ -14,7 +14,6 @@ import Projects from './components/Projects';
 import FeaturedProjects from './components/FeaturedProjects';
 import WhereWeStand from './components/WhereWeStand';
 import ContactUs from './components/ContactUs';
-import AdminDashboard from './components/AdminDashboard';
 import ClientsTicker from './components/ClientsTicker';
 import AboutUsSimple from './components/AboutUsSimple';
 import Team from './components/Team';
@@ -150,8 +149,6 @@ function App() {
           <Route path="/team/researchers" element={<Team />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<ContactUs />} />
-          <Route path="/admin/contacts" element={<AdminDashboard />} />
-          <Route path="/admin/projects" element={<AdminDashboard />} />
           
           {/* Who We Are routes */}
           <Route path="/about/overview" element={<AboutOverview />} />

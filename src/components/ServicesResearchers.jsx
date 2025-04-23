@@ -9,6 +9,7 @@ import nasikBangash from '../assets/7.png';
 import mudassirAli from '../assets/4.png';
 import sunirAshnae from '../assets/6.png';
 import muhammadShahroze from '../assets/14.png';
+import farhatAbbas from '../assets/15.png';
 
 const ServicesResearchers = () => {
   // Researchers data from Team.jsx
@@ -62,6 +63,16 @@ const ServicesResearchers = () => {
       linkedin: "#",
       twitter: "#",
       email: "shahroze@rosebeltconsultants.com"
+    },
+    {
+      id: 13,
+      name: "Farhat Abbas",
+      role: "Young Researcher",
+      image: farhatAbbas,
+      description: "A dynamic young researcher with a passion for data-driven insights and emerging research methodologies. Specializes in innovative approaches to complex social issues, combining academic rigor with creative problem-solving. Brings fresh perspectives and technological expertise to research projects across multiple domains.",
+      linkedin: "#",
+      twitter: "#",
+      email: "farhat@rosebeltconsultants.com"
     }
   ];
 
