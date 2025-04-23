@@ -127,21 +127,6 @@ const Header = () => {
       setHoveredDropdown(hoveredDropdown === id ? null : id);
     }
   };
-  
-  // Handle clicks on dropdown items in mobile view
-  const handleMobileItemClick = (e, link, path) => {
-    if (isMobile) {
-      e.preventDefault();
-      handleNavClick(link);
-      setHoveredDropdown(null);
-      setExpanded(false);
-      
-      // Use timeout to ensure state updates before navigation
-      setTimeout(() => {
-        window.location.href = path;
-      }, 10);
-    }
-  };
 
   return (
     <Navbar 
@@ -188,23 +173,16 @@ const Header = () => {
               </Link>
               
               {/* ABOUT US dropdown (new dropdown with former WHO WE ARE items) */}
+              {!isMobile ? (
               <div 
                 className="custom-dropdown-wrapper"
-                onMouseEnter={() => !isMobile && handleDropdownMouseEnter('about-us')}
-                onMouseLeave={() => !isMobile && handleDropdownMouseLeave()}
+                onMouseEnter={() => handleDropdownMouseEnter('about-us')}
+                onMouseLeave={handleDropdownMouseLeave}
               >
                 <NavDropdown 
                   title={
-                    <span 
-                      className="d-flex justify-content-between align-items-center w-100"
-                      onClick={(e) => isMobile && handleMobileDropdownClick(e, 'about-us')}
-                    >
+                      <span className="d-flex justify-content-between align-items-center w-100">
                       OUR WORKPLACE
-                      {isMobile && (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi bi-chevron-${hoveredDropdown === 'about-us' ? 'up' : 'down'}`} viewBox="0 0 16 16">
-                          <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                      )}
                     </span>
                   }
                   id="about-us-dropdown"
@@ -218,15 +196,11 @@ const Header = () => {
                         <Col xs={12}>
                           <NavDropdown.Item 
                             as={Link} 
-                            to="/our-workplace/offices"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                handleMobileItemClick(e, 'about-us', '/our-workplace/offices');
-                              } else {
+                              to="/our-workplace/offices"
+                              onClick={() => {
                                 handleNavClick('about-us');
                                 setHoveredDropdown(null);
                                 setExpanded(false);
-                              }
                             }}
                             className="mega-menu-item"
                           >
@@ -234,15 +208,11 @@ const Header = () => {
                           </NavDropdown.Item>
                           <NavDropdown.Item 
                             as={Link} 
-                            to="/our-workplace/accredited"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                handleMobileItemClick(e, 'about-us', '/our-workplace/accredited');
-                              } else {
+                              to="/our-workplace/accredited"
+                              onClick={() => {
                                 handleNavClick('about-us');
                                 setHoveredDropdown(null);
                                 setExpanded(false);
-                              }
                             }}
                             className="mega-menu-item"
                           >
@@ -250,15 +220,11 @@ const Header = () => {
                           </NavDropdown.Item>
                           <NavDropdown.Item 
                             as={Link} 
-                            to="/our-workplace/values"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                handleMobileItemClick(e, 'about-us', '/our-workplace/values');
-                              } else {
+                              to="/our-workplace/values"
+                              onClick={() => {
                                 handleNavClick('about-us');
                                 setHoveredDropdown(null);
                                 setExpanded(false);
-                              }
                             }}
                             className="mega-menu-item"
                           >
@@ -270,25 +236,50 @@ const Header = () => {
                   </div>
                 </NavDropdown>
               </div>
+              ) : (
+                <>
+                  <Link
+                    to="/our-workplace"
+                    className={`nav-link fw-bold mobile-menu-item ${activeLink === 'about-us' ? 'active' : ''}`}
+                    onClick={() => handleNavClick('about-us')}
+                  >
+                    OUR WORKPLACE
+                  </Link>
+                  <Link
+                    to="/our-workplace/offices"
+                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'about-us' ? 'active' : ''}`}
+                    onClick={() => handleNavClick('about-us')}
+                  >
+                    Our Offices
+                  </Link>
+                  <Link
+                    to="/our-workplace/accredited"
+                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'about-us' ? 'active' : ''}`}
+                    onClick={() => handleNavClick('about-us')}
+                  >
+                    The RoseBelt Accredited
+                  </Link>
+                  <Link
+                    to="/our-workplace/values"
+                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'about-us' ? 'active' : ''}`}
+                    onClick={() => handleNavClick('about-us')}
+                  >
+                    Our Values & Commitments
+                  </Link>
+                </>
+              )}
               
               {/* What We Do dropdown */}
+              {!isMobile ? (
               <div 
                 className="custom-dropdown-wrapper"
-                onMouseEnter={() => !isMobile && handleDropdownMouseEnter('services')}
-                onMouseLeave={() => !isMobile && handleDropdownMouseLeave()}
+                onMouseEnter={() => handleDropdownMouseEnter('services')}
+                onMouseLeave={handleDropdownMouseLeave}
               >
                 <NavDropdown 
                   title={
-                    <span 
-                      className="d-flex justify-content-between align-items-center w-100"
-                      onClick={(e) => isMobile && handleMobileDropdownClick(e, 'services')}
-                    >
+                      <span className="d-flex justify-content-between align-items-center w-100">
                       WHAT WE DO
-                      {isMobile && (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi bi-chevron-${hoveredDropdown === 'services' ? 'up' : 'down'}`} viewBox="0 0 16 16">
-                          <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                      )}
                     </span>
                   }
                   id="what-we-do-dropdown"
@@ -302,15 +293,11 @@ const Header = () => {
                         <Col xs={12}>
                           <NavDropdown.Item 
                             as={Link} 
-                            to="/what-we-do/overview"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                handleMobileItemClick(e, 'services-overview', '/what-we-do/overview');
-                              } else {
+                              to="/what-we-do/overview"
+                              onClick={() => {
                                 handleNavClick('services-overview');
                                 setHoveredDropdown(null);
                                 setExpanded(false);
-                              }
                             }}
                             className="mega-menu-item"
                           >
@@ -318,15 +305,11 @@ const Header = () => {
                           </NavDropdown.Item>
                           <NavDropdown.Item 
                             as={Link} 
-                            to="/what-we-do/consultants"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                handleMobileItemClick(e, 'services-consultants', '/what-we-do/consultants');
-                              } else {
+                              to="/what-we-do/consultants"
+                              onClick={() => {
                                 handleNavClick('services-consultants');
                                 setHoveredDropdown(null);
                                 setExpanded(false);
-                              }
                             }}
                             className="mega-menu-item"
                           >
@@ -334,15 +317,11 @@ const Header = () => {
                           </NavDropdown.Item>
                           <NavDropdown.Item 
                             as={Link} 
-                            to="/what-we-do/health-experts"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                handleMobileItemClick(e, 'services-health', '/what-we-do/health-experts');
-                              } else {
+                              to="/what-we-do/health-experts"
+                              onClick={() => {
                                 handleNavClick('services-health');
                                 setHoveredDropdown(null);
                                 setExpanded(false);
-                              }
                             }}
                             className="mega-menu-item"
                           >
@@ -350,15 +329,11 @@ const Header = () => {
                           </NavDropdown.Item>
                           <NavDropdown.Item 
                             as={Link} 
-                            to="/what-we-do/it-experts"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                handleMobileItemClick(e, 'services-it', '/what-we-do/it-experts');
-                              } else {
+                              to="/what-we-do/it-experts"
+                              onClick={() => {
                                 handleNavClick('services-it');
                                 setHoveredDropdown(null);
                                 setExpanded(false);
-                              }
                             }}
                             className="mega-menu-item"
                           >
@@ -366,15 +341,11 @@ const Header = () => {
                           </NavDropdown.Item>
                           <NavDropdown.Item 
                             as={Link} 
-                            to="/what-we-do/researchers"
-                            onClick={(e) => {
-                              if (isMobile) {
-                                handleMobileItemClick(e, 'services-researchers', '/what-we-do/researchers');
-                              } else {
+                              to="/what-we-do/researchers"
+                              onClick={() => {
                                 handleNavClick('services-researchers');
                                 setHoveredDropdown(null);
                                 setExpanded(false);
-                              }
                             }}
                             className="mega-menu-item"
                           >
@@ -386,6 +357,52 @@ const Header = () => {
                   </div>
                 </NavDropdown>
               </div>
+              ) : (
+                <>
+                  <Link
+                    to="/what-we-do"
+                    className={`nav-link fw-bold mobile-menu-item ${activeLink === 'services' ? 'active' : ''}`}
+                    onClick={() => handleNavClick('services')}
+                  >
+                    WHAT WE DO
+                  </Link>
+                  <Link
+                    to="/what-we-do/overview"
+                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-overview' ? 'active' : ''}`}
+                    onClick={() => handleNavClick('services-overview')}
+                  >
+                    Overview
+                  </Link>
+                  <Link
+                    to="/what-we-do/consultants"
+                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-consultants' ? 'active' : ''}`}
+                    onClick={() => handleNavClick('services-consultants')}
+                  >
+                    RoseBelt Consultants
+                  </Link>
+                  <Link
+                    to="/what-we-do/health-experts"
+                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-health' ? 'active' : ''}`}
+                    onClick={() => handleNavClick('services-health')}
+                  >
+                    RoseBelt Health Experts
+                  </Link>
+                  <Link
+                    to="/what-we-do/it-experts"
+                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-it' ? 'active' : ''}`}
+                    onClick={() => handleNavClick('services-it')}
+                  >
+                    RoseBelt IT Experts
+                  </Link>
+                  <Link
+                    to="/what-we-do/researchers"
+                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-researchers' ? 'active' : ''}`}
+                    onClick={() => handleNavClick('services-researchers')}
+                  >
+                    RoseBelt Researchers
+                  </Link>
+                </>
+              )}
               
               {/* Our Ideas */}
               <Link 

@@ -154,3 +154,82 @@ img {
   margin-top: 40px;
   margin-bottom: 40px;
 }
+
+/* Popup Image Modal Styles */
+.popup-image-modal .modal-content {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
+}
+
+.popup-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+  padding: 0;
+  line-height: 1;
+}
+
+.popup-close-button:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+.popup-image-modal .modal-header {
+  border-bottom: none;
+  padding: 20px 20px 0;
+  background-color: #f8f9fa;
+}
+
+.popup-image-modal .modal-title {
+  font-weight: 600;
+  color: #24375a;
+}
+
+.popup-image-modal .modal-body {
+  padding: 20px;
+}
+
+.popup-image-modal .modal-footer {
+  border-top: none;
+  padding: 0 20px 20px;
+}
+
+.popup-image-modal .btn-primary {
+  background-color: #24375a;
+  border-color: #24375a;
+  padding: 8px 20px;
+  font-weight: 500;
+}
+
+.popup-image-modal .btn-primary:hover {
+  background-color: #1a2843;
+  border-color: #1a2843;
+}
+
+.popup-image {
+  max-width: 100%;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+}
+
+.popup-image:hover {
+  transform: scale(1.02);
+}
