@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
+  <script>
+    // Extract the path from the current URL
+    var path = window.location.pathname;
+    
+    // Check if we're on a mobile device
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // Redirect to the home page with the path information
+    // This ensures React Router can handle the routing properly
+    if (isMobile) {
+      // For mobile, we'll use a query parameter to pass the intended path
+      window.location.href = '/?redirect_path=' + encodeURIComponent(path);
+    } else {
+      // For desktop, direct routing should work
+      window.location.href = '/';
+    }
+  </script>
+</head>
+<body>
+  <p>Redirecting to the main page...</p>
+</body>
+</html> 
