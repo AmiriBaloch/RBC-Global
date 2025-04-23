@@ -76,15 +76,22 @@ const Header = () => {
     };
   }, [prevScrollPos]);
 
-  // Handle window resize to detect mobile
+  // More reliable mobile detection
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 992);
+    const checkMobile = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 992);
     };
     
-    window.addEventListener('resize', handleResize);
+    // Check on initial load
+    checkMobile();
+    
+    // Set up event listener for window resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Clean up the event listener on component unmount
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', checkMobile);
     };
   }, []);
 
@@ -116,6 +123,21 @@ const Header = () => {
       e.preventDefault();
       e.stopPropagation();
       handleOurClick.current = true;
+      
+      // On mobile, if user is clicking the dropdown title, navigate to a summary page
+      if (id === 'about-us') {
+        // Redirect to the overview page instead of toggling the dropdown
+        setActiveLink('about-us');
+        setExpanded(false);
+        window.location.href = '/about/overview';
+        return;
+      } else if (id === 'services') {
+        // Redirect to the services overview page instead of toggling the dropdown
+        setActiveLink('services');
+        setExpanded(false);
+        window.location.href = '/services/overview';
+        return;
+      }
       
       // Toggle the dropdown - explicitly set to null if currently open
       if (hoveredDropdown === id) {
@@ -207,7 +229,11 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/about/overview"
-                            onClick={() => handleNavClick('about-us')}
+                            onClick={() => {
+                              handleNavClick('about-us');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
+                            }}
                             className="mega-menu-item"
                           >
                             Our Offices
@@ -215,7 +241,11 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/about/trust"
-                            onClick={() => handleNavClick('about-us')}
+                            onClick={() => {
+                              handleNavClick('about-us');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
+                            }}
                             className="mega-menu-item"
                           >
                             The RoseBelt Accredited
@@ -223,7 +253,11 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/about/values"
-                            onClick={() => handleNavClick('about-us')}
+                            onClick={() => {
+                              handleNavClick('about-us');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
+                            }}
                             className="mega-menu-item"
                           >
                             Our Values & Commitments
@@ -267,7 +301,11 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/services/overview"
-                            onClick={() => handleNavClick('services-overview')}
+                            onClick={() => {
+                              handleNavClick('services-overview');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
+                            }}
                             className="mega-menu-item"
                           >
                             Overview
@@ -275,7 +313,11 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/services/consultants"
-                            onClick={() => handleNavClick('services-consultants')}
+                            onClick={() => {
+                              handleNavClick('services-consultants');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
+                            }}
                             className="mega-menu-item"
                           >
                             RoseBelt Consultants
@@ -283,7 +325,11 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/services/health-experts"
-                            onClick={() => handleNavClick('services-health')}
+                            onClick={() => {
+                              handleNavClick('services-health');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
+                            }}
                             className="mega-menu-item"
                           >
                             RoseBelt Health Experts
@@ -291,7 +337,11 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/services/it-experts"
-                            onClick={() => handleNavClick('services-it')}
+                            onClick={() => {
+                              handleNavClick('services-it');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
+                            }}
                             className="mega-menu-item"
                           >
                             RoseBelt IT Experts
@@ -299,7 +349,11 @@ const Header = () => {
                           <NavDropdown.Item 
                             as={Link} 
                             to="/services/researchers"
-                            onClick={() => handleNavClick('services-researchers')}
+                            onClick={() => {
+                              handleNavClick('services-researchers');
+                              setHoveredDropdown(null);
+                              setExpanded(false);
+                            }}
                             className="mega-menu-item"
                           >
                             RoseBelt Researchers
