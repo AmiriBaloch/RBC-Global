@@ -238,169 +238,85 @@ const Header = () => {
               </div>
               ) : (
                 <>
-                  <Link
-                    to="/our-workplace"
-                    className={`nav-link fw-bold mobile-menu-item ${activeLink === 'about-us' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('about-us')}
+                  <NavDropdown
+                    title="OUR WORKPLACE"
+                    id="mobile-workplace-dropdown"
+                    className={`fw-bold mobile-menu-item ${activeLink === 'about-us' ? 'active' : ''}`}
+                    onClick={(e) => handleMobileDropdownClick(e, 'workplace')}
                   >
-                    OUR WORKPLACE
-                  </Link>
-                  <Link
-                    to="/our-workplace/offices"
-                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'about-us' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('about-us')}
+                    <NavDropdown.Item 
+                      as={Link} 
+                      to="/our-workplace/offices"
+                      onClick={() => handleNavClick('about-us')}
+                      className="mobile-submenu-item"
+                    >
+                      Our Offices
+                    </NavDropdown.Item>
+                    <NavDropdown.Item 
+                      as={Link} 
+                      to="/our-workplace/accredited"
+                      onClick={() => handleNavClick('about-us')}
+                      className="mobile-submenu-item"
+                    >
+                      The RoseBelt Accredited
+                    </NavDropdown.Item>
+                    <NavDropdown.Item 
+                      as={Link} 
+                      to="/our-workplace/values"
+                      onClick={() => handleNavClick('about-us')}
+                      className="mobile-submenu-item"
+                    >
+                      Our Values & Commitments
+                    </NavDropdown.Item>
+                  </NavDropdown>
+
+                  <NavDropdown
+                    title="WHAT WE DO"
+                    id="mobile-services-dropdown"
+                    className={`fw-bold mobile-menu-item ${activeLink === 'services' ? 'active' : ''}`}
+                    onClick={(e) => handleMobileDropdownClick(e, 'services')}
                   >
-                    Our Offices
-                  </Link>
-                  <Link
-                    to="/our-workplace/accredited"
-                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'about-us' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('about-us')}
-                  >
-                    The RoseBelt Accredited
-                  </Link>
-                  <Link
-                    to="/our-workplace/values"
-                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'about-us' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('about-us')}
-                  >
-                    Our Values & Commitments
-                  </Link>
-                </>
-              )}
-              
-              {/* What We Do dropdown */}
-              {!isMobile ? (
-              <div 
-                className="custom-dropdown-wrapper"
-                onMouseEnter={() => handleDropdownMouseEnter('services')}
-                onMouseLeave={handleDropdownMouseLeave}
-              >
-                <NavDropdown 
-                  title={
-                      <span className="d-flex justify-content-between align-items-center w-100">
-                      WHAT WE DO
-                    </span>
-                  }
-                  id="what-we-do-dropdown"
-                  className={`fw-bold main-dropdown ${activeLink === 'services' ? 'active' : ''}`}
-                  show={hoveredDropdown === 'services'}
-                  onSelect={handleDropdownSelect}
-                >
-                  <div className="mega-menu-content">
-                    <Container>
-                      <Row>
-                        <Col xs={12}>
-                          <NavDropdown.Item 
-                            as={Link} 
-                              to="/what-we-do/overview"
-                              onClick={() => {
-                                handleNavClick('services-overview');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                            }}
-                            className="mega-menu-item"
-                          >
-                            Overview
-                          </NavDropdown.Item>
-                          <NavDropdown.Item 
-                            as={Link} 
-                              to="/what-we-do/consultants"
-                              onClick={() => {
-                                handleNavClick('services-consultants');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                            }}
-                            className="mega-menu-item"
-                          >
-                            RoseBelt Consultants
-                          </NavDropdown.Item>
-                          <NavDropdown.Item 
-                            as={Link} 
-                              to="/what-we-do/health-experts"
-                              onClick={() => {
-                                handleNavClick('services-health');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                            }}
-                            className="mega-menu-item"
-                          >
-                            RoseBelt Health Experts
-                          </NavDropdown.Item>
-                          <NavDropdown.Item 
-                            as={Link} 
-                              to="/what-we-do/it-experts"
-                              onClick={() => {
-                                handleNavClick('services-it');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                            }}
-                            className="mega-menu-item"
-                          >
-                            RoseBelt IT Experts
-                          </NavDropdown.Item>
-                          <NavDropdown.Item 
-                            as={Link} 
-                              to="/what-we-do/researchers"
-                              onClick={() => {
-                                handleNavClick('services-researchers');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                            }}
-                            className="mega-menu-item"
-                          >
-                            RoseBelt Researchers
-                          </NavDropdown.Item>
-                        </Col>
-                      </Row>
-                    </Container>
-                  </div>
-                </NavDropdown>
-              </div>
-              ) : (
-                <>
-                  <Link
-                    to="/what-we-do"
-                    className={`nav-link fw-bold mobile-menu-item ${activeLink === 'services' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('services')}
-                  >
-                    WHAT WE DO
-                  </Link>
-                  <Link
-                    to="/what-we-do/overview"
-                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-overview' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('services-overview')}
-                  >
-                    Overview
-                  </Link>
-                  <Link
-                    to="/what-we-do/consultants"
-                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-consultants' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('services-consultants')}
-                  >
-                    RoseBelt Consultants
-                  </Link>
-                  <Link
-                    to="/what-we-do/health-experts"
-                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-health' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('services-health')}
-                  >
-                    RoseBelt Health Experts
-                  </Link>
-                  <Link
-                    to="/what-we-do/it-experts"
-                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-it' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('services-it')}
-                  >
-                    RoseBelt IT Experts
-                  </Link>
-                  <Link
-                    to="/what-we-do/researchers"
-                    className={`nav-link fw-bold mobile-submenu-item ${activeLink === 'services-researchers' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('services-researchers')}
-                  >
-                    RoseBelt Researchers
-                  </Link>
+                    <NavDropdown.Item 
+                      as={Link} 
+                      to="/what-we-do/overview"
+                      onClick={() => handleNavClick('services-overview')}
+                      className="mobile-submenu-item"
+                    >
+                      Overview
+                    </NavDropdown.Item>
+                    <NavDropdown.Item 
+                      as={Link} 
+                      to="/what-we-do/consultants"
+                      onClick={() => handleNavClick('services-consultants')}
+                      className="mobile-submenu-item"
+                    >
+                      RoseBelt Consultants
+                    </NavDropdown.Item>
+                    <NavDropdown.Item 
+                      as={Link} 
+                      to="/what-we-do/health-experts"
+                      onClick={() => handleNavClick('services-health')}
+                      className="mobile-submenu-item"
+                    >
+                      RoseBelt Health Experts
+                    </NavDropdown.Item>
+                    <NavDropdown.Item 
+                      as={Link} 
+                      to="/what-we-do/it-experts"
+                      onClick={() => handleNavClick('services-it')}
+                      className="mobile-submenu-item"
+                    >
+                      RoseBelt IT Experts
+                    </NavDropdown.Item>
+                    <NavDropdown.Item 
+                      as={Link} 
+                      to="/what-we-do/researchers"
+                      onClick={() => handleNavClick('services-researchers')}
+                      className="mobile-submenu-item"
+                    >
+                      RoseBelt Researchers
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
               )}
               
