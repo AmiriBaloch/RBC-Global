@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Nav, Navbar, Button, Image, NavDropdown, Row, Col } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -6,449 +6,188 @@ import './Header.css';
 import logo from '../assets/logo2.png';
 
 const Header = () => {
-  const [activeLink, setActiveLink] = useState('home');
-  const [scrolled, setScrolled] = useState(false);
-  const [visible, setVisible] = useState(true);
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [expanded, setExpanded] = useState(false);
-  const [hoveredDropdown, setHoveredDropdown] = useState(null);
+  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
-  const [openDropdown, setOpenDropdown] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const dropdownRefs = useRef({});
   const location = useLocation();
 
-  // Use a ref to track if we're handling our own click
-  const handleOurClick = React.useRef(false);
-
-  // Prevent Bootstrap's built-in toggle
-  const handleDropdownSelect = (e) => {
-    if (handleOurClick.current) {
-      e.preventDefault();
-      e.stopPropagation();
-      handleOurClick.current = false;
-    }
-  };
-
+  // Close dropdowns when route changes
   useEffect(() => {
-    // Update active link based on current path
-    const path = location.pathname;
-    if (path === '/' || path === '/our-workplace/offices') setActiveLink('who-we-are');
-    else if (path === '/projects') setActiveLink('projects');
-    else if (path.startsWith('/our-workplace')) setActiveLink('about-us');
-    else if (path.startsWith('/team')) setActiveLink('team');
-    else if (path === '/contact') setActiveLink('contact');
-    else if (path.startsWith('/what-we-do')) setActiveLink('services');
-    else if (path.startsWith('/our-ideas')) setActiveLink('ideas');
-    else if (path === '/join-our-team') setActiveLink('careers');
-    else if (path === '/experience') setActiveLink('experience');
-    else if (path === '/press') setActiveLink('press');
+    setActiveDropdown(null);
+    setIsMobileMenuOpen(false);
   }, [location]);
 
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      const newIsMobile = window.innerWidth < 992;
+      setIsMobile(newIsMobile);
+      if (!newIsMobile) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Handle scroll events
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollPos = window.scrollY;
-      
-      // Set scrolled state for styling
-      if (currentScrollPos > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+      const scrolled = window.scrollY > 50;
+      setIsScrolled(scrolled);
+      if (scrolled) {
+        setActiveDropdown(null);
       }
-      
-      // Handle header visibility based on scroll direction
-      if (currentScrollPos <= 20) {
-        // Always show header at top of page
-        setVisible(true);
-      } else if (prevScrollPos > currentScrollPos) {
-        // Scrolling UP - show header
-        setVisible(true);
-      } else {
-        // Scrolling DOWN - hide header
-        setVisible(false);
-      }
-      
-      // Save current position for next comparison
-      setPrevScrollPos(currentScrollPos);
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [prevScrollPos]);
-
-  // More reliable mobile detection
-  useEffect(() => {
-    const checkMobile = () => {
-      const width = window.innerWidth;
-      setIsMobile(width < 992);
-    };
-    
-    // Check on initial load
-    checkMobile();
-    
-    // Set up event listener for window resize
-    window.addEventListener('resize', checkMobile);
-    
-    // Clean up the event listener on component unmount
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (link) => {
-    setActiveLink(link);
-    setExpanded(false);
-    // Close any open dropdown when clicking a regular nav item
-    if (isMobile) {
-      setHoveredDropdown(null);
-    }
-  };
-
-  // Custom dropdown hover handlers
-  const handleDropdownMouseEnter = (id) => {
-    if (!isMobile) {
-      setHoveredDropdown(id);
-    }
-  };
-
-  const handleDropdownMouseLeave = () => {
-    if (!isMobile) {
-      setHoveredDropdown(null);
-    }
-  };
-
-  // Explicit click handler to ensure toggle works consistently
-  const handleMobileDropdownClick = (e, id) => {
-    if (isMobile) {
-      e.preventDefault();
-      e.stopPropagation();
-      handleOurClick.current = true;
-      
-      // Toggle the dropdown - if already open, close it; otherwise open it and close others
-      if (openDropdown === id) {
-        setOpenDropdown(null);
-      } else {
-        setOpenDropdown(id);
-      }
-    }
-  };
-
-  // Close dropdown when clicking outside
+  // Handle click outside dropdowns
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isMobile && openDropdown && !event.target.closest('.mobile-menu-item')) {
-        setOpenDropdown(null);
+      if (activeDropdown && dropdownRefs.current[activeDropdown]) {
+        const dropdownElement = dropdownRefs.current[activeDropdown];
+        if (!dropdownElement.contains(event.target)) {
+          setActiveDropdown(null);
+        }
       }
     };
 
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [isMobile, openDropdown]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [activeDropdown]);
 
-  // Close dropdown when navbar is collapsed
-  useEffect(() => {
-    if (!expanded) {
-      setOpenDropdown(null);
+  const handleDropdownClick = (dropdownName, event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    if (activeDropdown === dropdownName) {
+      setActiveDropdown(null);
+    } else {
+      setActiveDropdown(dropdownName);
     }
-  }, [expanded]);
+  };
+
+  const handleMobileDropdownClick = (dropdownName, event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    if (activeDropdown === dropdownName) {
+      setActiveDropdown(null);
+    } else {
+      setActiveDropdown(dropdownName);
+    }
+  };
+
+  const toggleNavbar = () => {
+    setIsNavCollapsed(!isNavCollapsed);
+    if (!isNavCollapsed) {
+      setActiveDropdown(null);
+    }
+  };
+
+  const closeAllDropdowns = () => {
+    setActiveDropdown(null);
+    setIsMobileMenuOpen(false);
+  };
 
   return (
-    <Navbar 
-      expand="lg" 
-      className={`navbar-light shadow-sm ${scrolled ? 'scrolled' : ''} ${visible ? 'navbar-visible' : 'navbar-hidden'}`} 
-      sticky="top"
-      expanded={expanded}
-      onToggle={(isExpanded) => {
-        setExpanded(isExpanded);
-        // Close any open dropdown when toggling the navbar
-        if (!isExpanded) {
-          setHoveredDropdown(null);
-        }
-      }}
-    >
-      <Container>
-        <Link 
-          to="/" 
-          className="navbar-brand brand-logo"
-          onClick={() => handleNavClick('who-we-are')}
-        >
-          <Image 
-            src={logo} 
-            alt="RoseBelt Consultants" 
-            className="logo-image" 
-          />
-        </Link>
-        
-        <Navbar.Toggle 
-          aria-controls="basic-navbar-nav" 
-          className={`custom-toggler ${expanded ? 'open' : ''}`}
-        />
-        
-        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-          <div className="nav-container">
-            <Nav className="ms-auto">
-              {/* HOME link (formerly WHO WE ARE dropdown) */}
-              <Link
-                to="/"
-                className={`nav-link fw-bold ${activeLink === 'who-we-are' ? 'active' : ''}`}
-                onClick={() => handleNavClick('who-we-are')}
-              >
-                WHO WE ARE
-              </Link>
-              
-              {/* ABOUT US dropdown (new dropdown with former WHO WE ARE items) */}
-              {!isMobile ? (
-              <div 
-                className="custom-dropdown-wrapper"
-                onMouseEnter={() => handleDropdownMouseEnter('about-us')}
-                onMouseLeave={handleDropdownMouseLeave}
-              >
-                <NavDropdown 
-                  title={
-                      <span className="d-flex justify-content-between align-items-center w-100">
-                      OUR WORKPLACE
-                    </span>
-                  }
-                  id="about-us-dropdown"
-                  className={`fw-bold main-dropdown ${activeLink === 'about-us' ? 'active' : ''}`}
-                  show={hoveredDropdown === 'about-us'}
-                  onSelect={handleDropdownSelect}
-                >
-                  <div className="mega-menu-content">
-                    <Container>
-                      <Row>
-                        <Col xs={12}>
-                          <NavDropdown.Item 
-                            as={Link} 
-                              to="/our-workplace/offices"
-                              onClick={() => {
-                                handleNavClick('about-us');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                            }}
-                            className="mega-menu-item"
-                          >
-                            Our Offices
-                          </NavDropdown.Item>
-                          <NavDropdown.Item 
-                            as={Link} 
-                              to="/our-workplace/accredited"
-                              onClick={() => {
-                                handleNavClick('about-us');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                            }}
-                            className="mega-menu-item"
-                          >
-                            The RoseBelt Accredited
-                          </NavDropdown.Item>
-                          <NavDropdown.Item 
-                            as={Link} 
-                              to="/our-workplace/values"
-                              onClick={() => {
-                                handleNavClick('about-us');
-                                setHoveredDropdown(null);
-                                setExpanded(false);
-                            }}
-                            className="mega-menu-item"
-                          >
-                            Our Values & Commitments
-                          </NavDropdown.Item>
-                        </Col>
-                      </Row>
-                    </Container>
-                  </div>
-                </NavDropdown>
-              </div>
-              ) : (
-                <>
-                  <NavDropdown
-                    title={
-                      <span className="d-flex justify-content-between align-items-center w-100">
-                        OUR WORKPLACE
-                        <svg 
-                          xmlns="http://www.w3.org/2000/svg" 
-                          width="16" 
-                          height="16" 
-                          fill="currentColor" 
-                          className={`bi bi-chevron-down ${openDropdown === 'workplace' ? 'rotate' : ''}`} 
-                          viewBox="0 0 16 16"
-                        >
-                          <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                      </span>
-                    }
-                    id="mobile-workplace-dropdown"
-                    className={`fw-bold mobile-menu-item ${activeLink === 'about-us' ? 'active' : ''}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleMobileDropdownClick(e, 'workplace');
-                    }}
-                    show={openDropdown === 'workplace'}
-                  >
-                    <NavDropdown.Item 
-                      as={Link} 
-                      to="/our-workplace/offices"
-                      onClick={() => {
-                        handleNavClick('about-us');
-                        setOpenDropdown(null);
-                      }}
-                      className="mobile-submenu-item"
-                    >
-                      Our Offices
-                    </NavDropdown.Item>
-                    <NavDropdown.Item 
-                      as={Link} 
-                      to="/our-workplace/accredited"
-                      onClick={() => {
-                        handleNavClick('about-us');
-                        setOpenDropdown(null);
-                      }}
-                      className="mobile-submenu-item"
-                    >
-                      The RoseBelt Accredited
-                    </NavDropdown.Item>
-                    <NavDropdown.Item 
-                      as={Link} 
-                      to="/our-workplace/values"
-                      onClick={() => {
-                        handleNavClick('about-us');
-                        setOpenDropdown(null);
-                      }}
-                      className="mobile-submenu-item"
-                    >
-                      Our Values & Commitments
-                    </NavDropdown.Item>
-                  </NavDropdown>
+    <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
+      <Navbar 
+        expand="lg" 
+        className="navbar-custom"
+        expanded={!isNavCollapsed}
+        onToggle={toggleNavbar}
+      >
+        <Container>
+          <Navbar.Brand as={Link} to="/" className="brand">
+            <img src={logo} alt="Rosebelt Logo" className="logo" />
+          </Navbar.Brand>
 
-                  <NavDropdown
-                    title={
-                      <span className="d-flex justify-content-between align-items-center w-100">
-                        WHAT WE DO
-                        <svg 
-                          xmlns="http://www.w3.org/2000/svg" 
-                          width="16" 
-                          height="16" 
-                          fill="currentColor" 
-                          className={`bi bi-chevron-down ${openDropdown === 'services' ? 'rotate' : ''}`} 
-                          viewBox="0 0 16 16"
-                        >
-                          <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                      </span>
-                    }
-                    id="mobile-services-dropdown"
-                    className={`fw-bold mobile-menu-item ${activeLink === 'services' ? 'active' : ''}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleMobileDropdownClick(e, 'services');
-                    }}
-                    show={openDropdown === 'services'}
-                  >
-                    <NavDropdown.Item 
-                      as={Link} 
-                      to="/what-we-do/overview"
-                      onClick={() => {
-                        handleNavClick('services-overview');
-                        setOpenDropdown(null);
-                      }}
-                      className="mobile-submenu-item"
-                    >
-                      Overview
-                    </NavDropdown.Item>
-                    <NavDropdown.Item 
-                      as={Link} 
-                      to="/what-we-do/consultants"
-                      onClick={() => {
-                        handleNavClick('services-consultants');
-                        setOpenDropdown(null);
-                      }}
-                      className="mobile-submenu-item"
-                    >
-                      RoseBelt Consultants
-                    </NavDropdown.Item>
-                    <NavDropdown.Item 
-                      as={Link} 
-                      to="/what-we-do/health-experts"
-                      onClick={() => {
-                        handleNavClick('services-health');
-                        setOpenDropdown(null);
-                      }}
-                      className="mobile-submenu-item"
-                    >
-                      RoseBelt Health Experts
-                    </NavDropdown.Item>
-                    <NavDropdown.Item 
-                      as={Link} 
-                      to="/what-we-do/it-experts"
-                      onClick={() => {
-                        handleNavClick('services-it');
-                        setOpenDropdown(null);
-                      }}
-                      className="mobile-submenu-item"
-                    >
-                      RoseBelt IT Experts
-                    </NavDropdown.Item>
-                    <NavDropdown.Item 
-                      as={Link} 
-                      to="/what-we-do/researchers"
-                      onClick={() => {
-                        handleNavClick('services-researchers');
-                        setOpenDropdown(null);
-                      }}
-                      className="mobile-submenu-item"
-                    >
-                      RoseBelt Researchers
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </>
-              )}
+          <Navbar.Toggle 
+            aria-controls="basic-navbar-nav" 
+            onClick={toggleNavbar}
+            className="custom-toggler"
+          >
+            <span className={`navbar-toggler-icon ${!isNavCollapsed ? 'open' : ''}`}></span>
+          </Navbar.Toggle>
+
+          <Navbar.Collapse id="basic-navbar-nav" className={isNavCollapsed ? '' : 'show'}>
+            <Nav className="ms-auto">
+              <Nav.Link as={Link} to="/" className={location.pathname === '/' ? 'active' : ''}>
+                Home
+              </Nav.Link>
               
-              {/* Our Ideas */}
-              <Link 
-                to="/our-ideas" 
-                className={`nav-link fw-bold ${activeLink === 'ideas' ? 'active' : ''}`}
-                onClick={() => handleNavClick('ideas')}
+              <Nav.Link 
+                as={Link} 
+                to="/about" 
+                className={location.pathname === '/about' ? 'active' : ''}
               >
-                OUR IDEAS
-              </Link>
-              
-              {/* Join Our Team */}
-              <Link 
+                About Us
+              </Nav.Link>
+
+              <NavDropdown 
+                title="Services" 
+                id="services-dropdown"
+                active={activeDropdown === 'services'}
+                onClick={(e) => handleDropdownClick('services', e)}
+                ref={el => dropdownRefs.current['services'] = el}
+              >
+                <NavDropdown.Item as={Link} to="/services/consulting" onClick={closeAllDropdowns}>
+                  Consulting
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/services/recruitment" onClick={closeAllDropdowns}>
+                  Recruitment
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/services/training" onClick={closeAllDropdowns}>
+                  Training
+                </NavDropdown.Item>
+              </NavDropdown>
+
+              <NavDropdown 
+                title="Resources" 
+                id="resources-dropdown"
+                active={activeDropdown === 'resources'}
+                onClick={(e) => handleDropdownClick('resources', e)}
+                ref={el => dropdownRefs.current['resources'] = el}
+              >
+                <NavDropdown.Item as={Link} to="/resources/blog" onClick={closeAllDropdowns}>
+                  Blog
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/resources/case-studies" onClick={closeAllDropdowns}>
+                  Case Studies
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/resources/whitepapers" onClick={closeAllDropdowns}>
+                  Whitepapers
+                </NavDropdown.Item>
+              </NavDropdown>
+
+              <Nav.Link 
+                as={Link} 
+                to="/contact" 
+                className={location.pathname === '/contact' ? 'active' : ''}
+              >
+                Contact
+              </Nav.Link>
+
+              <Nav.Link 
+                as={Link} 
                 to="/join-our-team" 
-                className={`nav-link fw-bold ${activeLink === 'careers' ? 'active' : ''}`}
-                onClick={() => handleNavClick('careers')}
+                className={`join-button ${location.pathname === '/join-our-team' ? 'active' : ''}`}
               >
-                JOIN OUR TEAM
-              </Link>
-              
-              {/* Contact - as a button on desktop, regular link on mobile */}
-              {!isMobile ? (
-                <Button 
-                  variant="link"
-                  as={Link}
-                  to="/contact"
-                  className={`nav-link fw-bold connect-button ${activeLink === 'contact' ? 'active' : ''}`}
-                  onClick={() => handleNavClick('contact')}
-                >
-                  Contact
-                </Button>
-              ) : (
-                <Link 
-                  to="/contact"
-                  className={`nav-link fw-bold ${activeLink === 'contact' ? 'active' : ''}`}
-                  onClick={() => handleNavClick('contact')}
-                >
-                  CONTACT
-                </Link>
-              )}
+                Join Our Team
+              </Nav.Link>
             </Nav>
-          </div>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </header>
   );
 };
 
