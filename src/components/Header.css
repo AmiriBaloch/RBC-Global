@@ -1016,4 +1016,56 @@ body {
   }
 }
 
-/* End of file */ 
+/* End of file */
+
+/* Mobile Section Styles */
+.mobile-section {
+  width: 100%;
+}
+
+.mobile-section-header {
+  padding: 15px 20px;
+  background-color: transparent;
+  cursor: pointer;
+  border-bottom: 1px solid #e0e0e0;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: var(--dark-bg);
+}
+
+.mobile-section-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background-color: #f8f8f8;
+}
+
+.mobile-section-content.show {
+  max-height: 500px;
+}
+
+.mobile-submenu-item {
+  display: block;
+  padding: 12px 30px;
+  color: var(--dark-bg);
+  text-decoration: none;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.mobile-submenu-item:hover {
+  background-color: #f0f0f0;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+/* Chevron rotation animation */
+.bi-chevron-down {
+  transition: transform 0.3s ease;
+}
+
+.bi-chevron-down.rotate {
+  transform: rotate(180deg);
+} 
