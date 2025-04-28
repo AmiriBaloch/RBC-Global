@@ -13,6 +13,7 @@ const Header = () => {
   const [expanded, setExpanded] = useState(false);
   const [hoveredDropdown, setHoveredDropdown] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
+  const [openDropdown, setOpenDropdown] = useState(null);
   const location = useLocation();
 
   // Use a ref to track if we're handling our own click
@@ -123,8 +124,12 @@ const Header = () => {
       e.stopPropagation();
       handleOurClick.current = true;
       
-      // Toggle the dropdown - explicitly set to null if currently open
-      setHoveredDropdown(hoveredDropdown === id ? null : id);
+      // Toggle the dropdown - if already open, close it; otherwise open it and close others
+      if (openDropdown === id) {
+        setOpenDropdown(null);
+      } else {
+        setOpenDropdown(id);
+      }
     }
   };
 
@@ -239,15 +244,33 @@ const Header = () => {
               ) : (
                 <>
                   <NavDropdown
-                    title="OUR WORKPLACE"
+                    title={
+                      <span className="d-flex justify-content-between align-items-center w-100">
+                        OUR WORKPLACE
+                        <svg 
+                          xmlns="http://www.w3.org/2000/svg" 
+                          width="16" 
+                          height="16" 
+                          fill="currentColor" 
+                          className={`bi bi-chevron-down ${openDropdown === 'workplace' ? 'rotate' : ''}`} 
+                          viewBox="0 0 16 16"
+                        >
+                          <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                      </span>
+                    }
                     id="mobile-workplace-dropdown"
                     className={`fw-bold mobile-menu-item ${activeLink === 'about-us' ? 'active' : ''}`}
                     onClick={(e) => handleMobileDropdownClick(e, 'workplace')}
+                    show={openDropdown === 'workplace'}
                   >
                     <NavDropdown.Item 
                       as={Link} 
                       to="/our-workplace/offices"
-                      onClick={() => handleNavClick('about-us')}
+                      onClick={() => {
+                        handleNavClick('about-us');
+                        setOpenDropdown(null);
+                      }}
                       className="mobile-submenu-item"
                     >
                       Our Offices
@@ -255,7 +278,10 @@ const Header = () => {
                     <NavDropdown.Item 
                       as={Link} 
                       to="/our-workplace/accredited"
-                      onClick={() => handleNavClick('about-us')}
+                      onClick={() => {
+                        handleNavClick('about-us');
+                        setOpenDropdown(null);
+                      }}
                       className="mobile-submenu-item"
                     >
                       The RoseBelt Accredited
@@ -263,7 +289,10 @@ const Header = () => {
                     <NavDropdown.Item 
                       as={Link} 
                       to="/our-workplace/values"
-                      onClick={() => handleNavClick('about-us')}
+                      onClick={() => {
+                        handleNavClick('about-us');
+                        setOpenDropdown(null);
+                      }}
                       className="mobile-submenu-item"
                     >
                       Our Values & Commitments
@@ -271,15 +300,33 @@ const Header = () => {
                   </NavDropdown>
 
                   <NavDropdown
-                    title="WHAT WE DO"
+                    title={
+                      <span className="d-flex justify-content-between align-items-center w-100">
+                        WHAT WE DO
+                        <svg 
+                          xmlns="http://www.w3.org/2000/svg" 
+                          width="16" 
+                          height="16" 
+                          fill="currentColor" 
+                          className={`bi bi-chevron-down ${openDropdown === 'services' ? 'rotate' : ''}`} 
+                          viewBox="0 0 16 16"
+                        >
+                          <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                      </span>
+                    }
                     id="mobile-services-dropdown"
                     className={`fw-bold mobile-menu-item ${activeLink === 'services' ? 'active' : ''}`}
                     onClick={(e) => handleMobileDropdownClick(e, 'services')}
+                    show={openDropdown === 'services'}
                   >
                     <NavDropdown.Item 
                       as={Link} 
                       to="/what-we-do/overview"
-                      onClick={() => handleNavClick('services-overview')}
+                      onClick={() => {
+                        handleNavClick('services-overview');
+                        setOpenDropdown(null);
+                      }}
                       className="mobile-submenu-item"
                     >
                       Overview
@@ -287,7 +334,10 @@ const Header = () => {
                     <NavDropdown.Item 
                       as={Link} 
                       to="/what-we-do/consultants"
-                      onClick={() => handleNavClick('services-consultants')}
+                      onClick={() => {
+                        handleNavClick('services-consultants');
+                        setOpenDropdown(null);
+                      }}
                       className="mobile-submenu-item"
                     >
                       RoseBelt Consultants
@@ -295,7 +345,10 @@ const Header = () => {
                     <NavDropdown.Item 
                       as={Link} 
                       to="/what-we-do/health-experts"
-                      onClick={() => handleNavClick('services-health')}
+                      onClick={() => {
+                        handleNavClick('services-health');
+                        setOpenDropdown(null);
+                      }}
                       className="mobile-submenu-item"
                     >
                       RoseBelt Health Experts
@@ -303,7 +356,10 @@ const Header = () => {
                     <NavDropdown.Item 
                       as={Link} 
                       to="/what-we-do/it-experts"
-                      onClick={() => handleNavClick('services-it')}
+                      onClick={() => {
+                        handleNavClick('services-it');
+                        setOpenDropdown(null);
+                      }}
                       className="mobile-submenu-item"
                     >
                       RoseBelt IT Experts
@@ -311,7 +367,10 @@ const Header = () => {
                     <NavDropdown.Item 
                       as={Link} 
                       to="/what-we-do/researchers"
-                      onClick={() => handleNavClick('services-researchers')}
+                      onClick={() => {
+                        handleNavClick('services-researchers');
+                        setOpenDropdown(null);
+                      }}
                       className="mobile-submenu-item"
                     >
                       RoseBelt Researchers

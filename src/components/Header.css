@@ -963,13 +963,18 @@ body {
     font-size: 14px;
   }
 
-  .mobile-menu-item.dropdown-toggle::after {
+  /* Chevron icon styles */
+  .bi-chevron-down {
     transition: transform 0.3s ease;
     margin-left: 10px;
   }
 
-  .mobile-menu-item.show.dropdown-toggle::after {
+  .bi-chevron-down.rotate {
     transform: rotate(180deg);
+  }
+
+  .mobile-menu-item.dropdown-toggle::after {
+    display: none;
   }
 
   .mobile-submenu-item {
