@@ -133,6 +133,27 @@ const Header = () => {
     }
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMobile && openDropdown && !event.target.closest('.mobile-menu-item')) {
+        setOpenDropdown(null);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isMobile, openDropdown]);
+
+  // Close dropdown when navbar is collapsed
+  useEffect(() => {
+    if (!expanded) {
+      setOpenDropdown(null);
+    }
+  }, [expanded]);
+
   return (
     <Navbar 
       expand="lg" 
@@ -261,7 +282,10 @@ const Header = () => {
                     }
                     id="mobile-workplace-dropdown"
                     className={`fw-bold mobile-menu-item ${activeLink === 'about-us' ? 'active' : ''}`}
-                    onClick={(e) => handleMobileDropdownClick(e, 'workplace')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleMobileDropdownClick(e, 'workplace');
+                    }}
                     show={openDropdown === 'workplace'}
                   >
                     <NavDropdown.Item 
@@ -317,7 +341,10 @@ const Header = () => {
                     }
                     id="mobile-services-dropdown"
                     className={`fw-bold mobile-menu-item ${activeLink === 'services' ? 'active' : ''}`}
-                    onClick={(e) => handleMobileDropdownClick(e, 'services')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleMobileDropdownClick(e, 'services');
+                    }}
                     show={openDropdown === 'services'}
                   >
                     <NavDropdown.Item 

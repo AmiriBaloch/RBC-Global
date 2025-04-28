@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { FaBullhorn, FaAngleDown, FaAngleUp, FaTimes, FaComment, FaBell, FaExternalLinkAlt, FaRegClock } from 'react-icons/fa';
 import { collection, query, orderBy, onSnapshot, limit } from 'firebase/firestore';
 import { db } from '../firebase';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import './Announcements.css';
 
 const Announcements = () => {
@@ -217,11 +217,30 @@ const Announcements = () => {
                       <p>
                         {announcement.content}
                       </p>
-                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <small className="text-muted">
                           <FaRegClock style={{ marginRight: '4px', fontSize: '0.7rem' }} />
                           {formatDate(announcement.date)}
                         </small>
+                        <Link to="/join-our-team">
+                          <Button 
+                            variant="primary" 
+                            size="sm"
+                            className="apply-now-button"
+                            style={{
+                              backgroundColor: '#f59e0b',
+                              borderColor: '#f59e0b',
+                              color: 'white',
+                              padding: '4px 12px',
+                              borderRadius: '20px',
+                              fontSize: '0.8rem',
+                              fontWeight: '600',
+                              transition: 'all 0.3s ease'
+                            }}
+                          >
+                            Apply Now
+                          </Button>
+                        </Link>
                       </div>
                     </div>
                   ))
