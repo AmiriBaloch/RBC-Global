@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,7 +7,7 @@
 }
 
 :root {
-  --heading-font: 'Montserrat', sans-serif;
+  --heading-font: 'Lato', sans-serif;
   --body-font: 'Raleway', sans-serif;
   --page-bg: #E3EBF2;
   --olive-green: #2AA96B;
@@ -23,7 +25,45 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading-font);
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+}
+
+@media screen and (min-width: 1024px) {
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 14px;
+  }
+}
+
+.nav-menu {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-menu a {
+  color: #333333;
+  text-decoration: none;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 100;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+  color: #2AA96B;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-menu {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .nav-menu a {
+    font-size: 12px;
+  }
 }

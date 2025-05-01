@@ -15,7 +15,6 @@ const Header = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
   const dropdownRefs = useRef({});
   const location = useLocation();
-  const [allDropdownsOpen, setAllDropdownsOpen] = useState(false);
   const [expandedSections, setExpandedSections] = useState({
     workplace: false,
     services: false
@@ -77,50 +76,13 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos]);
 
-  // Handle click outside dropdowns
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (activeDropdown && dropdownRefs.current[activeDropdown]) {
-        const dropdownElement = dropdownRefs.current[activeDropdown];
-        if (!dropdownElement.contains(event.target)) {
-          setActiveDropdown(null);
-        }
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [activeDropdown]);
-
   const handleNavClick = (link) => {
     setActiveLink(link);
     setExpanded(false);
     setActiveDropdown(null);
   };
 
-  const handleDropdownClick = (dropdownName, event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    
-    // Reset all dropdowns state when clicking individual dropdowns
-    setAllDropdownsOpen(false);
-    
-    // If clicking the same dropdown that's already open, close it
-    if (activeDropdown === dropdownName) {
-      setActiveDropdown(null);
-    } else {
-      // If clicking a different dropdown, close the current one and open the new one
-      setActiveDropdown(dropdownName);
-    }
-  };
-
-  const handleDropdownItemClick = (linkName) => {
-    // Close the dropdown when an item is clicked
-    setActiveDropdown(null);
-    setExpanded(false);
-    handleNavClick(linkName);
-  };
-
+  // For mobile dropdowns we still need click handling
   const handleMobileDropdownClick = (dropdownName, event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -129,40 +91,11 @@ const Header = () => {
     setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
   };
 
-  // Prevent Bootstrap's built-in toggle
-  const handleDropdownSelect = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  // Close dropdowns when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      // Check if click is outside any dropdown
-      const isOutsideDropdown = !event.target.closest('.dropdown');
-      if (isOutsideDropdown) {
-        setActiveDropdown(null);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const toggleAllDropdowns = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    
-    // Toggle all dropdowns
-    if (allDropdownsOpen) {
-      // Close all dropdowns
-      setActiveDropdown(null);
-      setAllDropdownsOpen(false);
-    } else {
-      // Open all dropdowns
-      setAllDropdownsOpen(true);
-      setActiveDropdown('all');
-    }
+  const handleDropdownItemClick = (linkName) => {
+    // Close the dropdown when an item is clicked
+    setActiveDropdown(null);
+    setExpanded(false);
+    handleNavClick(linkName);
   };
 
   const toggleSection = (sectionName, event) => {
@@ -190,7 +123,6 @@ const Header = () => {
         setExpanded(isExpanded);
         if (!isExpanded) {
           setActiveDropdown(null);
-          setAllDropdownsOpen(false);
         }
       }}
     >
@@ -226,55 +158,31 @@ const Header = () => {
               
               {/* ABOUT US dropdown (new dropdown with former WHO WE ARE items) */}
               {!isMobile ? (
-                <div 
-                  className="custom-dropdown-wrapper"
-                  ref={el => dropdownRefs.current['about-us'] = el}
-                >
-                  <NavDropdown 
-                    title={
-                      <span className="d-flex justify-content-between align-items-center w-100">
-                        OUR WORKPLACE
-                      </span>
-                    }
-                    id="about-us-dropdown"
-                    className={`fw-bold main-dropdown ${activeLink === 'about-us' ? 'active' : ''}`}
-                    show={activeDropdown === 'about-us'}
-                    onSelect={handleDropdownSelect}
-                    onClick={(e) => handleDropdownClick('about-us', e)}
-                  >
-                    <div className="mega-menu-content">
-                      <Container>
-                        <Row>
-                          <Col xs={12}>
-                            <NavDropdown.Item 
-                              as={Link} 
-                              to="/our-workplace/offices"
-                              onClick={() => handleDropdownItemClick('about-us')}
-                              className="mega-menu-item"
-                            >
-                              Our Offices
-                            </NavDropdown.Item>
-                            <NavDropdown.Item 
-                              as={Link} 
-                              to="/our-workplace/accredited"
-                              onClick={() => handleDropdownItemClick('about-us')}
-                              className="mega-menu-item"
-                            >
-                              The RoseBelt Accredited
-                            </NavDropdown.Item>
-                            <NavDropdown.Item 
-                              as={Link} 
-                              to="/our-workplace/values"
-                              onClick={() => handleDropdownItemClick('about-us')}
-                              className="mega-menu-item"
-                            >
-                              Our Values & Commitments
-                            </NavDropdown.Item>
-                          </Col>
-                        </Row>
-                      </Container>
-                    </div>
-                  </NavDropdown>
+                <div className="custom-dropdown-wrapper">
+                  <Link to="#" className="nav-link dropdown-toggle fw-bold">OUR WORKPLACE</Link>
+                  <div className="dropdown-menu">
+                    <Link 
+                      to="/our-workplace/offices"
+                      onClick={() => handleDropdownItemClick('about-us')}
+                      className="dropdown-item"
+                    >
+                      Our Offices
+                    </Link>
+                    <Link 
+                      to="/our-workplace/accredited"
+                      onClick={() => handleDropdownItemClick('about-us')}
+                      className="dropdown-item"
+                    >
+                      The RoseBelt Accredited
+                    </Link>
+                    <Link 
+                      to="/our-workplace/values"
+                      onClick={() => handleDropdownItemClick('about-us')}
+                      className="dropdown-item"
+                    >
+                      Our Values & Commitments
+                    </Link>
+                  </div>
                 </div>
               ) : (
                 <div className="mobile-section">
@@ -322,75 +230,46 @@ const Header = () => {
 
               {/* WHAT WE DO section */}
               {!isMobile ? (
-                <NavDropdown 
-                  title={
-                    <span className="d-flex justify-content-between align-items-center w-100">
-                      WHAT WE DO
-                      {isMobile && (
-                        <svg 
-                          xmlns="http://www.w3.org/2000/svg" 
-                          width="16" 
-                          height="16" 
-                          fill="currentColor" 
-                          className={`bi bi-chevron-down ${(activeDropdown === 'services' || activeDropdown === 'all') ? 'rotate' : ''}`} 
-                          viewBox="0 0 16 16"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleAllDropdowns(e);
-                          }}
-                        >
-                          <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                      )}
-                    </span>
-                  }
-                  id="services-dropdown"
-                  className={`fw-bold ${isMobile ? 'mobile-menu-item' : 'main-dropdown'} ${activeLink === 'services' ? 'active' : ''}`}
-                  onClick={(e) => handleDropdownClick('services', e)}
-                  show={activeDropdown === 'services' || activeDropdown === 'all'}
-                  ref={el => dropdownRefs.current['services'] = el}
-                >
-                  <NavDropdown.Item 
-                    as={Link} 
-                    to="/what-we-do/overview"
-                    onClick={() => handleDropdownItemClick('services-overview')}
-                    className={isMobile ? "mobile-submenu-item" : "mega-menu-item"}
-                  >
-                    Overview
-                  </NavDropdown.Item>
-                  <NavDropdown.Item 
-                    as={Link} 
-                    to="/what-we-do/consultants"
-                    onClick={() => handleDropdownItemClick('services-consultants')}
-                    className={isMobile ? "mobile-submenu-item" : "mega-menu-item"}
-                  >
-                    RoseBelt Consultants
-                  </NavDropdown.Item>
-                  <NavDropdown.Item 
-                    as={Link} 
-                    to="/what-we-do/health-experts"
-                    onClick={() => handleDropdownItemClick('services-health')}
-                    className={isMobile ? "mobile-submenu-item" : "mega-menu-item"}
-                  >
-                    RoseBelt Health Experts
-                  </NavDropdown.Item>
-                  <NavDropdown.Item 
-                    as={Link} 
-                    to="/what-we-do/it-experts"
-                    onClick={() => handleDropdownItemClick('services-it')}
-                    className={isMobile ? "mobile-submenu-item" : "mega-menu-item"}
-                  >
-                    RoseBelt IT Experts
-                  </NavDropdown.Item>
-                  <NavDropdown.Item 
-                    as={Link} 
-                    to="/what-we-do/researchers"
-                    onClick={() => handleDropdownItemClick('services-researchers')}
-                    className={isMobile ? "mobile-submenu-item" : "mega-menu-item"}
-                  >
-                    RoseBelt Researchers
-                  </NavDropdown.Item>
-                </NavDropdown>
+                <div className="custom-dropdown-wrapper">
+                  <Link to="#" className="nav-link dropdown-toggle fw-bold">WHAT WE DO</Link>
+                  <div className="dropdown-menu">
+                    <Link 
+                      to="/what-we-do/overview"
+                      onClick={() => handleDropdownItemClick('services-overview')}
+                      className="dropdown-item"
+                    >
+                      Overview
+                    </Link>
+                    <Link 
+                      to="/what-we-do/consultants"
+                      onClick={() => handleDropdownItemClick('services-consultants')}
+                      className="dropdown-item"
+                    >
+                      RoseBelt Consultants
+                    </Link>
+                    <Link 
+                      to="/what-we-do/health-experts"
+                      onClick={() => handleDropdownItemClick('services-health')}
+                      className="dropdown-item"
+                    >
+                      RoseBelt Health Experts
+                    </Link>
+                    <Link 
+                      to="/what-we-do/it-experts"
+                      onClick={() => handleDropdownItemClick('services-it')}
+                      className="dropdown-item"
+                    >
+                      RoseBelt IT Experts
+                    </Link>
+                    <Link 
+                      to="/what-we-do/researchers"
+                      onClick={() => handleDropdownItemClick('services-researchers')}
+                      className="dropdown-item"
+                    >
+                      RoseBelt Researchers
+                    </Link>
+                  </div>
+                </div>
               ) : (
                 <div className="mobile-section">
                   <div 

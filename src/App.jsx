@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
-import PopupImage from './components/PopupImage';
 
 // Page components
 import CarouselSlider from './components/CarouselSlider';
@@ -134,7 +133,6 @@ function App() {
       <ScrollToTop />
       <div className="App">
         <Header />
-        <PopupImage />
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
             {/* WHO WE ARE as the home page */}

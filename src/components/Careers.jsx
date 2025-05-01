@@ -96,14 +96,7 @@ const Careers = () => {
         throw new Error('Please enter a valid CNIC number (13 digits or in format 12345-1234567-1)');
       }
 
-      // Check if CNIC already exists in the database
-      const talentPoolRef = collection(db, 'talentPool');
-      const q = query(talentPoolRef, where("cnic", "==", formData.cnic));
-      const querySnapshot = await getDocs(q);
-      
-      if (!querySnapshot.empty) {
-        throw new Error('An application with this CNIC already exists. You cannot apply twice with the same CNIC.');
-      }
+      // CNIC duplication check removed to allow users to apply for multiple positions
 
       const submissionData = {
         ...formData,
