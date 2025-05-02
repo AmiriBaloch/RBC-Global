@@ -30,7 +30,7 @@ const FacebookButton = () => {
           width: 35px !important;
           height: 35px !important;
           right: 15px !important;
-          bottom: 60px !important;
+          bottom: 55px !important;
         }
         
         .facebook-btn svg {
@@ -56,7 +56,7 @@ const FacebookButton = () => {
       aria-label="Visit our Facebook page"
       style={{
         position: 'fixed',
-        bottom: '75px', // Position above WhatsApp button
+        bottom: '60px', // Reduced from 75px to be closer to WhatsApp
         right: '20px',
         backgroundColor: '#4267B2', // Facebook blue
         color: 'white',

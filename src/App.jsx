@@ -39,7 +39,6 @@ import ServicesData from './components/ServicesData';
 // Social buttons
 import WhatsAppButton from './components/WhatsAppButton';
 import FacebookButton from './components/FacebookButton';
-import EmailButton from './components/EmailButton';
 import InstagramButton from './components/InstagramButton';
 
 // Styles
@@ -228,12 +227,9 @@ function App() {
         </Suspense>
         
         {/* Social media buttons */}
-        <div className="social-buttons">
-          <InstagramButton />
-          <EmailButton />
-          <FacebookButton />
-          <WhatsAppButton />
-        </div>
+        <WhatsAppButton />
+        <FacebookButton />
+        <InstagramButton />
         
         {/* Announcements box */}
         <Announcements />

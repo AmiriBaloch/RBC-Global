@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { FaEnvelope, FaPhone, FaSearch, FaFacebook, FaInstagram, FaWhatsapp, FaLinkedin } from 'react-icons/fa';
+import { FaPhone, FaSearch, FaFacebook, FaInstagram, FaWhatsapp, FaLinkedin } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
@@ -42,10 +42,6 @@ const Footer = () => {
           <Col lg={3} md={6} className="mb-4 mb-lg-0">
             <h5 className="footer-heading">Contact Us</h5>
             <ul className="footer-contact">
-              <li>
-                <FaEnvelope className="contact-icon" />
-                <a href="mailto:info@rosebeltconsultantsglobal.com">info@rosebeltconsultantsglobal.com</a>
-              </li>
               <li>
                 <FaPhone className="contact-icon" />
                 <a href="tel:+923051564945">+92 305 1564945</a>
@@ -89,8 +85,8 @@ const Footer = () => {
               <p>Subscribe to our newsletter for updates</p>
               <Form.Group>
                 <Form.Control
-                  type="email"
-                  placeholder="Enter your email"
+                  type="text"
+                  placeholder="Enter your phone number"
                   className="newsletter-input"
                 />
                 <Button style={{ backgroundColor: '#f59e0b', borderColor: '#f59e0b' }} className="w-100 mt-2">

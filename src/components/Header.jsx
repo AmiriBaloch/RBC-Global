@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Nav, Navbar, Button, Image, NavDropdown, Row, Col } from 'react-bootstrap';
+import { Container, Nav, Navbar, Button, Image } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Header.css';
@@ -19,9 +19,7 @@ const Header = () => {
     workplace: false,
     services: false
   });
-
-  // Use a ref to track if we're handling our own click
-  const handleOurClick = useRef(false);
+  const togglerRef = useRef(null);
 
   // Close dropdowns when route changes
   useEffect(() => {
@@ -38,6 +36,23 @@ const Header = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Toggle body scroll lock when mobile menu is expanded
+  useEffect(() => {
+    if (expanded) {
+      document.body.classList.add('no-scroll');
+      document.body.classList.add('menu-expanded');
+    } else {
+      document.body.classList.remove('no-scroll');
+      document.body.classList.remove('menu-expanded');
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.classList.remove('no-scroll');
+      document.body.classList.remove('menu-expanded');
+    };
+  }, [expanded]);
 
   // Handle scroll events
   useEffect(() => {
@@ -92,15 +107,55 @@ const Header = () => {
   };
 
   const handleDropdownItemClick = (linkName) => {
-    // Close the dropdown when an item is clicked
-    setActiveDropdown(null);
-    setExpanded(false);
-    handleNavClick(linkName);
+    // Get all dropdown menus and add the closing animation class
+    const dropdownMenus = document.querySelectorAll('.dropdown-menu, .mega-menu-content, .mobile-section-content');
+    dropdownMenus.forEach(menu => {
+      if (menu.classList.contains('show')) {
+        menu.classList.add('closing');
+      }
+    });
+    
+    // Use a short timeout to allow the animation to play
+    setTimeout(() => {
+      // Close the dropdown when an item is clicked
+      setActiveDropdown(null);
+      setExpanded(false);
+      // Close all expanded mobile sections
+      setExpandedSections({
+        workplace: false,
+        services: false
+      });
+      handleNavClick(linkName);
+      
+      // Remove the closing class after animation completes
+      dropdownMenus.forEach(menu => {
+        menu.classList.remove('closing');
+      });
+    }, 200); // Match this with the CSS transition duration
   };
 
   const toggleSection = (sectionName, event) => {
     event.preventDefault();
     event.stopPropagation();
+    
+    // If clicking on a dropdown that's already open, close it with animation
+    if (expandedSections[sectionName]) {
+      // Get the section content element
+      const sectionContent = event.currentTarget.nextElementSibling;
+      if (sectionContent) {
+        sectionContent.classList.add('closing');
+        
+        // Use timeout to allow animation to play
+        setTimeout(() => {
+          setExpandedSections(prev => ({
+            ...prev,
+            [sectionName]: false
+          }));
+          sectionContent.classList.remove('closing');
+        }, 200);
+      }
+      return;
+    }
     
     // Close all sections first, then open the clicked one if it wasn't already open
     setExpandedSections(prev => {
@@ -112,6 +167,33 @@ const Header = () => {
       };
     });
   };
+
+  // Add event listener to close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Close all dropdowns if user clicks outside of any dropdown
+      const isClickInsideDropdown = event.target.closest('.dropdown-menu') || 
+                                   event.target.closest('.mobile-section-header') ||
+                                   event.target.closest('.custom-dropdown-wrapper') ||
+                                   event.target.closest('.dropdown-toggle');
+      
+      if (!isClickInsideDropdown) {
+        setActiveDropdown(null);
+        setExpandedSections({
+          workplace: false,
+          services: false
+        });
+      }
+    };
+
+    // Add the event listener to the document
+    document.addEventListener('click', handleClickOutside);
+    
+    // Remove the listener when component unmounts
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
     <Navbar 
@@ -135,14 +217,23 @@ const Header = () => {
           <Image 
             src={logo} 
             alt="RoseBelt Consultants" 
-            className="logo-image" 
+            className="logo-image"
+            width={200}
+            height="auto"
+            loading="eager"
+            priority={true}
           />
         </Link>
 
         <Navbar.Toggle 
           aria-controls="basic-navbar-nav" 
           className={`custom-toggler ${expanded ? 'open' : ''}`}
-        />
+          ref={togglerRef}
+        >
+          <span className="navbar-toggler-icon">
+            <span></span>
+          </span>
+        </Navbar.Toggle>
 
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <div className="nav-container">
@@ -365,6 +456,36 @@ const Header = () => {
                 >
                   CONTACT
                 </Link>
+              )}
+              
+              {/* Social Media Icons - only shown on mobile when menu is expanded */}
+              {isMobile && expanded && (
+                <div className="mobile-nav-social-icons" style={{ 
+                  display: 'flex', 
+                  flexDirection: 'row', 
+                  justifyContent: 'center', 
+                  marginTop: '10px',
+                  borderTop: '1px solid #e4ebf2',
+                  paddingTop: '10px'
+                }}>
+                  <div style={{ 
+                    display: 'flex',
+                    background: '#e4ebf2',
+                    borderRadius: '10px',
+                    padding: '3px',
+                    width: 'fit-content'
+                  }}>
+                    <a href="https://www.instagram.com/rosebeltconsultantsglobal/" target="_blank" rel="noopener noreferrer" className="nav-social-icon instagram" style={{ margin: '0 -2px' }}>
+                      <i className="bi bi-instagram" style={{ fontSize: '24px' }}></i>
+                    </a>
+                    <a href="https://www.facebook.com/share/16QfztW6BQ/" target="_blank" rel="noopener noreferrer" className="nav-social-icon facebook" style={{ margin: '0 -2px' }}>
+                      <i className="bi bi-facebook" style={{ fontSize: '24px' }}></i>
+                    </a>
+                    <a href="https://wa.me/923051564945" target="_blank" rel="noopener noreferrer" className="nav-social-icon whatsapp" style={{ margin: '0 -2px' }}>
+                      <i className="bi bi-whatsapp" style={{ fontSize: '24px' }}></i>
+                    </a>
+                  </div>
+                </div>
               )}
             </Nav>
           </div>

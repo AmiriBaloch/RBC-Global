@@ -31,7 +31,7 @@ const InstagramButton = () => {
           width: 35px !important;
           height: 35px !important;
           right: 15px !important;
-          bottom: 150px !important;
+          bottom: 100px !important;
         }
         
         .instagram-btn svg {
@@ -57,7 +57,7 @@ const InstagramButton = () => {
       aria-label="Follow us on Instagram"
       style={{
         position: 'fixed',
-        bottom: '185px', // Position above Email button
+        bottom: '100px', // Reduced from 150px to be closer to Facebook
         right: '20px',
         color: 'white',
         borderRadius: '50%',
