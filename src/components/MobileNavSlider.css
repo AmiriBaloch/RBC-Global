@@ -6,20 +6,19 @@
   width: 80%;
   height: calc(100vh - 60px);
   background-color: #E4EBF2;
-  padding: 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: none;
+  padding: 1rem 1rem;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  z-index: 9999 !important;
+  transition: left 0.3s ease;
   overflow-y: auto;
-  z-index: 2000;
-  transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  text-align: left;
-  padding-top: 1rem;
-  will-change: left;
+  border-top-right-radius: 10px;
+  display: block !important;
+  visibility: visible !important;
 }
 
 .mobile-nav-slider.show {
   left: 0;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
 }
 
 .mobile-menu-backdrop {
@@ -29,204 +28,174 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1999;
-  display: block;
+  z-index: 9998 !important;
   cursor: pointer;
-  opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  will-change: opacity, visibility;
-}
-
-.mobile-menu-backdrop.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-.mobile-nav-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Mobile Section Styles */
-.mobile-section {
-  width: 100%;
-}
-
-.mobile-section-header {
-  padding: 10px 15px;
-  background-color: transparent;
-  cursor: pointer;
-  border-bottom: 1px solid #d0d8e0;
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 14px;
-  color: #151617;
-  font-family: 'Lato', sans-serif;
-  margin: 0;
-  padding-right: 40px;
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-}
-
-.mobile-section-header:hover {
-  color: #151617;
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-.mobile-section-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-  background-color: #e4ebf2;
-  border-radius: 0;
-  margin: 0;
-  padding: 0;
-  border: none;
-}
-
-.mobile-section-content.show {
-  max-height: 500px;
-  border: none;
-  margin: 0;
-}
-
-.mobile-section-content.closing {
   opacity: 0;
-  transform: translateY(-10px);
+  transition: visibility 0.3s, opacity 0.3s;
   pointer-events: none;
 }
 
-/* Mobile submenu item styling */
-.mobile-submenu-item {
-  display: block;
-  padding: 8px 20px;
-  color: #151617;
-  text-decoration: none;
-  border-bottom: 1px solid #d0d8e0;
-  font-size: 14px;
-  transition: all 0.2s ease;
-  position: relative;
-  background-color: #e4ebf2;
-  font-family: 'Lato', sans-serif;
-  text-transform: uppercase;
-  margin: 0;
-  padding-left: 20px;
+.mobile-menu-backdrop.show {
+  visibility: visible !important;
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.mobile-submenu-item:hover {
-  background-color: #d5dde6;
-  color: #151617;
-  border-left: 3px solid #d5dde6;
+.mobile-nav-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-.mobile-submenu-item:active {
-  background-color: rgba(0, 0, 0, 0.05);
-  color: var(--primary-color);
-  transform: scale(0.98);
-  transition: transform 0.1s ease;
-}
-
-.mobile-submenu-item.active {
-  color: var(--primary-color);
-  background-color: transparent;
-  font-weight: 600;
-}
-
-/* Nav Link Styling */
-.mobile-nav-slider .nav-link {
+/* Base styles for all menu items */
+.mobile-nav-container .nav-link,
+.mobile-section-header {
   padding: 10px 15px;
-  height: auto;
-  width: 100%;
-  justify-content: flex-start;
-  text-align: left;
-  font-size: 14px;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #d0d8e0;
-  margin: 0;
+  margin: 2px 0;
   color: #151617;
+  background-color: #E4EBF2 !important; /* Force this background with !important */
+  text-decoration: none;
   font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
   text-transform: uppercase;
-  background-color: transparent;
-}
-
-.mobile-nav-slider .nav-link:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  color: #151617;
-}
-
-.mobile-nav-slider .nav-link.active {
-  color: var(--primary-color);
-  background-color: transparent;
-  font-weight: 600;
-}
-
-/* Chevron animation for dropdown toggles */
-.bi-chevron-down {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: transform 0.3s ease;
-  color: #151617;
-}
-
-.bi-chevron-down.rotate {
-  transform: translateY(-50%) rotate(180deg);
-  color: #151617;
-}
-
-/* Mobile navigation social icons */
-.mobile-nav-social-icons {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #d0d8e0;
-}
-
-.social-icons-container {
-  display: flex;
-  background: #e4ebf2;
-  border-radius: 10px;
-  padding: 3px;
-  width: fit-content;
-  animation: fadeInUp 0.5s ease forwards;
-  animation-delay: 0.2s;
+  border-bottom: 1px solid #d0d8e0;
+  border-radius: 4px;
   opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s forwards;
+  animation-delay: calc(var(--item-index) * 0.1s);
+}
+
+/* Reset any hover or focus states */
+.mobile-nav-container .nav-link:hover,
+.mobile-nav-container .nav-link:focus,
+.mobile-section-header:hover,
+.mobile-section-header:focus {
+  background-color: #E4EBF2 !important;
+  color: #151617;
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.nav-social-icon {
-  margin: 0 5px;
-  text-decoration: none;
-  color: #151617;
-  font-size: 24px;
+.mobile-section {
+  margin: 2px 0;
 }
 
+/* Override Bootstrap d-flex and other classes that might affect background */
+.mobile-section-header {
+  cursor: pointer;
+  padding-right: 15px;
+  margin: 0;
+  font-weight: 400;
+  background-color: #E4EBF2 !important;
+  border-radius: 4px;
+}
+
+/* Override any Bootstrap classes */
+.d-flex.justify-content-between.align-items-center.w-100.mobile-section-header {
+  background-color: #E4EBF2 !important;
+}
+
+.mobile-section-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background-color: #d0d8e0;
+  border-radius: 0 0 4px 4px;
+  margin-top: 0;
+  padding: 0;
+}
+
+.mobile-section-content.show {
+  max-height: 500px; /* Adjust based on content */
+  margin-top: 0;
+}
+
+.mobile-section-content.closing {
+  max-height: 0 !important;
+}
+
+.mobile-submenu-item {
+  display: block;
+  padding: 8px 15px 8px 25px;
+  text-decoration: none;
+  color: #333;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  border-bottom: 1px solid #c0c8d0;
+  text-transform: uppercase;
+  margin: 0; /* Ensure consistent spacing */
+  background-color: #d0d8e0;
+}
+
+.mobile-submenu-item:hover,
+.mobile-submenu-item:focus {
+  background-color: #d0d8e0;
+  color: #333;
+}
+
+.mobile-submenu-item:last-child {
+  border-bottom: none;
+}
+
+.bi-chevron-down {
+  transition: transform 0.3s ease;
+}
+
+.bi-chevron-down.rotate {
+  transform: rotate(180deg);
+}
+
+/* Social Icons Section */
+.mobile-nav-social-icons {
+  margin-top: 10px;
+  padding: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s forwards;
+  animation-delay: calc(var(--item-index) * 0.1s);
+}
+
+.social-icons-container {
+  display: flex;
+  justify-content: space-around;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.nav-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: transparent;
+  text-decoration: none;
+  font-size: 20px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-social-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Brand colors for social icons */
 .nav-social-icon.instagram i {
   color: #E1306C;
 }
 
 .nav-social-icon.facebook i {
-  color: #4267B2;
+  color: #1877F2;
 }
 
 .nav-social-icon.whatsapp i {
@@ -247,4 +216,28 @@ body.no-scroll {
   position: fixed;
   width: 100%;
   height: 100%;
+}
+
+/* Entry animation for menu items */
+.mobile-nav-slider .nav-link,
+.mobile-nav-slider .mobile-section,
+.mobile-nav-slider .mobile-nav-social-icons {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition-delay: calc(var(--item-index, 0) * 0.05s);
+}
+
+.mobile-nav-slider.show .nav-link,
+.mobile-nav-slider.show .mobile-section,
+.mobile-nav-slider.show .mobile-nav-social-icons {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Ensure active items only change text color, not background */
+.mobile-nav-container .nav-link.active {
+  font-weight: 400;
+  color: #f59e0b;
+  background-color: #E4EBF2 !important; /* Same as non-active items */
 } 

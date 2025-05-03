@@ -16,6 +16,8 @@ const MobileNavSlider = ({
 
   // Close all sections when mobile menu is closed
   useEffect(() => {
+    console.log("MobileNavSlider expanded state:", expanded);
+    
     if (!expanded) {
       setExpandedSections({
         workplace: false,
@@ -23,6 +25,14 @@ const MobileNavSlider = ({
       });
     }
   }, [expanded]);
+
+  // Handle backdrop click
+  const handleBackdropClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("Backdrop clicked, directly closing menu");
+    setExpanded(false);
+  };
 
   const toggleSection = (sectionName, event) => {
     event.preventDefault();
@@ -58,30 +68,57 @@ const MobileNavSlider = ({
     });
   };
 
+  console.log("Rendering MobileNavSlider with expanded:", expanded);
+
   return (
     <>
-      {/* Mobile menu backdrop */}
+      {/* Mobile menu backdrop - always render but control visibility with CSS */}
       <div 
         className={`mobile-menu-backdrop ${expanded ? 'show' : ''}`}
-        onClick={() => setExpanded(false)}
+        onClick={handleBackdropClick}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 9998,
+          cursor: 'pointer',
+          visibility: expanded ? 'visible' : 'hidden',
+          opacity: expanded ? 1 : 0,
+          transition: 'visibility 0.3s, opacity 0.3s',
+          pointerEvents: expanded ? 'auto' : 'none'
+        }}
       />
       
-      {/* Mobile Menu Content */}
-      <div className={`mobile-nav-slider ${expanded ? 'show' : ''}`}>
+      {/* Mobile Menu Content - always render but control position with CSS */}
+      <div 
+        className={`mobile-nav-slider ${expanded ? 'show' : ''}`}
+        style={{ display: 'block' }}
+      >
         <div className="mobile-nav-container">
           <Link
             to="/"
-            className={`nav-link fw-bold ${activeLink === 'who-we-are' ? 'active' : ''}`}
+            className={`nav-link ${activeLink === 'who-we-are' ? 'active' : ''}`}
             onClick={() => handleNavClick('who-we-are')}
+            style={{ '--item-index': 0 }}
           >
             WHO WE ARE
           </Link>
           
           {/* OUR WORKPLACE Section */}
-          <div className="mobile-section">
+          <div className="mobile-section" style={{ '--item-index': 1 }}>
             <div 
-              className="d-flex justify-content-between align-items-center w-100 mobile-section-header"
+              className="mobile-section-header"
               onClick={(e) => toggleSection('workplace', e)}
+              style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                width: '100%',
+                backgroundColor: '#E4EBF2'
+              }}
             >
               <span>OUR WORKPLACE</span>
               <svg 
@@ -121,10 +158,17 @@ const MobileNavSlider = ({
           </div>
 
           {/* WHAT WE DO Section */}
-          <div className="mobile-section">
+          <div className="mobile-section" style={{ '--item-index': 2 }}>
             <div 
-              className="d-flex justify-content-between align-items-center w-100 mobile-section-header"
+              className="mobile-section-header"
               onClick={(e) => toggleSection('services', e)}
+              style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                width: '100%',
+                backgroundColor: '#E4EBF2'
+              }}
             >
               <span>WHAT WE DO</span>
               <svg 
@@ -180,8 +224,9 @@ const MobileNavSlider = ({
           {/* Our Ideas */}
           <Link 
             to="/our-ideas" 
-            className={`nav-link fw-bold ${activeLink === 'ideas' ? 'active' : ''}`}
+            className={`nav-link ${activeLink === 'ideas' ? 'active' : ''}`}
             onClick={() => handleNavClick('ideas')}
+            style={{ '--item-index': 3 }}
           >
             OUR IDEAS
           </Link>
@@ -189,8 +234,9 @@ const MobileNavSlider = ({
           {/* Join Our Team */}
           <Link 
             to="/join-our-team" 
-            className={`nav-link fw-bold ${activeLink === 'careers' ? 'active' : ''}`}
+            className={`nav-link ${activeLink === 'careers' ? 'active' : ''}`}
             onClick={() => handleNavClick('careers')}
+            style={{ '--item-index': 4 }}
           >
             JOIN OUR TEAM
           </Link>
@@ -198,14 +244,15 @@ const MobileNavSlider = ({
           {/* Contact */}
           <Link 
             to="/contact"
-            className={`nav-link fw-bold ${activeLink === 'contact' ? 'active' : ''}`}
+            className={`nav-link ${activeLink === 'contact' ? 'active' : ''}`}
             onClick={() => handleNavClick('contact')}
+            style={{ '--item-index': 5 }}
           >
             CONTACT
           </Link>
           
           {/* Social Media Icons */}
-          <div className="mobile-nav-social-icons">
+          <div className="mobile-nav-social-icons" style={{ '--item-index': 6 }}>
             <div className="social-icons-container">
               <a href="https://www.instagram.com/rosebeltconsultantsglobal/" target="_blank" rel="noopener noreferrer" className="nav-social-icon instagram">
                 <i className="bi bi-instagram"></i>

@@ -19,23 +19,6 @@ const Header = () => {
   const togglerRef = useRef(null);
   const burgerButtonRef = useRef(null);
 
-  // Add direct click handler to burger button
-  useEffect(() => {
-    if (burgerButtonRef.current) {
-      const burgerButton = burgerButtonRef.current;
-      
-      const handleBurgerClick = () => {
-        setExpanded(prevState => !prevState);
-      };
-      
-      burgerButton.addEventListener('click', handleBurgerClick);
-      
-      return () => {
-        burgerButton.removeEventListener('click', handleBurgerClick);
-      };
-    }
-  }, []);
-
   // Close dropdowns when route changes
   useEffect(() => {
     setActiveDropdown(null);
@@ -44,29 +27,27 @@ const Header = () => {
   // Handle window resize
   useEffect(() => {
     const handleResize = () => {
-      const newIsMobile = window.innerWidth < 992;
+      const windowWidth = window.innerWidth;
+      const newIsMobile = windowWidth < 992;
+      
       setIsMobile(newIsMobile);
+      
+      // Close mobile menu when resizing to desktop
+      if (!newIsMobile && expanded) {
+        setExpanded(false);
+      }
+      
+      console.log("Window width:", windowWidth, "isMobile:", newIsMobile);
     };
 
+    // Initial check
+    handleResize();
+
+    // Add event listener
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Toggle body scroll lock when mobile menu is expanded
-  useEffect(() => {
-    if (expanded) {
-      document.body.classList.add('no-scroll');
-      document.body.classList.add('menu-expanded');
-    } else {
-      document.body.classList.remove('no-scroll');
-      document.body.classList.remove('menu-expanded');
-    }
     
-    // Cleanup on unmount
-    return () => {
-      document.body.classList.remove('no-scroll');
-      document.body.classList.remove('menu-expanded');
-    };
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
   }, [expanded]);
 
   // Handle scroll events
@@ -166,6 +147,39 @@ const Header = () => {
     }, 200); // Match this with the CSS transition duration
   };
 
+  // Remove the useEffect for the burger button click since we now use onClick directly
+  useEffect(() => {
+    console.log("Current expanded state:", expanded);
+    
+    // Toggle body scroll lock when mobile menu is expanded
+    if (expanded) {
+      document.body.classList.add('no-scroll');
+      document.body.classList.add('menu-expanded');
+    } else {
+      document.body.classList.remove('no-scroll');
+      document.body.classList.remove('menu-expanded');
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.classList.remove('no-scroll');
+      document.body.classList.remove('menu-expanded');
+    };
+  }, [expanded]);
+
+  // Replace the toggleMobileMenu function with a simpler direct approach
+  const openMobileMenu = () => {
+    console.log("DIRECTLY SETTING expanded to TRUE");
+    document.body.style.overflow = "hidden"; // Prevent background scrolling
+    setExpanded(true);
+  };
+
+  const closeMobileMenu = () => {
+    console.log("DIRECTLY SETTING expanded to FALSE");
+    document.body.style.overflow = ""; // Restore scrolling
+    setExpanded(false);
+  };
+
   return (
     <>
       {/* Mobile Navigation Slider - only on mobile */}
@@ -185,7 +199,9 @@ const Header = () => {
         sticky="top"
         expanded={expanded}
         onToggle={(isExpanded) => {
-          setExpanded(isExpanded);
+          console.log("Navbar onToggle called with", isExpanded);
+          // Don't use this to set expanded state since we're managing it ourselves
+          // Only handle collapse state if needed
           if (!isExpanded) {
             setActiveDropdown(null);
           }
@@ -209,7 +225,7 @@ const Header = () => {
 
           {/* Burger button - only show on mobile */}
           {isMobile && (
-            <div 
+            <button 
               ref={burgerButtonRef}
               className={`custom-toggler ${expanded ? 'open' : ''}`}
               style={{
@@ -220,15 +236,33 @@ const Header = () => {
                 width: '45px',
                 height: '40px',
                 position: 'relative',
-                zIndex: 2001,
+                zIndex: 10001, // Increased z-index to be higher than any other element
                 transition: 'transform 0.3s ease',
-                transform: expanded ? 'scale(1.1)' : 'scale(1)'
+                transform: expanded ? 'scale(1.1)' : 'scale(1)',
+                marginRight: '5px',
+                backgroundColor: 'transparent',
+                border: 'none',
+                outline: 'none',
+                pointerEvents: 'auto' // Ensure clicks are captured
               }}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent event bubbling
+                console.log("Hamburger button clicked, current expanded state:", expanded);
+                // Toggle between states
+                if (expanded) {
+                  closeMobileMenu();
+                } else {
+                  openMobileMenu();
+                }
+              }}
+              aria-label="Toggle navigation menu"
             >
-              <span className="navbar-toggler-icon">
-                <span></span>
-              </span>
-            </div>
+              <div className="hamburger-icon">
+                <span className={`line line-1 ${expanded ? 'open' : ''}`}></span>
+                <span className={`line line-2 ${expanded ? 'open' : ''}`}></span>
+                <span className={`line line-3 ${expanded ? 'open' : ''}`}></span>
+              </div>
+            </button>
           )}
 
           {/* Hidden original toggle - used for Bootstrap's internal handling */}

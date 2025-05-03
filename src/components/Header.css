@@ -1770,219 +1770,102 @@ body {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(245, 158, 11, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* Custom toggler styling */
-.custom-toggler {
-  border: none !important;
-  padding: 10px !important;
-  outline: none !important;
-  background: none !important;
-  border-radius: 8px !important;
-  transition: all 0.3s ease !important;
-  margin-right: 0 !important;
+/* Modern Hamburger Icon - ensure visibility on mobile */
+.hamburger-icon {
   position: relative;
-  z-index: 1050;
-  width: 45px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.custom-toggler:focus {
-  box-shadow: none !important;
-}
-
-.custom-toggler:hover {
-  background-color: rgba(228, 235, 242, 0.6) !important;
-  transform: scale(1.05);
-}
-
-/* Custom burger icon with animated lines */
-.custom-toggler .navbar-toggler-icon {
-  background-image: none !important;
-  position: relative;
-  transition: all 0.3s ease-in-out !important;
-  width: 30px !important;
-  height: 20px !important;
-  display: flex;
+  width: 24px;
+  height: 20px;
+  display: flex !important;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 9999;
 }
 
-.custom-toggler .navbar-toggler-icon::before,
-.custom-toggler .navbar-toggler-icon::after,
-.custom-toggler .navbar-toggler-icon span {
-  content: "";
+.hamburger-icon .line {
   display: block;
   width: 100%;
   height: 3px;
-  background: linear-gradient(to right, #151617, #35393a);
-  border-radius: 4px;
-  transition: all 0.3s ease-in-out;
+  background-color: #333;
+  border-radius: 3px;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Create a slight delay between animations */
-.custom-toggler .navbar-toggler-icon::before {
-  transform-origin: 0 0;
-  transition-delay: 0.05s;
+/* Animation for hamburger to X */
+.hamburger-icon .line-1.open {
+  transform: translateY(8.5px) rotate(45deg);
 }
 
-.custom-toggler .navbar-toggler-icon span {
-  margin: 0 auto;
-  transition-delay: 0.125s;
+.hamburger-icon .line-2.open {
+  opacity: 0;
+  transform: scale(0);
 }
 
-.custom-toggler .navbar-toggler-icon::after {
-  transform-origin: 0 100%;
-  transition-delay: 0.2s;
+.hamburger-icon .line-3.open {
+  transform: translateY(-8.5px) rotate(-45deg);
 }
 
-/* Animation for open state */
-.custom-toggler.open .navbar-toggler-icon span {
-  transform: scaleX(0);
+/* Custom toggler styling - ensure visibility */
+.custom-toggler {
+  position: relative;
+  z-index: 10001 !important; /* Ensure highest z-index */
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+.hamburger-icon {
+  width: 30px;
+  height: 24px;
+  position: relative;
+  pointer-events: none; /* Let clicks pass through to the button */
+}
+
+.hamburger-icon .line {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: #151617;
+  border-radius: 3px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: all 0.3s ease;
+  pointer-events: none; /* Let clicks pass through to the button */
+}
+
+.hamburger-icon .line-1 {
+  top: 0;
+}
+
+.hamburger-icon .line-2 {
+  top: 10px;
+}
+
+.hamburger-icon .line-3 {
+  top: 20px;
+}
+
+/* Animated state for hamburger when opened */
+.hamburger-icon .line-1.open {
+  top: 10px;
+  transform: rotate(45deg);
+}
+
+.hamburger-icon .line-2.open {
   opacity: 0;
 }
 
-.custom-toggler.open .navbar-toggler-icon::before {
-  transform: rotate(45deg) translateY(-3px) translateX(3px);
-  width: 120%;
+.hamburger-icon .line-3.open {
+  top: 10px;
+  transform: rotate(-45deg);
 }
 
-.custom-toggler.open .navbar-toggler-icon::after {
-  transform: rotate(-45deg) translateY(3px) translateX(3px);
-  width: 120%;
+/* Ensure Navbar z-index doesn't conflict with menu */
+.navbar {
+  z-index: 9997 !important;
 }
 
-/* Add animation to the container */
-@keyframes pulse {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(228, 235, 242, 0.4); }
-  50% { transform: scale(1.03); box-shadow: 0 0 0 8px rgba(228, 235, 242, 0); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(228, 235, 242, 0); }
-}
-
-.custom-toggler.open {
-  animation: pulse 0.6s ease-in-out;
-  background-color: rgba(228, 235, 242, 0.4) !important;
-}
-
-/* Consistent mobile styles */
-@media (max-width: 991px) {
-  /* All mobile menu items */
-  .mobile-menu-item.dropdown-toggle,
-  .navbar-light .nav-link,
-  .dropdown-item,
-  .dropdown-toggle,
-  .mobile-section-header,
-  .mobile-submenu-item {
-    padding: 0.75rem 1rem;
-    margin: 0.25rem 0;
-    color: var(--dark-bg) !important;
-    text-transform: uppercase;
-    font-family: 'Lato', sans-serif !important;
-    background-color: transparent !important; /* Ensure no background on mobile items */
-  }
-  
-  /* Hover state for all items */
-  .mobile-menu-item.dropdown-toggle:hover,
-  .navbar-light .nav-link:hover,
-  .dropdown-item:hover,
-  .dropdown-toggle:hover,
-  .mobile-section-header:hover,
-  .mobile-submenu-item:hover {
-    background-color: rgba(0, 0, 0, 0.05) !important; /* Very light background on hover */
-    color: var(--dark-bg) !important;
-  }
-  
-  /* Ensure active items have color but not dark background */
-  .navbar-light .nav-link.active,
-  .dropdown-item.active,
-  .mobile-submenu-item.active {
-    color: var(--primary-color) !important;
-    background-color: transparent !important;
-  }
-  
-  /* ... existing code ... */
-}
-
-@media (max-width: 991px) {
-  /* Apply styles to dropdown menu containers */
-  .dropdown-menu,
-  .mega-menu-content,
-  .mobile-section-content {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background-color: #e4ebf2 !important;
-  }
-  
-  /* Ensure last items don't have bottom borders */
-  .dropdown-menu .dropdown-item:last-child,
-  .mega-menu-content .mega-menu-item:last-child,
-  .mobile-section-content .mobile-submenu-item:last-child,
-  .custom-dropdown-wrapper .dropdown-menu .dropdown-item:last-child {
-    border-bottom: none !important;
-  }
-
-  /* Fix dropdown item hover states without changing layout */
-  .dropdown-item:hover,
-  .mobile-submenu-item:hover,
-  .custom-dropdown-wrapper .dropdown-item:hover {
-    border-left: 3px solid #d5dde6 !important;
-    padding-left: 12px !important;
-  }
-  
-  /* Make submenu items slightly indented */
-  .mobile-submenu-item,
-  .dropdown-menu .dropdown-item,
-  .mega-menu-content .mega-menu-item {
-    padding-left: 20px !important;
-  }
-  
-  /* Fix any animation that might affect the layout */
-  .dropdown-menu.show,
-  .mega-menu-content.show {
-    animation: fadeIn 0.2s ease forwards !important;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-}
-
-/* Dropdown closing animation */
-@media (max-width: 991px) {
-  .dropdown-menu,
-  .mega-menu-content,
-  .mobile-section-content {
-    transition: all 0.2s ease-out !important;
-  }
-  
-  .dropdown-menu.closing,
-  .mega-menu-content.closing,
-  .mobile-section-content.closing {
-    opacity: 0 !important;
-    transform: translateY(-10px) !important;
-    pointer-events: none !important;
-  }
-  
-  /* Dropdown item click effect */
-  .dropdown-item:active,
-  .mobile-submenu-item:active,
-  .custom-dropdown-wrapper .dropdown-item:active {
-    background-color: #d5dde6 !important;
-    color: #151617 !important;
-    transform: scale(0.98);
-    transition: transform 0.1s ease;
-  }
-}
+/* Add any other existing CSS below */
 
 /* Prevent scrolling when mobile menu is open */
 body.no-scroll {
@@ -1990,71 +1873,4 @@ body.no-scroll {
   position: fixed;
   width: 100%;
   height: 100%;
-}
-
-/* Mobile navigation social icons */
-.mobile-nav-social-icons {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #d0d8e0;
-}
-
-.nav-social-icon {
-  display: flex;
-  align-items: center;
-  padding: 12px 20px !important;
-  margin: 0 !important;
-  border-bottom: 1px solid #d0d8e0 !important;
-  text-decoration: none;
-  color: #151617 !important;
-  font-family: 'Lato', sans-serif !important;
-  font-weight: 400 !important;
-  font-size: 14px;
-  text-transform: uppercase;
-}
-
-.nav-social-icon i {
-  margin-right: 15px;
-  font-size: 18px;
-}
-
-.nav-social-icon.instagram i {
-  color: #E1306C;
-}
-
-.nav-social-icon.facebook i {
-  color: #4267B2;
-}
-
-.nav-social-icon.whatsapp i {
-  color: #25D366;
-}
-
-.nav-social-icon:hover {
-  background-color: #d5dde6;
-}
-
-/* Desktop navbar styles to override mobile menu appearance */
-@media (min-width: 992px) {
-  .navbar-collapse {
-    position: static !important;
-    left: auto !important;
-    top: auto !important;
-    width: auto !important;
-    height: auto !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
-    z-index: auto !important;
-    transition: none !important;
-    overflow: visible !important;
-    padding: 0 !important;
-    transform: none !important;
-  }
-  
-  .custom-toggler {
-    display: none !important;
-  }
 } 
