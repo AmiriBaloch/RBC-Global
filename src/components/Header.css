@@ -143,10 +143,25 @@ body {
   }
   
   .navbar-collapse {
-    position: fixed;
-    top: 37px; /* Moved down slightly from 35px */
-    height: calc(100vh - 37px); /* Adjusted height accordingly */
-    padding-top: 1rem;
+    position: fixed !important;
+    top: 60px !important;
+    left: -100% !important;
+    width: 80% !important;
+    height: calc(100vh - 60px) !important;
+    background-color: #E4EBF2 !important;
+    padding: 1rem !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    border: none !important;
+    overflow-y: auto !important;
+    z-index: 2000 !important;
+    transition: left 0.3s ease !important;
+    text-align: left !important;
+    padding-top: 1rem !important;
+  }
+  
+  .navbar-collapse.show {
+    left: 0 !important;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2) !important;
   }
   
   body {
@@ -595,25 +610,25 @@ body {
   }
 
   .navbar-collapse {
-    position: fixed;
-    top: 42px;
-    left: -100%;
-    width: 80%;
-    height: calc(100vh - 42px);
-    background-color: #E4EBF2;
-    padding: 1rem;
-    box-shadow: none !important;
+    position: fixed !important;
+    top: 60px !important;
+    left: -100% !important;
+    width: 80% !important;
+    height: calc(100vh - 60px) !important;
+    background-color: #E4EBF2 !important;
+    padding: 1rem !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
     border: none !important;
-    border-top: none !important;
-    overflow-y: auto;
-    z-index: 1045;
-    transition: left 0.3s ease;
-    text-align: left;
-    padding-top: 1rem;
+    overflow-y: auto !important;
+    z-index: 2000 !important;
+    transition: left 0.3s ease !important;
+    text-align: left !important;
+    padding-top: 1rem !important;
   }
   
   .navbar-collapse.show {
-    left: 0;
+    left: 0 !important;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2) !important;
   }
 
   body {
@@ -818,9 +833,9 @@ body {
   }
 
   .navbar-collapse {
-    top: 37px; /* Moved down slightly from 35px */
-    height: calc(100vh - 37px); /* Adjusted height accordingly */
-    padding-top: 1rem;
+    top: 60px;
+    height: calc(100vh - 60px);
+    padding: 1rem;
   }
 
   body {
@@ -1673,57 +1688,76 @@ body {
 
 /* Update active header component to use #f59f0a */
 .navbar-light .nav-link.active {
-  color: #f59f0a !important;
-  font-weight: 700 !important;
+  color: var(--primary-color) !important;
+  background-color: transparent !important; /* Ensure no background on active items */
 }
 
 /* Ensure the active dropdown has the proper color */
 .custom-dropdown-wrapper .nav-link.active {
-  color: #f59f0a !important;
+  color: var(--primary-color) !important;
+  background-color: transparent !important; /* Ensure no background on active items */
 }
 
 /* Make sure hover states don't use the amber color unless active */
 .navbar-light .nav-link:hover {
-  color: #333333 !important;
+  color: rgba(0, 0, 0, 0.7) !important;
 }
 
 /* Only active items should have amber color */
 .custom-dropdown-wrapper:hover .nav-link {
-  color: #333333 !important; /* Reset to dark color instead of amber */
+  color: rgba(0, 0, 0, 0.7) !important;
 }
 
 /* Active state override - this ensures active elements remain amber even on hover */
 .navbar-light .nav-link.active:hover,
 .custom-dropdown-wrapper .nav-link.active:hover {
-  color: #f59f0a !important;
+  color: var(--primary-color) !important;
+  background-color: transparent !important; /* Ensure no background on hover of active items */
 }
 
 @media (max-width: 991px) {
-  /* Dropdown item hover - no left padding adjustment needed */
-  .custom-dropdown-wrapper .dropdown-item {
-    background-color: #e4ebf2 !important;
-    color: #151617 !important;
-    border-bottom: 1px solid #e0e0e0;
-    font-family: 'Lato', sans-serif !important;
-    text-transform: uppercase;
+  /* Fix for active item highlighting on small screens */
+  .navbar-light .nav-link.active,
+  .dropdown-item.active,
+  .mobile-submenu-item.active,
+  .nav-link.active,
+  .mobile-section-header.active,
+  .mobile-menu-item.active {
+    color: var(--primary-color) !important;
+    background-color: transparent !important;
+    font-weight: 600;
   }
   
-  .custom-dropdown-wrapper .dropdown-item:hover {
-    background-color: #d5dde6 !important;
-    color: #151617 !important;
-    border-left: 3px solid #d5dde6;
-    padding-left: 20px; /* Keep original padding */
+  /* All mobile menu items should have transparent background by default */
+  .navbar-light .nav-link,
+  .dropdown-item,
+  .mobile-submenu-item,
+  .nav-link,
+  .mobile-section-header,
+  .mobile-menu-item,
+  .dropdown-toggle {
+    background-color: transparent !important;
   }
+  
+  /* Hover state for mobile items should be very subtle */
+  .navbar-light .nav-link:hover,
+  .dropdown-item:hover,
+  .mobile-submenu-item:hover,
+  .nav-link:hover,
+  .mobile-section-header:hover,
+  .mobile-menu-item:hover,
+  .dropdown-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+  }
+  
+  /* ... existing code ... */
+}
 
-  /* Clean separator for dropdown items */
-  .custom-dropdown-wrapper .dropdown-item:not(:last-child) {
-    border-bottom: 1px solid #e0e0e0;
-  }
-  
-  /* Triangle indicator color for mobile */
-  .custom-dropdown-wrapper .dropdown-menu::before {
-    background-color: #e4ebf2 !important;
-  }
+.dropdown-item:active,
+.mobile-submenu-item:active,
+.custom-dropdown-wrapper .dropdown-item:active {
+  background-color: rgba(0, 0, 0, 0.05) !important; /* Light background when active/pressed */
+  color: var(--primary-color) !important;
 }
 
 /* Main navbar toggle button */
@@ -1836,53 +1870,38 @@ body {
   /* All mobile menu items */
   .mobile-menu-item.dropdown-toggle,
   .navbar-light .nav-link,
-  .dropdown-toggle,
-  #admin-dropdown,
-  .mobile-section-header,
   .dropdown-item,
-  .mega-menu-item,
-  .mobile-submenu-item,
-  .custom-dropdown-wrapper .dropdown-item {
-    padding: 10px 15px !important;
-    margin: 0 !important;
-    border-bottom: 1px solid #d0d8e0 !important;
-    color: #151617 !important;
+  .dropdown-toggle,
+  .mobile-section-header,
+  .mobile-submenu-item {
+    padding: 0.75rem 1rem;
+    margin: 0.25rem 0;
+    color: var(--dark-bg) !important;
     text-transform: uppercase;
     font-family: 'Lato', sans-serif !important;
-    background-color: #e4ebf2 !important;
+    background-color: transparent !important; /* Ensure no background on mobile items */
   }
   
   /* Hover state for all items */
   .mobile-menu-item.dropdown-toggle:hover,
   .navbar-light .nav-link:hover,
-  .dropdown-toggle:hover,
-  #admin-dropdown:hover,
-  .mobile-section-header:hover,
   .dropdown-item:hover,
-  .mega-menu-item:hover,
-  .mobile-submenu-item:hover,
-  .custom-dropdown-wrapper .dropdown-item:hover {
-    background-color: #d5dde6 !important;
-    color: #151617 !important;
+  .dropdown-toggle:hover,
+  .mobile-section-header:hover,
+  .mobile-submenu-item:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important; /* Very light background on hover */
+    color: var(--dark-bg) !important;
   }
   
-  /* Chevron icon positioning */
-  .mobile-menu-item.dropdown-toggle::after,
-  .dropdown-toggle::after {
-    display: none;
+  /* Ensure active items have color but not dark background */
+  .navbar-light .nav-link.active,
+  .dropdown-item.active,
+  .mobile-submenu-item.active {
+    color: var(--primary-color) !important;
+    background-color: transparent !important;
   }
   
-  .bi-chevron-down {
-    transition: transform 0.3s ease;
-    color: #151617;
-    margin-left: auto;
-    margin-right: 10px;
-  }
-  
-  .bi-chevron-down.rotate {
-    transform: rotate(180deg);
-    color: #151617;
-  }
+  /* ... existing code ... */
 }
 
 @media (max-width: 991px) {
@@ -2016,4 +2035,26 @@ body.no-scroll {
 
 .nav-social-icon:hover {
   background-color: #d5dde6;
+}
+
+/* Desktop navbar styles to override mobile menu appearance */
+@media (min-width: 992px) {
+  .navbar-collapse {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    width: auto !important;
+    height: auto !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    z-index: auto !important;
+    transition: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    transform: none !important;
+  }
+  
+  .custom-toggler {
+    display: none !important;
+  }
 } 

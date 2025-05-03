@@ -1,0 +1,227 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './MobileNavSlider.css';
+
+const MobileNavSlider = ({ 
+  expanded, 
+  setExpanded, 
+  activeLink, 
+  handleNavClick, 
+  handleDropdownItemClick 
+}) => {
+  const [expandedSections, setExpandedSections] = useState({
+    workplace: false,
+    services: false
+  });
+
+  // Close all sections when mobile menu is closed
+  useEffect(() => {
+    if (!expanded) {
+      setExpandedSections({
+        workplace: false,
+        services: false
+      });
+    }
+  }, [expanded]);
+
+  const toggleSection = (sectionName, event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // If clicking on a dropdown that's already open, close it with animation
+    if (expandedSections[sectionName]) {
+      // Get the section content element
+      const sectionContent = event.currentTarget.nextElementSibling;
+      if (sectionContent) {
+        sectionContent.classList.add('closing');
+        
+        // Use timeout to allow animation to play
+        setTimeout(() => {
+          setExpandedSections(prev => ({
+            ...prev,
+            [sectionName]: false
+          }));
+          sectionContent.classList.remove('closing');
+        }, 200);
+      }
+      return;
+    }
+    
+    // Close all sections first, then open the clicked one if it wasn't already open
+    setExpandedSections(prev => {
+      const wasOpen = prev[sectionName];
+      return {
+        workplace: false,
+        services: false,
+        [sectionName]: !wasOpen
+      };
+    });
+  };
+
+  return (
+    <>
+      {/* Mobile menu backdrop */}
+      <div 
+        className={`mobile-menu-backdrop ${expanded ? 'show' : ''}`}
+        onClick={() => setExpanded(false)}
+      />
+      
+      {/* Mobile Menu Content */}
+      <div className={`mobile-nav-slider ${expanded ? 'show' : ''}`}>
+        <div className="mobile-nav-container">
+          <Link
+            to="/"
+            className={`nav-link fw-bold ${activeLink === 'who-we-are' ? 'active' : ''}`}
+            onClick={() => handleNavClick('who-we-are')}
+          >
+            WHO WE ARE
+          </Link>
+          
+          {/* OUR WORKPLACE Section */}
+          <div className="mobile-section">
+            <div 
+              className="d-flex justify-content-between align-items-center w-100 mobile-section-header"
+              onClick={(e) => toggleSection('workplace', e)}
+            >
+              <span>OUR WORKPLACE</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="16" 
+                height="16" 
+                fill="currentColor" 
+                className={`bi bi-chevron-down ${expandedSections.workplace ? 'rotate' : ''}`} 
+                viewBox="0 0 16 16"
+              >
+                <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+              </svg>
+            </div>
+            <div className={`mobile-section-content ${expandedSections.workplace ? 'show' : ''}`}>
+              <Link 
+                to="/our-workplace/offices"
+                className="mobile-submenu-item"
+                onClick={() => handleDropdownItemClick('about-us')}
+              >
+                Our Offices
+              </Link>
+              <Link 
+                to="/our-workplace/accredited"
+                className="mobile-submenu-item"
+                onClick={() => handleDropdownItemClick('about-us')}
+              >
+                The RoseBelt Accredited
+              </Link>
+              <Link 
+                to="/our-workplace/values"
+                className="mobile-submenu-item"
+                onClick={() => handleDropdownItemClick('about-us')}
+              >
+                Our Values & Commitments
+              </Link>
+            </div>
+          </div>
+
+          {/* WHAT WE DO Section */}
+          <div className="mobile-section">
+            <div 
+              className="d-flex justify-content-between align-items-center w-100 mobile-section-header"
+              onClick={(e) => toggleSection('services', e)}
+            >
+              <span>WHAT WE DO</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="16" 
+                height="16" 
+                fill="currentColor" 
+                className={`bi bi-chevron-down ${expandedSections.services ? 'rotate' : ''}`} 
+                viewBox="0 0 16 16"
+              >
+                <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+              </svg>
+            </div>
+            <div className={`mobile-section-content ${expandedSections.services ? 'show' : ''}`}>
+              <Link 
+                to="/what-we-do/overview"
+                className="mobile-submenu-item"
+                onClick={() => handleDropdownItemClick('services-overview')}
+              >
+                Overview
+              </Link>
+              <Link 
+                to="/what-we-do/consultants"
+                className="mobile-submenu-item"
+                onClick={() => handleDropdownItemClick('services-consultants')}
+              >
+                RoseBelt Consultants
+              </Link>
+              <Link 
+                to="/what-we-do/health-experts"
+                className="mobile-submenu-item"
+                onClick={() => handleDropdownItemClick('services-health')}
+              >
+                RoseBelt Health Experts
+              </Link>
+              <Link 
+                to="/what-we-do/it-experts"
+                className="mobile-submenu-item"
+                onClick={() => handleDropdownItemClick('services-it')}
+              >
+                RoseBelt IT Experts
+              </Link>
+              <Link 
+                to="/what-we-do/researchers"
+                className="mobile-submenu-item"
+                onClick={() => handleDropdownItemClick('services-researchers')}
+              >
+                RoseBelt Researchers
+              </Link>
+            </div>
+          </div>
+          
+          {/* Our Ideas */}
+          <Link 
+            to="/our-ideas" 
+            className={`nav-link fw-bold ${activeLink === 'ideas' ? 'active' : ''}`}
+            onClick={() => handleNavClick('ideas')}
+          >
+            OUR IDEAS
+          </Link>
+          
+          {/* Join Our Team */}
+          <Link 
+            to="/join-our-team" 
+            className={`nav-link fw-bold ${activeLink === 'careers' ? 'active' : ''}`}
+            onClick={() => handleNavClick('careers')}
+          >
+            JOIN OUR TEAM
+          </Link>
+          
+          {/* Contact */}
+          <Link 
+            to="/contact"
+            className={`nav-link fw-bold ${activeLink === 'contact' ? 'active' : ''}`}
+            onClick={() => handleNavClick('contact')}
+          >
+            CONTACT
+          </Link>
+          
+          {/* Social Media Icons */}
+          <div className="mobile-nav-social-icons">
+            <div className="social-icons-container">
+              <a href="https://www.instagram.com/rosebeltconsultantsglobal/" target="_blank" rel="noopener noreferrer" className="nav-social-icon instagram">
+                <i className="bi bi-instagram"></i>
+              </a>
+              <a href="https://www.facebook.com/share/16QfztW6BQ/" target="_blank" rel="noopener noreferrer" className="nav-social-icon facebook">
+                <i className="bi bi-facebook"></i>
+              </a>
+              <a href="https://wa.me/923051564945" target="_blank" rel="noopener noreferrer" className="nav-social-icon whatsapp">
+                <i className="bi bi-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default MobileNavSlider; 

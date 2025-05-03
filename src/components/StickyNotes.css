@@ -99,6 +99,7 @@
   font-size: 0.95rem;
   line-height: 1.4;
   color: #444;
+  text-align: justify;
 }
 
 /* Add subtle texture to sticky notes */
@@ -200,6 +201,7 @@
   .sticky-content p {
     font-size: 0.9rem;
     line-height: 1.5;
+    text-align: justify;
   }
 
   /* New animations for mobile view */
@@ -262,6 +264,7 @@
   .sticky-content p {
     font-size: 0.85rem;
     line-height: 1.4;
+    text-align: justify;
   }
 
   /* Enhance mobile animations */

@@ -48,6 +48,11 @@
   text-indent: 30px;
 }
 
+/* New class for responsive text alignment */
+.responsive-text-align {
+  text-align: center;
+}
+
 @media (max-width: 991px) {
   .section-heading-container,
   .introduction-content {
@@ -78,6 +83,11 @@
   
   .introduction-content p {
     text-indent: 20px;
+  }
+  
+  /* Text justification for small screens */
+  .responsive-text-align {
+    text-align: justify !important;
   }
 }
 

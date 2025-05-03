@@ -302,7 +302,7 @@ const OurIdeas = () => {
       </Container>
       
       {/* Additional CSS for the page */}
-      <style jsx>{`
+      <style>{`
         .category-badge {
           font-size: 0.8rem;
           text-transform: uppercase;

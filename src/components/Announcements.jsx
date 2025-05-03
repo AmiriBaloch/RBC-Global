@@ -1,10 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from 'react-bootstrap';
-import { FaBullhorn, FaAngleDown, FaAngleUp, FaTimes, FaComment, FaBell, FaExternalLinkAlt, FaRegClock } from 'react-icons/fa';
+import { 
+  FaBullhorn, 
+  FaAngleDown, 
+  FaAngleUp, 
+  FaTimes, 
+  FaComment, 
+  FaBell, 
+  FaExternalLinkAlt, 
+  FaRegClock, 
+  FaEye,
+  FaArrowRight,
+  FaCalendarAlt,
+  FaFireAlt
+} from 'react-icons/fa';
 import { collection, query, orderBy, onSnapshot, limit } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useLocation, Link } from 'react-router-dom';
 import './Announcements.css';
+import { formatDistanceToNow } from 'date-fns';
 
 const Announcements = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,10 +27,66 @@ const Announcements = () => {
   const [loading, setLoading] = useState(true);
   const [isHidden, setIsHidden] = useState(true);
   const [showComponent, setShowComponent] = useState(false);
+  const [activeAnnouncement, setActiveAnnouncement] = useState(null);
+  const [animationPlayed, setAnimationPlayed] = useState(false);
+  const [isFirstVisit, setIsFirstVisit] = useState(false);
+  const announcementRef = useRef(null);
   const location = useLocation();
   
   // Check if we're on the home page
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
+  
+  // Create and manage backdrop
+  useEffect(() => {
+    // Create backdrop element if it doesn't exist
+    if (!document.querySelector('.announcements-backdrop')) {
+      const backdropElement = document.createElement('div');
+      backdropElement.className = 'announcements-backdrop';
+      document.body.appendChild(backdropElement);
+      
+      // Add click event to close announcements when clicking backdrop
+      backdropElement.addEventListener('click', () => {
+        setIsOpen(false);
+        backdropElement.classList.remove('active');
+      });
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      const backdrop = document.querySelector('.announcements-backdrop');
+      if (backdrop) {
+        document.body.removeChild(backdrop);
+      }
+    };
+  }, []);
+  
+  // Update backdrop when opening/closing announcements
+  useEffect(() => {
+    const backdrop = document.querySelector('.announcements-backdrop');
+    if (backdrop) {
+      if (isOpen) {
+        backdrop.classList.add('active');
+      } else {
+        backdrop.classList.remove('active');
+      }
+    }
+  }, [isOpen]);
+  
+  // Check if it's the user's first visit
+  useEffect(() => {
+    const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
+    if (!hasVisitedBefore && isHomePage) {
+      setIsFirstVisit(true);
+      localStorage.setItem('hasVisitedBefore', 'true');
+      
+      // Auto-open announcements and activate backdrop on first visit
+      setIsOpen(true);
+      const backdrop = document.querySelector('.announcements-backdrop');
+      if (backdrop) {
+        backdrop.classList.add('active');
+      }
+    }
+  }, [isHomePage]);
   
   // Show component after 7 seconds, but only on the home page
   useEffect(() => {
@@ -29,7 +99,7 @@ const Announcements = () => {
         setTimeout(() => {
           setIsHidden(false);
         }, 200);
-      }, 7000); // 7 seconds delay
+      }, isFirstVisit ? 1000 : 7000); // Show immediately on first visit, otherwise wait 7 seconds
       
       return () => clearTimeout(timer);
     } else {
@@ -37,7 +107,7 @@ const Announcements = () => {
       setShowComponent(false);
       setIsHidden(true);
     }
-  }, [isHomePage]);
+  }, [isHomePage, isFirstVisit]);
   
   // Fetch announcements from Firestore
   useEffect(() => {
@@ -53,7 +123,8 @@ const Announcements = () => {
     const unsubscribe = onSnapshot(announcementsQuery, (snapshot) => {
       const announcementsData = snapshot.docs.map(doc => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
+        isNew: new Date(doc.data().date?.toDate?.() || doc.data().date) > new Date(Date.now() - 86400000 * 2) // Mark as new if less than 2 days old
       }));
       
       setAnnouncements(announcementsData);
@@ -76,6 +147,13 @@ const Announcements = () => {
   useEffect(() => {
     // Close the announcements box when the route changes
     setIsOpen(false);
+    setActiveAnnouncement(null);
+    
+    // Hide backdrop when route changes
+    const backdrop = document.querySelector('.announcements-backdrop');
+    if (backdrop) {
+      backdrop.classList.remove('active');
+    }
   }, [location]);
 
   // Add scroll event listener to close announcements when scrolling
@@ -83,6 +161,13 @@ const Announcements = () => {
     const handleScroll = () => {
       if (isOpen) {
         setIsOpen(false);
+        setActiveAnnouncement(null);
+        
+        // Hide backdrop when scrolling
+        const backdrop = document.querySelector('.announcements-backdrop');
+        if (backdrop) {
+          backdrop.classList.remove('active');
+        }
       }
     };
 
@@ -102,15 +187,52 @@ const Announcements = () => {
     };
   }, [isOpen]);
 
+  // Add intersection observer to play animation when component is visible
+  useEffect(() => {
+    if (!announcementRef.current || animationPlayed) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !animationPlayed) {
+          setAnimationPlayed(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(announcementRef.current);
+    return () => observer.disconnect();
+  }, [announcementRef, animationPlayed, showComponent]);
+
   // Toggle announcements box
   const toggleAnnouncements = () => {
     setIsOpen(!isOpen);
+    
+    // Toggle backdrop visibility
+    const backdrop = document.querySelector('.announcements-backdrop');
+    if (backdrop) {
+      if (!isOpen) {
+        backdrop.classList.add('active');
+      } else {
+        backdrop.classList.remove('active');
+      }
+    }
+    
+    if (activeAnnouncement) {
+      setActiveAnnouncement(null);
+    }
   };
 
   // Dismiss announcements completely
   const dismissAnnouncements = (e) => {
     e.stopPropagation(); // Prevent the click from toggling the box
     setShowComponent(false);
+    
+    // Hide backdrop when dismissing
+    const backdrop = document.querySelector('.announcements-backdrop');
+    if (backdrop) {
+      backdrop.classList.remove('active');
+    }
   };
 
   // Format date to readable string
@@ -118,7 +240,7 @@ const Announcements = () => {
     if (!date) return '';
     
     const now = new Date();
-    const announcementDate = new Date(date);
+    const announcementDate = new Date(date?.toDate?.() || date);
     
     // If it's today, show "Today" instead of the date
     if (announcementDate.toDateString() === now.toDateString()) {
@@ -140,28 +262,73 @@ const Announcements = () => {
     });
   };
 
+  // View announcement details
+  const viewAnnouncementDetails = (announcement) => {
+    setActiveAnnouncement(announcement);
+  };
+
+  // Close announcement details
+  const closeAnnouncementDetails = (e) => {
+    if (e) e.stopPropagation();
+    setActiveAnnouncement(null);
+  };
+
+  // Get time ago string
+  const getTimeAgo = (date) => {
+    if (!date) return '';
+    
+    const now = new Date();
+    const announcementDate = new Date(date?.toDate?.() || date);
+    const diffInSeconds = Math.floor((now - announcementDate) / 1000);
+    
+    if (diffInSeconds < 60) {
+      return 'Just now';
+    } else if (diffInSeconds < 3600) {
+      const minutes = Math.floor(diffInSeconds / 60);
+      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    } else if (diffInSeconds < 86400) {
+      const hours = Math.floor(diffInSeconds / 3600);
+      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    } else {
+      return formatDate(date);
+    }
+  };
+
+  // Get the class names for the announcements box
+  const getAnnouncementsClasses = () => {
+    let classes = 'announcements-box modern-style';
+    
+    if (isOpen) classes += ' open';
+    else classes += ' closed';
+    
+    if (isHidden) classes += ' hidden';
+    if (animationPlayed) classes += ' animation-played';
+    if (isFirstVisit) classes += ' first-visit';
+    
+    return classes;
+  };
+
   // If not on home page, or no announcements and not loading, or component is dismissed, don't render anything
   if (!isHomePage || (!loading && !latestAnnouncement) || !showComponent) return null;
 
   return (
-    <div className={`announcements-box comment-style ${isOpen ? 'open' : 'closed'} ${isHidden ? 'hidden' : ''}`}>
+    <div 
+      ref={announcementRef}
+      className={getAnnouncementsClasses()}
+    >
       <div className="announcements-header" onClick={toggleAnnouncements}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <FaBell className="bell-icon-animated" style={{ marginRight: '10px' }} />
-          <span className="announcement-text-animated">Announcements</span>
-          {announcements.length > 0 && 
-            <span style={{ 
-              fontSize: '0.7rem', 
-              background: 'rgba(255,255,255,0.3)', 
-              borderRadius: '10px', 
-              padding: '2px 6px', 
-              marginLeft: '8px' 
-            }}>
-              {announcements.length}
-            </span>
-          }
+        <div className="header-content">
+          <div className="header-icon-container">
+            <FaBullhorn className="header-icon" />
+          </div>
+          <div className="header-text">
+            <span className="announcement-title-text">Announcements</span>
+            {announcements.length > 0 && 
+              <span className="announcement-count">{announcements.length}</span>
+            }
+          </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div className="header-actions">
           <Button 
             variant="link" 
             className="dismiss-button"
@@ -170,7 +337,7 @@ const Announcements = () => {
           >
             <FaTimes />
           </Button>
-          {isOpen ? <FaAngleDown style={{ marginLeft: '5px' }} /> : <FaAngleUp style={{ marginLeft: '5px' }} />}
+          {isOpen ? <FaAngleDown className="toggle-icon" /> : <FaAngleUp className="toggle-icon" />}
         </div>
       </div>
       
@@ -184,89 +351,137 @@ const Announcements = () => {
         </div>
       ) : (
         <>
-          {!isOpen && latestAnnouncement && (
+          {!isOpen && latestAnnouncement && !activeAnnouncement && (
             <div className="latest-announcement" onClick={toggleAnnouncements}>
+              {latestAnnouncement.isNew && <div className="announcement-badge"></div>}
               <h6 className="announcement-title">
+                {latestAnnouncement.isNew && (
+                  <span className="new-label">New</span>
+                )}
                 {latestAnnouncement.title}
               </h6>
               <p className="announcement-preview">
                 {latestAnnouncement.content}
               </p>
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                fontSize: '0.7rem', 
-                color: '#9aa0a8',
-                marginTop: '4px'
-              }}>
-                <FaRegClock style={{ marginRight: '4px', fontSize: '0.65rem' }} />
-                {formatDate(latestAnnouncement.date)}
+              <div className="announcement-meta">
+                <FaRegClock className="meta-icon" />
+                <span className="meta-text">{getTimeAgo(latestAnnouncement.date)}</span>
+                <span className="view-more">
+                  View details <FaArrowRight className="arrow-icon" />
+                </span>
               </div>
             </div>
           )}
           
-          {isOpen && (
-            <>
-              <div className="announcements-content">
-                {announcements.length > 0 ? (
-                  announcements.map(announcement => (
-                    <div key={announcement.id} className="announcement-item">
-                      <h6 className="announcement-title">
-                        {announcement.title}
-                      </h6>
-                      <p>
-                        {announcement.content}
+          {isOpen && !activeAnnouncement && (
+            <div className="announcements-content">
+              {announcements.length > 0 ? (
+                announcements.map(announcement => (
+                  <div 
+                    key={announcement.id} 
+                    className={`announcement-item ${announcement.isNew ? 'new-announcement' : ''}`}
+                    onClick={() => viewAnnouncementDetails(announcement)}
+                  >
+                    <div className="announcement-content">
+                      <div className="announcement-header">
+                        <h6 className="announcement-title">
+                          {announcement.isNew && (
+                            <span className="new-label">New</span>
+                          )}
+                          {announcement.title}
+                        </h6>
+                        {announcement.isNew && <FaFireAlt className="hot-icon" />}
+                      </div>
+                      <p className="announcement-text">
+                        {announcement.content.length > 120 
+                          ? `${announcement.content.substring(0, 120)}...` 
+                          : announcement.content
+                        }
                       </p>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <small className="text-muted">
-                          <FaRegClock style={{ marginRight: '4px', fontSize: '0.7rem' }} />
-                          {formatDate(announcement.date)}
-                        </small>
-                        <Link to="/join-our-team">
-                          <Button 
-                            variant="primary" 
-                            size="sm"
-                            className="apply-now-button"
-                            style={{
-                              backgroundColor: '#f59e0b',
-                              borderColor: '#f59e0b',
-                              color: 'white',
-                              padding: '4px 12px',
-                              borderRadius: '20px',
-                              fontSize: '0.8rem',
-                              fontWeight: '600',
-                              transition: 'all 0.3s ease'
-                            }}
+                      <div className="announcement-item-footer">
+                        <div className="announcement-meta">
+                          <FaCalendarAlt className="meta-icon" />
+                          <span className="meta-text">{getTimeAgo(announcement.date)}</span>
+                        </div>
+                        <div className="announcement-actions">
+                          {announcement.content.length > 120 && (
+                            <Button 
+                              variant="link" 
+                              className="view-details-button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                viewAnnouncementDetails(announcement);
+                              }}
+                            >
+                              <FaEye className="button-icon" />
+                              <span>View</span>
+                            </Button>
+                          )}
+                          <Link 
+                            to="/join-our-team"
+                            onClick={(e) => e.stopPropagation()}
                           >
-                            Apply Now
-                          </Button>
-                        </Link>
+                            <Button 
+                              variant="primary" 
+                              size="sm"
+                              className="apply-now-button"
+                            >
+                              Apply Now
+                            </Button>
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <p className="text-center text-muted">No announcements available</p>
-                )}
-              </div>
-              
-              <div className="announcement-actions">
+                  </div>
+                ))
+              ) : (
+                <div className="no-announcements">
+                  <div className="no-data-icon">
+                    <FaBell />
+                  </div>
+                  <p>No announcements available</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeAnnouncement && (
+            <div className="announcement-detail-view">
+              <div className="detail-header">
+                <h5 className="detail-title">
+                  {activeAnnouncement.isNew && (
+                    <span className="new-label-detail">New</span>
+                  )}
+                  {activeAnnouncement.title}
+                </h5>
                 <Button 
-                  size="sm" 
                   variant="link" 
-                  className="view-all-button"
+                  className="close-detail-button"
+                  onClick={closeAnnouncementDetails}
                 >
-                  View All <FaExternalLinkAlt style={{ fontSize: '0.7rem', marginLeft: '4px' }} />
-                </Button>
-                <Button 
-                  size="sm" 
-                  variant="link" 
-                  onClick={toggleAnnouncements}
-                  className="close-button"
-                >
-                  Close
+                  <FaTimes />
                 </Button>
               </div>
-            </>
+              <div className="detail-content">
+                <p className="detail-text">{activeAnnouncement.content}</p>
+                <div className="detail-meta">
+                  <FaCalendarAlt className="meta-icon" />
+                  <span className="meta-text">{formatDate(activeAnnouncement.date)}</span>
+                  <span className="detail-time-ago">({getTimeAgo(activeAnnouncement.date)})</span>
+                </div>
+                <div className="detail-actions">
+                  <Link to="/join-our-team">
+                    <Button 
+                      variant="primary" 
+                      className="apply-now-button-large"
+                    >
+                      <span className="button-text">Apply Now</span>
+                      <FaArrowRight className="button-icon-right" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
           )}
         </>
       )}
