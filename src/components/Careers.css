@@ -178,35 +178,281 @@
 }
 
 /* Application Form */
-.application-form-card {
-  border: none;
-  border-radius: 12px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+.application-form-section {
+  position: relative;
+  z-index: 1000;
+  background-color: var(--page-bg);
+  width: 100%;
+  margin: 0;
+  padding: 20px 0;
 }
 
-.dark-mode .application-form-card {
-  background-color: #2a2a3e;
-  color: #ffffff;
+#applicationForm {
+  scroll-margin-top: 60px;
+  visibility: visible !important;
+  display: block !important;
+  opacity: 1 !important;
+  z-index: 1000;
+  width: 100%;
 }
 
-.application-form-card .form-label {
+/* Form Controls */
+.form-control {
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  -webkit-appearance: none;
+  margin-bottom: 15px;
+}
+
+.form-control:focus {
+  border-color: #2AA96B;
+  box-shadow: 0 0 0 0.25rem rgba(42, 169, 107, 0.25);
+}
+
+textarea.form-control {
+  min-height: 100px;
+}
+
+/* Submit Button */
+.submit-button {
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+  background-color: #2AA96B;
+  border-color: #2AA96B;
+  border-radius: 8px;
+  margin-top: 20px;
+  -webkit-appearance: none;
+  transition: all 0.3s ease;
+}
+
+.submit-button:disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.submit-button:not(:disabled):hover {
+  background-color: #228c58;
+  border-color: #228c58;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.submit-button:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+/* Loading State */
+.submit-button.loading {
+  position: relative;
+  color: transparent;
+}
+
+.submit-button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+  .application-form-section {
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    margin: 0;
+    background-color: var(--page-bg);
+  }
+
+  #applicationForm {
+    scroll-margin-top: 30px;
+    padding: 10px;
+    width: 100%;
+    margin: 0;
+    position: relative;
+    z-index: 1000;
+  }
+
+  .application-form-section .container {
+    padding: 0 10px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .form-control {
+    font-size: 16px !important;
+    padding: 12px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Improve form field spacing */
+  .form-group {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  /* Stack form fields properly */
+  .application-form-section .row > [class*="col-"] {
+    padding: 0 10px;
+    margin-bottom: 10px;
+  }
+
+  .form-label {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .submit-button {
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 15px;
+    height: auto;
+    min-height: 48px;
+  }
+
+  /* Improve form readability on mobile */
+  .application-form-section .p-4 {
+    padding: 15px !important;
+  }
+
+  /* Make form full width on mobile */
+  .application-form-section .col-md-10 {
+    padding: 0;
+  }
+
+  /* Stack form fields vertically on mobile */
+  .application-form-section .row {
+    margin: 0;
+  }
+
+  .application-form-section [class*="col-"] {
+    padding: 0;
+  }
+
+  /* Fix iOS zoom on input focus */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Add some spacing between stacked fields */
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  /* Mobile-specific button enhancements */
+  .apply-now-btn, 
+  .contact-btn {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* Remove default mobile highlight */
+    padding: 12px 20px !important; /* Larger touch target */
+    font-size: 16px !important;
+    touch-action: manipulation; /* Optimize for touch */
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    margin: 10px 0;
+    width: auto;
+    min-width: 160px; /* Ensure buttons are wide enough to tap */
+  }
+  
+  /* Add active state for touch feedback */
+  .apply-now-btn:active, 
+  .contact-btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+  
+  /* Ensure Contact Us button works properly */
+  .contact-btn {
+    display: inline-block !important;
+    width: auto !important;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  /* Fix stacking order of buttons on mobile */
+  .contact-btn, 
+  .apply-now-btn {
+    position: relative;
+    z-index: 1000;
+  }
+}
+
+/* iOS Specific Fixes */
+@supports (-webkit-touch-callout: none) {
+  .form-control {
+    -webkit-appearance: none;
+    border-radius: 8px;
+  }
+
+  /* Prevent zoom on iOS */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Fix iOS button appearance */
+  .submit-button {
+    -webkit-appearance: none;
+    border-radius: 8px;
+  }
+}
+
+/* Ensure form is always visible */
+.application-form-section {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Add smooth transitions */
+.application-form-section {
+  transition: all 0.3s ease;
+}
+
+/* Improve form field spacing */
+.form-group:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+/* Make text more readable */
+.form-label {
   font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
 }
 
-.dark-mode .application-form-card .form-control {
-  background-color: #1a1a2e;
-  border-color: #3a3a4e;
-  color: #ffffff;
+.text-muted {
+  font-size: 0.875rem;
 }
 
-.dark-mode .application-form-card .form-control:focus {
-  background-color: #1a1a2e;
-  border-color: #4CAF50;
-  color: #ffffff;
-}
-
-.dark-mode .application-form-card .form-text {
-  color: #e0e0e0;
+/* Add hover effects to form fields */
+.form-control:hover {
+  border-color: #2AA96B;
 }
 
 /* Responsive Adjustments */
