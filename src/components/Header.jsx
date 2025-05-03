@@ -37,7 +37,7 @@ const Header = () => {
         setExpanded(false);
       }
       
-      console.log("Window width:", windowWidth, "isMobile:", newIsMobile);
+      
     };
 
     // Initial check
@@ -149,7 +149,7 @@ const Header = () => {
 
   // Remove the useEffect for the burger button click since we now use onClick directly
   useEffect(() => {
-    console.log("Current expanded state:", expanded);
+    
     
     // Toggle body scroll lock when mobile menu is expanded
     if (expanded) {
@@ -169,13 +169,13 @@ const Header = () => {
 
   // Replace the toggleMobileMenu function with a simpler direct approach
   const openMobileMenu = () => {
-    console.log("DIRECTLY SETTING expanded to TRUE");
+    
     document.body.style.overflow = "hidden"; // Prevent background scrolling
     setExpanded(true);
   };
 
   const closeMobileMenu = () => {
-    console.log("DIRECTLY SETTING expanded to FALSE");
+    
     document.body.style.overflow = ""; // Restore scrolling
     setExpanded(false);
   };
@@ -199,7 +199,7 @@ const Header = () => {
         sticky="top"
         expanded={expanded}
         onToggle={(isExpanded) => {
-          console.log("Navbar onToggle called with", isExpanded);
+          
           // Don't use this to set expanded state since we're managing it ourselves
           // Only handle collapse state if needed
           if (!isExpanded) {
@@ -247,7 +247,7 @@ const Header = () => {
               }}
               onClick={(e) => {
                 e.stopPropagation(); // Prevent event bubbling
-                console.log("Hamburger button clicked, current expanded state:", expanded);
+                
                 // Toggle between states
                 if (expanded) {
                   closeMobileMenu();
@@ -374,16 +374,7 @@ const Header = () => {
                     JOIN OUR TEAM
                   </Link>
                   
-                  {/* Contact - as a button on desktop */}
-                  <Button 
-                    variant="link"
-                    as={Link}
-                    to="/contact"
-                    className={`nav-link fw-bold connect-button ${activeLink === 'contact' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('contact')}
-                  >
-                    Contact
-                  </Button>
+
                 </Nav>
               </div>
             </Navbar.Collapse>

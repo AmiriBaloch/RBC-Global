@@ -8,7 +8,7 @@ const AboutUsSimple = () => {
   const [selectedOffice, setSelectedOffice] = useState('Lahore');
   
   useEffect(() => {
-    console.log("AboutUsSimple component mounted");
+    
     document.title = "About Us | Rosebelt Consultants";
   }, []);
 
@@ -146,36 +146,7 @@ const AboutUsSimple = () => {
           </Row>
         </section>
 
-        {/* CTA Section */}
-        <section className="about-section py-5 mb-0 text-white" style={{ backgroundColor: '#333333', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)' }}>
-          <Container>
-            <Row className="justify-content-center">
-              <Col md={8} className="text-center">
-                <h2 className="mb-3">Ready to <span style={{ color: '#f59e0b' }}>Transform</span> Your Business?</h2>
-                <p className="lead mb-4">
-                  Partner with Rosebelt Consultants and unlock your organization's full potential.
-                </p>
-                <div>
-                  <Button 
-                    variant="outline-light"
-                    size="lg" 
-                    href="/contact"
-                    className="contact-btn"
-                    style={{
-                      backgroundColor: 'transparent', 
-                      borderColor: '#f59e0b',
-                      color: '#f59e0b',
-                      padding: '10px 25px',
-                      borderRadius: '30px'
-                    }}
-                  >
-                    Contact Us Today
-                  </Button>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </section>
+
       </Container>
     </div>
   );

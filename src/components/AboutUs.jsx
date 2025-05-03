@@ -23,7 +23,7 @@ import image3 from '../assets/3.png';
 
 const AboutUs = () => {
   useEffect(() => {
-    console.log("AboutUs component mounted");
+    
     document.title = "About Us | Rosebelt Consultants";
   }, []);
 
@@ -511,18 +511,7 @@ const AboutUs = () => {
         </Container>
       </section>
 
-      {/* CTA Section */}
-      <section className="about-section">
-        <Container>
-          <Row className="justify-content-center">
-            <Col md={8} className="text-center cta-content">
-              <h2>Ready to Transform Your Business?</h2>
-              <p className="lead mb-4">Partner with Rosebelt Consultants and unlock your organization's full potential.</p>
-              <Button variant="success" size="lg" href="/contact">Contact Us Today</Button>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+
     </div>
   );
 };

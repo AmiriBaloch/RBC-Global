@@ -16,7 +16,7 @@ const MobileNavSlider = ({
 
   // Close all sections when mobile menu is closed
   useEffect(() => {
-    console.log("MobileNavSlider expanded state:", expanded);
+    
     
     if (!expanded) {
       setExpandedSections({
@@ -30,7 +30,7 @@ const MobileNavSlider = ({
   const handleBackdropClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("Backdrop clicked, directly closing menu");
+    
     setExpanded(false);
   };
 
@@ -68,7 +68,7 @@ const MobileNavSlider = ({
     });
   };
 
-  console.log("Rendering MobileNavSlider with expanded:", expanded);
+  
 
   return (
     <>
@@ -239,16 +239,6 @@ const MobileNavSlider = ({
             style={{ '--item-index': 4 }}
           >
             JOIN OUR TEAM
-          </Link>
-          
-          {/* Contact */}
-          <Link 
-            to="/contact"
-            className={`nav-link ${activeLink === 'contact' ? 'active' : ''}`}
-            onClick={() => handleNavClick('contact')}
-            style={{ '--item-index': 5 }}
-          >
-            CONTACT
           </Link>
           
           {/* Social Media Icons */}

@@ -147,6 +147,13 @@
   color: #ffffff;
 }
 
+/* Preserve line breaks in job descriptions */
+.job-description {
+  white-space: pre-line;
+  word-break: break-word;
+  line-height: 1.6;
+}
+
 .job-meta {
   display: flex;
   flex-wrap: wrap;
@@ -181,7 +188,7 @@
 .application-form-section {
   position: relative;
   z-index: 1000;
-  background-color: var(--page-bg);
+  background-color: #e4ebf2;
   width: 100%;
   margin: 0;
   padding: 20px 0;
@@ -197,23 +204,31 @@
 }
 
 /* Form Controls */
-.form-control {
+.form-control, .form-select {
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
   font-size: 16px;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #ddd;
-  background-color: #fff;
   -webkit-appearance: none;
   margin-bottom: 15px;
 }
 
-.form-control:focus {
+.form-control:focus,
+.form-select:focus {
   border-color: #2AA96B;
   box-shadow: 0 0 0 0.25rem rgba(42, 169, 107, 0.25);
 }
 
 textarea.form-control {
   min-height: 100px;
+  white-space: pre-line; /* Preserve line breaks */
+}
+
+/* Preserve line breaks in display of submitted text */
+.submitted-text-content {
+  white-space: pre-line;
+  word-break: break-word;
 }
 
 /* Submit Button */
@@ -297,7 +312,8 @@ textarea.form-control {
     margin: 0 auto;
   }
 
-  .form-control {
+  .form-control,
+  .form-select {
     font-size: 16px !important;
     padding: 12px;
     margin-bottom: 10px;
@@ -402,7 +418,8 @@ textarea.form-control {
 
 /* iOS Specific Fixes */
 @supports (-webkit-touch-callout: none) {
-  .form-control {
+  .form-control,
+  .form-select {
     -webkit-appearance: none;
     border-radius: 8px;
   }
@@ -451,7 +468,8 @@ textarea.form-control {
 }
 
 /* Add hover effects to form fields */
-.form-control:hover {
+.form-control:hover,
+.form-select:hover {
   border-color: #2AA96B;
 }
 
@@ -536,4 +554,225 @@ textarea.form-control {
   .text-muted {
     color: #888888 !important;
   }
-} 
+}
+
+/* Application Form Styles */
+.application-form-section {
+  background-color: #E3EBF2;
+}
+
+.application-form-container {
+  width: 100%;
+}
+
+.application-form-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Mobile Form Overlay */
+.mobile-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.mobile-form-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e4ebf2;
+  padding: 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modern-mobile-container {
+  background-color: #e4ebf2;
+  padding-top: 60px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .modern-mobile-container {
+    background-color: #1c1c1c;
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .application-form-card {
+    border-radius: 0;
+    box-shadow: none;
+  }
+  
+  /* Make sure all form inputs are large enough for mobile */
+  .form-control, 
+  .form-select {
+    font-size: 16px;
+    padding: 12px;
+    height: auto;
+  }
+  
+  /* Ensure buttons are easy to tap */
+  .btn {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+  
+  /* Stack form columns on mobile */
+  .application-form-container .row [class*="col-"] {
+    margin-bottom: 15px;
+  }
+  
+  /* Mobile form fixed position */
+  body.form-open {
+    overflow: hidden;
+  }
+}
+
+/* Button styles */
+.contact-btn:hover {
+  background-color: #f59e0b !important;
+  color: #333333 !important;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+}
+
+.btn-success,
+button[style*="backgroundColor: '#2AA96B'"] {
+  transition: all 0.3s ease;
+}
+
+.btn-success:hover,
+button[style*="backgroundColor: '#2AA96B'"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(42, 169, 107, 0.3);
+}
+
+/* Guaranteed mobile button styles */
+@media (max-width: 767px) {
+  a.btn, a.contact-btn, button.btn {
+    -webkit-appearance: none !important;
+    -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+    display: inline-block !important;
+    text-align: center !important;
+    touch-action: manipulation !important;
+    user-select: none !important;
+    border-radius: 8px !important;
+    transition: none !important;
+    position: relative !important;
+    z-index: 9999 !important;
+    cursor: pointer !important;
+    font-size: 16px !important;
+    padding: 12px 20px !important;
+    margin: 10px auto !important;
+    width: auto !important;
+    min-width: 160px !important;
+    max-width: 100% !important;
+  }
+  
+  a.contact-btn {
+    color: #f59e0b !important;
+    background-color: transparent !important;
+    border: 1px solid #f59e0b !important;
+    text-decoration: none !important;
+  }
+  
+  a.btn-success, button.apply-now-btn {
+    background-color: #2AA96B !important;
+    border-color: #2AA96B !important;
+    color: white !important;
+  }
+  
+  /* Make clickable areas large and obvious */
+  a.btn:before, a.contact-btn:before, button.btn:before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: -1;
+  }
+  
+  /* Clear any conflicting styles */
+  .mobile-form-overlay, 
+  .mobile-form-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 99999 !important;
+  }
+  
+  /* Mobile form enhancements */
+  .mobile-form-container .application-form-card {
+    margin-top: 40px;
+  }
+}
+
+/* Application Form Styles */
+
+/* Button Styles */
+.submit-button {
+  background-color: #2AA96B;
+  border-color: #2AA96B;
+  color: white;
+}
+
+/* Placeholder Color */
+::placeholder {
+  color: #878774 !important;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: #878774 !important;
+}
+
+::-ms-input-placeholder {
+  color: #878774 !important;
+}
+
+/* Empty option styling */
+select option[value=""] {
+  color: #878774;
+}
+
+/* Responsive Button Styling */
+@media (max-width: 576px) {
+  .btn, .btn-sm, a.btn, button.btn {
+    font-size: 0.85rem !important;
+    padding: 6px 12px !important;
+  }
+  
+  .application-form-container .btn {
+    margin-top: 5px;
+  }
+  
+  /* Keep buttons on same row but reduce margins */
+  .d-flex.justify-content-end {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .d-flex.justify-content-end .btn {
+    flex: 0 1 auto;
+  }
+}
+
+ 

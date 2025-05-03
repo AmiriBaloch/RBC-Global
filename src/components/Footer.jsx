@@ -10,7 +10,7 @@ const Footer = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     // Implement search functionality here
-    console.log('Search query:', searchQuery);
+    
   };
 
   return (
@@ -34,7 +34,7 @@ const Footer = () => {
               <li><Link to="/services">Services</Link></li>
               <li><Link to="/projects">Projects</Link></li>
               <li><Link to="/careers">Careers</Link></li>
-              <li><Link to="/contact">Contact</Link></li>
+
             </ul>
           </Col>
 

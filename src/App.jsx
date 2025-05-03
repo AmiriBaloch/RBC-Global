@@ -13,7 +13,7 @@ import StickyNotes from './components/StickyNotes';
 import Projects from './components/Projects';
 import FeaturedProjects from './components/FeaturedProjects';
 import WhereWeStand from './components/WhereWeStand';
-import ContactUs from './components/ContactUs';
+// ContactUs component has been removed
 import ClientsTicker from './components/ClientsTicker';
 import AboutUsSimple from './components/AboutUsSimple';
 import Team from './components/Team';
@@ -93,6 +93,8 @@ const ArticleDetails = () => {
 const AllArticles = () => {
   return <ComingSoon title="All Articles" />;
 };
+
+// Contact Us page has been removed
 
 // Home page content component for About/Overview page
 export const HomePageContent = () => {
@@ -208,8 +210,8 @@ function App() {
             {/* Legacy CAREERS route for backward compatibility */}
             <Route path="/careers" element={<Navigate to="/join-our-team" replace />} />
             
-            {/* CONTACT route */}
-            <Route path="/contact" element={<ContactUs />} />
+            {/* CONTACT route - redirect to home */}
+            <Route path="/contact" element={<Navigate to="/" replace />} />
             
             {/* Other main routes */}
             <Route path="/projects" element={<Projects />} />

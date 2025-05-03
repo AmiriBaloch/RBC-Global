@@ -4,34 +4,403 @@ import { FaBriefcase } from 'react-icons/fa';
 import { collection, addDoc, query, orderBy, getDocs, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import Swal from 'sweetalert2';
-import MobileApplicationForm from './MobileApplicationForm';
+// MobileApplicationForm component has been removed
 import './Careers.css';
 import './shared.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import handleApplyNow from '../utils/applyNowHandler';
 
-const Careers = () => {
+// Application Form component
+const ApplicationForm = ({ position = '', onClose }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
+    fullName: '',
+    fatherName: '',
     cnic: '',
+    email: '',
     position: '',
     qualification: '',
+    experience: '',
     address: '',
     district: '',
     tehsil: '',
-    experience: '',
-    uc: '',
-    coverLetter: '',
-    submittedAt: ''
+    unionCouncil: '',
+    coverLetter: ''
   });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+  
+  useEffect(() => {
+    // Update position if it changes
+    if (position) {
+      setFormData(prev => ({ ...prev, position }));
+    }
+  }, [position]);
+  
+  const positions = [
+    'District Manager',
+    'Trainer',
+    'Supervisor',
+    'Surveyor'
+  ];
+  
+  const experiences = ['0', '1', '2', '3', '4', '5'];
+  
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
+    if (!formData.fatherName.trim()) newErrors.fatherName = 'Father name is required';
+    if (!formData.cnic.trim()) newErrors.cnic = 'CNIC is required';
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
+      newErrors.email = 'Valid email is required';
+    }
+    
+    if (!formData.qualification.trim()) newErrors.qualification = 'Qualification is required';
+    if (!formData.position.trim()) newErrors.position = 'Position is required';
+    if (!formData.experience.trim()) newErrors.experience = 'Experience is required';
+    if (!formData.address.trim()) newErrors.address = 'Address is required';
+    if (!formData.district.trim()) newErrors.district = 'District is required';
+    if (!formData.tehsil.trim()) newErrors.tehsil = 'Tehsil is required';
+    if (!formData.unionCouncil.trim()) newErrors.unionCouncil = 'Union Council is required';
+    if (!formData.coverLetter.trim()) newErrors.coverLetter = 'Cover letter is required';
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+  
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // Clear error for this field if it exists
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: undefined
+      }));
+    }
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      // Scroll to the first error
+      const firstErrorField = document.querySelector('.is-invalid');
+      if (firstErrorField) {
+        firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      // Determine which collection to use based on position
+      const collectionName = formData.position.replace(/\s+/g, '');
+      
+      await addDoc(collection(db, collectionName), {
+        ...formData,
+        createdAt: new Date()
+      });
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Application Submitted!',
+        text: 'Thank you for your application. We will get back to you soon.',
+        confirmButtonColor: '#2AA96B'
+      });
+      
+      // Reset form
+      resetForm();
+      
+      // Close form if callback exists
+      if (onClose) onClose();
+      
+    } catch (error) {
+      console.error("Error submitting application:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Submission Failed',
+        text: 'There was an error submitting your application. Please try again.',
+        confirmButtonColor: '#dc3545'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  
+  // Reset form
+  const resetForm = () => {
+    setFormData({
+      fullName: '',
+      fatherName: '',
+      cnic: '',
+      email: '',
+      position: '',
+      qualification: '',
+      experience: '',
+      address: '',
+      district: '',
+      tehsil: '',
+      unionCouncil: '',
+      coverLetter: ''
+    });
+  };
+  
+  // Label with red star
+  const FormLabel = ({ children }) => (
+    <Form.Label style={{ color: '#000000', fontWeight: '500', marginBottom: '8px' }}>
+      {children} <span style={{ color: 'red' }}>*</span>
+    </Form.Label>
+  );
+  
+  return (
+    <div className="application-form-container" style={{ marginTop: 0 }}>
+      <Card className="application-form-card" style={{ border: '1px solid #dee2e6', backgroundColor: '#e4ebf2' }}>
+        <Card.Body>
+          <Form onSubmit={handleSubmit}>
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <FormLabel>Full Name</FormLabel>
+                  <Form.Control
+                    type="text"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleInputChange}
+                    isInvalid={!!errors.fullName}
+                    placeholder="Enter your full name"
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.fullName}</Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <FormLabel>Father Name</FormLabel>
+                  <Form.Control
+                    type="text"
+                    name="fatherName"
+                    value={formData.fatherName}
+                    onChange={handleInputChange}
+                    isInvalid={!!errors.fatherName}
+                    placeholder="Enter your father's name"
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.fatherName}</Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+            
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <FormLabel>CNIC</FormLabel>
+                  <Form.Control
+                    type="text"
+                    name="cnic"
+                    value={formData.cnic}
+                    onChange={handleInputChange}
+                    isInvalid={!!errors.cnic}
+                    placeholder="00000-0000000-0"
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.cnic}</Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <FormLabel>Email</FormLabel>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    isInvalid={!!errors.email}
+                    placeholder="Enter your email address"
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+            
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <FormLabel>Position</FormLabel>
+                  <Form.Select
+                    name="position"
+                    value={formData.position}
+                    onChange={handleInputChange}
+                    isInvalid={!!errors.position}
+                  >
+                    <option value="">Select your position</option>
+                    {positions.map(pos => (
+                      <option key={pos} value={pos}>{pos}</option>
+                    ))}
+                  </Form.Select>
+                  <Form.Control.Feedback type="invalid">{errors.position}</Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <FormLabel>Qualification</FormLabel>
+                  <Form.Control
+                    type="text"
+                    name="qualification"
+                    value={formData.qualification}
+                    onChange={handleInputChange}
+                    isInvalid={!!errors.qualification}
+                    placeholder="Enter your qualification"
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.qualification}</Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+            
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <FormLabel>Experience (Years)</FormLabel>
+                  <Form.Select
+                    name="experience"
+                    value={formData.experience}
+                    onChange={handleInputChange}
+                    isInvalid={!!errors.experience}
+                  >
+                    <option value="">Select years of experience</option>
+                    {experiences.map(exp => (
+                      <option key={exp} value={exp}>{exp}</option>
+                    ))}
+                  </Form.Select>
+                  <Form.Control.Feedback type="invalid">{errors.experience}</Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <FormLabel>Address</FormLabel>
+                  <Form.Control
+                    type="text"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
+                    isInvalid={!!errors.address}
+                    placeholder="Enter your address"
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.address}</Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+            
+            <Row>
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <FormLabel>District</FormLabel>
+                  <Form.Control
+                    type="text"
+                    name="district"
+                    value={formData.district}
+                    onChange={handleInputChange}
+                    isInvalid={!!errors.district}
+                    placeholder="Enter your district"
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.district}</Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <FormLabel>Tehsil</FormLabel>
+                  <Form.Control
+                    type="text"
+                    name="tehsil"
+                    value={formData.tehsil}
+                    onChange={handleInputChange}
+                    isInvalid={!!errors.tehsil}
+                    placeholder="Enter your tehsil"
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.tehsil}</Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <FormLabel>Union Council</FormLabel>
+                  <Form.Control
+                    type="text"
+                    name="unionCouncil"
+                    value={formData.unionCouncil}
+                    onChange={handleInputChange}
+                    isInvalid={!!errors.unionCouncil}
+                    placeholder="Enter your union council"
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.unionCouncil}</Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+            
+            <Form.Group className="mb-3">
+              <FormLabel>Cover Letter</FormLabel>
+              <Form.Control
+                as="textarea"
+                rows={4}
+                name="coverLetter"
+                value={formData.coverLetter}
+                onChange={handleInputChange}
+                isInvalid={!!errors.coverLetter}
+                placeholder="Tell us why you are interested in this position and why you would be a good fit..."
+              />
+              <Form.Control.Feedback type="invalid">{errors.coverLetter}</Form.Control.Feedback>
+            </Form.Group>
+            
+            <div className="d-flex justify-content-end mt-4">
+              {onClose && (
+                <Button 
+                  variant="outline-secondary" 
+                  onClick={onClose}
+                  disabled={isSubmitting}
+                  className="me-2"
+                  size="sm"
+                  style={{ width: 'auto', padding: '8px 16px', fontSize: '0.9rem' }}
+                >
+                  Cancel
+                </Button>
+              )}
+              <Button 
+                variant="success" 
+                type="submit" 
+                style={{ backgroundColor: '#2AA96B', borderColor: '#2AA96B', width: 'auto', padding: '8px 16px', fontSize: '0.9rem' }}
+                disabled={isSubmitting}
+                size="sm"
+              >
+                {isSubmitting ? (
+                  <>
+                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    Submitting...
+                  </>
+                ) : "Submit Application"}
+              </Button>
+            </div>
+          </Form>
+        </Card.Body>
+      </Card>
+    </div>
+  );
+};
+
+const Careers = () => {
+  // Removed form data state
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showApplicationForm, setShowApplicationForm] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
   const [showMobileForm, setShowMobileForm] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState('');
   const [isMobileView, setIsMobileView] = useState(false);
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [permanentlyShowForm, setPermanentlyShowForm] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     document.title = "Careers | Rosebelt Consultants";
@@ -46,8 +415,50 @@ const Careers = () => {
     
     checkMobile();
     window.addEventListener('resize', checkMobile);
+    
+    // Check if we need to show the application form
+    const shouldShowForm = location.hash === '#application-form-section';
+    
+    // Check for position in URL parameters
+    const params = new URLSearchParams(location.search);
+    const positionParam = params.get('position');
+    
+    // If we have a position or hash, show the form
+    if (positionParam || shouldShowForm) {
+      if (positionParam) {
+        setSelectedPosition(positionParam);
+      }
+      
+      setShowApplicationForm(true);
+      setPermanentlyShowForm(true);
+      
+      // Wait for form to be ready then scroll to it
+      setTimeout(() => {
+        const formElement = document.getElementById('application-form-section');
+        if (formElement) {
+          // Use window.scrollTo with offset to account for potential fixed headers
+          window.scrollTo({
+            top: formElement.offsetTop - 50,
+            behavior: 'smooth'
+          });
+        }
+      }, 500);
+    }
+    
+    // Save in sessionStorage to persist across page refreshes
+    if (shouldShowForm || positionParam) {
+      sessionStorage.setItem('showApplicationForm', 'true');
+    }
+
+    // Check sessionStorage when component mounts
+    const savedShowForm = sessionStorage.getItem('showApplicationForm');
+    if (savedShowForm === 'true') {
+      setPermanentlyShowForm(true);
+      setShowApplicationForm(true);
+    }
+    
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  }, [location.search, location.hash]);
 
   const fetchJobs = async () => {
     try {
@@ -67,282 +478,143 @@ const Careers = () => {
     }
   };
 
-  const handleShowForm = (position = '') => {
-    setFormData(prev => ({ ...prev, position }));
-    setShowApplicationForm(true);
-    setTimeout(() => {
-      const form = document.getElementById('applicationForm');
-      if (form) {
-        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
-  };
-
   const handleCloseMobileForm = () => {
+    if (!permanentlyShowForm) {
     setShowMobileForm(false);
     document.body.classList.remove('form-open');
+    }
   };
 
   const handleShowApplicationForm = (jobTitle = '') => {
-    console.log("handleShowApplicationForm called");
-    
-    // Update form data first if job title provided
-    if (jobTitle) {
-      setFormData(prev => ({...prev, position: jobTitle}));
-    }
+    setSelectedPosition(jobTitle || '');
+    setShowApplicationForm(true);
     
     if (isMobileView) {
       // For mobile, show the mobile form instead
-      setSelectedPosition(jobTitle || '');
       setShowMobileForm(true);
       document.body.classList.add('form-open');
       return;
     }
     
-    // For desktop, continue with normal flow
-    // Set form visibility
-    setShowApplicationForm(true);
-    
-    // Force body scroll to work on mobile
-    document.body.style.overflow = 'auto';
-    document.body.style.position = 'static';
-    
-    // Simple timeout for state update and scroll
+    // Scroll to application form
     setTimeout(() => {
-      const form = document.getElementById('applicationForm');
-      if (form) {
-        // Force form visibility
-        form.style.display = 'block';
-        form.style.visibility = 'visible';
-        form.style.opacity = '1';
-        form.style.zIndex = '9999';
-        
-        // Calculate offset based on viewport height
-        const viewportHeight = window.innerHeight;
-        const offset = viewportHeight < 768 ? 30 : 80;
-        
-        // Scroll to form with offset
-        const formTop = form.getBoundingClientRect().top + window.pageYOffset - offset;
+      const formElement = document.getElementById('application-form-section');
+      if (formElement) {
+        // Use window.scrollTo with offset to account for potential fixed headers
         window.scrollTo({
-          top: formTop,
+          top: formElement.offsetTop - 50,
           behavior: 'smooth'
         });
-        
-        // Focus first input after scroll
-        const firstInput = form.querySelector('input');
-        if (firstInput) {
-          setTimeout(() => {
-            firstInput.focus();
-          }, 500);
-        }
       }
     }, 100);
   };
 
-  const handleCloseForm = () => {
-    setShowApplicationForm(false);
-    document.body.classList.remove('form-open');
-  };
-
   // Single click/touch handler for buttons with improved mobile support
   const handleButtonClick = (e, jobTitle = '') => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log("Button clicked/touched");
+    e.preventDefault(); // Prevent default link behavior
     
-    // Add a small delay to avoid any touch event conflicts
+    // We're already on the Careers page, so use local navigation
+    setSelectedPosition(jobTitle || '');
+    setPermanentlyShowForm(true);
+    setShowApplicationForm(true);
+    
+    // Save in sessionStorage
+    sessionStorage.setItem('showApplicationForm', 'true');
+    
+    // More reliable scrolling technique for all devices
     setTimeout(() => {
-      handleShowApplicationForm(jobTitle);
-    }, 10);
-  };
-
-  const benefits = [
-    {
-      title: 'Professional Growth',
-      description: 'Continuous learning and development opportunities'
-    },
-    {
-      title: 'Work-Life Balance',
-      description: 'Flexible working hours and remote work options'
-    },
-    {
-      title: 'Competitive Package',
-      description: 'Attractive salary and comprehensive benefits'
-    },
-    {
-      title: 'Global Exposure',
-      description: 'Work with international clients and diverse teams'
-    }
-  ];
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-    
-    try {
-      // Validate CNIC format (Pakistani CNIC is 13 digits)
-      const cnicRegex = /^\d{5}-\d{7}-\d{1}$|^\d{13}$/;
-      if (!cnicRegex.test(formData.cnic)) {
-        throw new Error('Please enter a valid CNIC number (13 digits or in format 12345-1234567-1)');
+      try {
+        const formElement = document.getElementById('application-form-section');
+        if (formElement) {
+          // First approach: smooth scroll with offset
+          formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          // As a backup, also use window.scrollTo
+          setTimeout(() => {
+            const yOffset = -50;
+            const y = formElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }, 100);
+        }
+      } catch (error) {
+        console.error("Error scrolling to form:", error);
+        // Fallback method
+        const formY = document.getElementById('application-form-section')?.offsetTop || 1000;
+        window.scrollTo({ top: formY - 50, behavior: 'smooth' });
       }
-
-      // CNIC duplication check removed to allow users to apply for multiple positions
-
-      const submissionData = {
-        ...formData,
-        submittedAt: new Date().toISOString()
-      };
-
-      // Add document to Firebase
-      await addDoc(collection(db, 'talentPool'), submissionData);
-
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        cnic: '',
-        position: '',
-        qualification: '',
-        address: '',
-        district: '',
-        tehsil: '',
-        experience: '',
-        uc: '',
-        coverLetter: '',
-        submittedAt: ''
-      });
-      
-      setShowApplicationForm(false);
-      
-      // Show success message with SweetAlert2
-      Swal.fire({
-        icon: 'success',
-        title: 'Application Submitted!',
-        text: 'Your application has been submitted successfully. We will contact you when relevant opportunities arise.',
-        confirmButtonColor: '#2AA96B',
-        timer: 3000
-      });
-    } catch (error) {
-      console.error('Error submitting application:', error);
-      
-      // Show error message with SweetAlert2
-      Swal.fire({
-        icon: 'error',
-        title: 'Submission Failed',
-        text: error.message || 'We couldn\'t submit your application. Please try again later.',
-        confirmButtonColor: '#d33',
-      });
-    } finally {
-      setSubmitting(false);
-    }
+    }, 200);
   };
 
-  // Add a modified render function for buttons based on device type
-  const renderButton = (type, title, jobTitle = '') => {
-    if (isMobileView) {
-      // For mobile, use direct HTML anchor tags
-      if (type === 'apply') {
+  // Benefits array removed
+
+  // Form-related functions have been removed
+
+  // Update renderButton - make mobile view use the same approach
+  const renderButton = (type, text = '', jobTitle = '') => {
+    if (type === 'apply') {
+      // Use the same button type for all devices
+      return (
+        <Button 
+          variant="success" 
+          className="mt-3 apply-now-btn"
+          size="sm"
+          style={{ 
+            backgroundColor: '#2AA96B', 
+            borderColor: '#2AA96B',
+            width: 'auto',
+            padding: '8px 16px',
+            fontSize: '0.9rem'
+          }}
+          onClick={(e) => handleButtonClick(e, jobTitle)}
+        >
+          {text || 'Apply Now'}
+        </Button>
+      );
+    } else if (type === 'contact') {
+      // For mobile view, create a direct link to contact page
+      if (isMobileView) {
         return (
           <a 
-            href="#" 
-            className="btn btn-success apply-now-btn"
+            href="/contact"
+            className="contact-btn"
             style={{
-              backgroundColor: '#2AA96B',
-              borderColor: '#2AA96B',
-              padding: '12px 20px',
-              fontSize: '16px',
-              fontWeight: '500',
               display: 'inline-block',
+              backgroundColor: 'transparent',
+              color: '#f59e0b',
+              padding: '8px 16px',
               borderRadius: '4px',
               textDecoration: 'none',
-              color: 'white',
-              marginTop: '10px'
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-              setSelectedPosition(jobTitle || '');
-              setShowMobileForm(true);
-              document.body.classList.add('form-open');
-            }}
-          >
-            {title || 'Apply Now'}
-          </a>
-        );
-      } else if (type === 'contact') {
-        return (
-          <a 
-            href="/contact" 
-            className="contact-btn"
-            style={{
-              backgroundColor: 'transparent',
-              borderColor: '#f59e0b',
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              color: '#f59e0b',
-              padding: '12px 20px',
-              fontWeight: '500',
-              fontSize: '16px',
-              display: 'inline-block',
-              borderRadius: '30px',
-              textDecoration: 'none',
-              marginTop: '10px'
+              fontWeight: 'bold',
+              margin: '10px 0',
+              fontSize: '0.9rem',
+              border: '1px solid #f59e0b'
             }}
           >
             Contact Us
           </a>
         );
       }
-    } else {
-      // For desktop, use regular Button components
-      if (type === 'apply') {
-        return (
-          <Button
-            className="apply-now-btn"
-            style={{
-              backgroundColor: '#2AA96B',
-              borderColor: '#2AA96B',
-              transition: 'all 0.3s ease',
-              padding: '10px 20px',
-              fontSize: '16px',
-              fontWeight: '500',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-            }}
-            onClick={(e) => handleButtonClick(e, jobTitle)}
-          >
-            {title || 'Apply Now'}
-          </Button>
-        );
-      } else if (type === 'contact') {
-        return (
-          <Button 
-            variant="outline-light"
-            size="lg" 
-            as={Link}
-            to="/contact"
-            className="contact-btn"
-            style={{
-              backgroundColor: 'transparent', 
-              borderColor: '#f59e0b',
-              color: '#f59e0b',
-              padding: '10px 25px',
-              borderRadius: '30px',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            Contact Us
-          </Button>
-        );
-      }
+      
+      // For desktop view
+      return (
+        <Link
+          to="/contact"
+          className="btn contact-btn"
+          style={{
+            color: '#f59e0b',
+            backgroundColor: 'transparent',
+            borderColor: '#f59e0b',
+            padding: '8px 16px',
+            fontSize: '0.9rem',
+            fontWeight: '500'
+          }}
+        >
+          Contact Us
+        </Link>
+      );
     }
+    
+    return null;
   };
 
   return (
@@ -360,33 +632,6 @@ const Careers = () => {
           </Row>
         </Container>
       </div>
-
-      {/* Benefits Section */}
-      <section className="benefits-section py-5" style={{ backgroundColor: '#E3EBF2' }}>
-        <div className="section-heading-container mb-4" style={{ backgroundColor: '#333333', borderRadius: '4px' }}>
-          <Container>
-            <h2 className="section-heading text-white py-2 px-3">
-              <span style={{ color: '#f59e0b' }}>Why Choose</span> Rosebelt Consultants?
-            </h2>
-          </Container>
-        </div>
-        <Container>
-          <div className="p-4 border rounded mb-4" style={{ backgroundColor: '#ffffff' }}>
-          <Row>
-            {benefits.map((benefit, index) => (
-              <Col md={3} key={index} className="mb-4">
-                  <Card className="benefit-card h-100" style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)', border: '1px solid #dee2e6' }}>
-                  <Card.Body>
-                      <h3 className="h5 mb-3" style={{ color: '#2AA96B', fontWeight: 600 }}>{benefit.title}</h3>
-                    <p className="mb-0">{benefit.description}</p>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-          </div>
-        </Container>
-      </section>
 
       {/* Job Listings Section */}
       <section className="job-listings-section py-5" style={{ backgroundColor: '#E3EBF2' }}>
@@ -441,564 +686,69 @@ const Careers = () => {
                 </Col>
               </Row>
             )}
-            
-            {/* Quick Application Form under Current Openings (replacing Quick Actions) */}
-            {isMobileView && (
-              <div className="mt-4 p-3" style={{ backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
-                <h5 className="text-center mb-3" style={{ color: '#000', fontWeight: 'bold' }}>Quick Application Form</h5>
-                <p className="text-center" style={{ color: '#666', fontSize: '14px' }}>Please fill out the form below to apply for this position.</p>
-                <Form onSubmit={handleSubmit} className="mobile-application-form">
-                  <Row>
-                    <Col xs={12} md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Full Name</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          required
-                          placeholder="Enter your full name"
-                          style={{ backgroundColor: '#333', color: '#fff', border: 'none' }}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xs={12} md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Email</Form.Label>
-                        <Form.Control
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          required
-                          placeholder="Enter your email"
-                          style={{ backgroundColor: '#333', color: '#fff', border: 'none' }}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  
-                  <Row>
-                    <Col xs={12} md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Phone Number</Form.Label>
-                        <Form.Control
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          required
-                          placeholder="Enter your phone number"
-                          style={{ backgroundColor: '#333', color: '#fff', border: 'none' }}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xs={12} md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>CNIC Number</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="cnic"
-                          value={formData.cnic}
-                          onChange={handleInputChange}
-                          required
-                          placeholder="12345-1234567-1"
-                          style={{ backgroundColor: '#333', color: '#fff', border: 'none' }}
-                        />
-                        <Form.Text style={{ fontSize: '12px', color: '#666' }}>
-                          Format: 12345-1234567-1 or 1234512345671
-                        </Form.Text>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  
-                  <Row>
-                    <Col xs={12} md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Position</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="position"
-                          value={formData.position}
-                          onChange={handleInputChange}
-                          required
-                          placeholder="Positions for Trainers"
-                          style={{ backgroundColor: '#333', color: '#fff', border: 'none' }}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xs={12} md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Qualification</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="qualification"
-                          value={formData.qualification}
-                          onChange={handleInputChange}
-                          required
-                          placeholder="Enter your qualification"
-                          style={{ backgroundColor: '#333', color: '#fff', border: 'none' }}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  
-                  <Form.Group className="mb-3">
-                    <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Experience (Years)</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="experience"
-                      value={formData.experience}
-                      onChange={handleInputChange}
-                      required
-                      placeholder="Enter years of experience"
-                      style={{ backgroundColor: '#333', color: '#fff', border: 'none' }}
-                    />
-                  </Form.Group>
-                  
-                  <Form.Group className="mb-3">
-                    <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Address</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleInputChange}
-                      required
-                      placeholder="Enter your address"
-                      style={{ backgroundColor: '#333', color: '#fff', border: 'none' }}
-                    />
-                  </Form.Group>
-                  
-                  <Row>
-                    <Col xs={12} md={4}>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>District</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="district"
-                          value={formData.district}
-                          onChange={handleInputChange}
-                          required
-                          placeholder="District"
-                          style={{ backgroundColor: '#333', color: '#fff', border: 'none' }}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xs={12} md={4}>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Tehsil</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="tehsil"
-                          value={formData.tehsil}
-                          onChange={handleInputChange}
-                          required
-                          placeholder="Tehsil"
-                          style={{ backgroundColor: '#333', color: '#fff', border: 'none' }}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col xs={12} md={4}>
-                      <Form.Group className="mb-3">
-                        <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>UC (Union Council)</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="uc"
-                          value={formData.uc}
-                          onChange={handleInputChange}
-                          required
-                          placeholder="Union Council"
-                          style={{ backgroundColor: '#333', color: '#fff', border: 'none' }}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  
-                  <Form.Group className="mb-3">
-                    <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Cover Letter / Additional Information</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      rows={4}
-                      name="coverLetter"
-                      value={formData.coverLetter}
-                      onChange={handleInputChange}
-                      required
-                      placeholder="Tell us about yourself and why you're interested in this position"
-                      style={{ backgroundColor: '#333', color: '#fff', border: 'none' }}
-                    />
-                  </Form.Group>
-                  
-                  <div className="d-grid gap-2">
-                    <Button 
-                      type="submit" 
-                      className={`submit-button ${submitting ? 'loading' : ''}`}
-                      style={{ 
-                        backgroundColor: '#2AA96B', 
-                        borderColor: '#2AA96B',
-                        transition: 'all 0.3s ease',
-                        padding: '12px 30px',
-                        fontSize: '16px',
-                        fontWeight: '500',
-                        borderRadius: '0'
-                      }}
-                      disabled={submitting}
-                    >
-                      {submitting ? 'Submitting...' : 'Submit Application'}
-                    </Button>
-                  </div>
-                  
-                  {/* Add a direct contact link below the form */}
-                  <div className="text-center mt-3">
-                    <a
-                      href="/contact"
-                      className="btn btn-info"
-                      style={{
-                        width: '100%',
-                        padding: '12px',
-                        fontSize: '16px',
-                        borderRadius: '8px',
-                        color: 'white',
-                        textDecoration: 'none',
-                        backgroundColor: '#f59e0b',
-                        borderColor: '#f59e0b'
-                      }}
-                    >
-                      Navigate to Contact Page
-                    </a>
-                  </div>
-                </Form>
-              </div>
-            )}
           </div>
         </Container>
       </section>
 
-      {/* Application Form Section */}
-      {showApplicationForm && (
-        <section 
-          id="applicationForm" 
-          className="application-form-section py-5" 
-          style={{ 
-            backgroundColor: '#E3EBF2',
-            opacity: 1,
-            transition: 'opacity 0.3s ease'
-          }}
-        >
-          <div className="section-heading-container mb-4" style={{ backgroundColor: '#333333', borderRadius: '4px' }}>
-            <Container>
-              <h2 className="section-heading text-white py-2 px-3">
-                <span style={{ color: '#f59e0b' }}>Application</span> Form
-              </h2>
-            </Container>
-          </div>
+      {/* Application Form Section - Make sure it's always visible */}
+      <section id="application-form-section" className="application-form-section py-5" style={{ 
+        backgroundColor: '#e4ebf2', 
+        paddingTop: 0, 
+        marginTop: '-100px',
+        display: 'block', // Ensure it's always visible
+        opacity: 1,
+        visibility: 'visible'
+      }}>
+        <div className="section-heading-container mb-4" style={{ backgroundColor: '#333333', borderRadius: '4px' }}>
           <Container>
-            <div className="p-4 border rounded mb-4" style={{ backgroundColor: '#ffffff' }}>
-              <Row className="justify-content-center">
-                <Col md={10}>
-                  <p className="text-center text-muted mb-4">
-                    Please fill out the form below to apply for this position.
-                  </p>
-                  <Form onSubmit={handleSubmit}>
-                    <Row>
-                      <Col md={6}>
-                        <Form.Group className="mb-3">
-                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Full Name</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Enter your full name"
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col md={6}>
-                        <Form.Group className="mb-3">
-                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Email</Form.Label>
-                          <Form.Control
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Enter your email"
-                          />
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={6}>
-                        <Form.Group className="mb-3">
-                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Phone Number</Form.Label>
-                          <Form.Control
-                            type="tel"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Enter your phone number"
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col md={6}>
-                        <Form.Group className="mb-3">
-                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>CNIC Number</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="cnic"
-                            value={formData.cnic}
-                            onChange={handleInputChange}
-                            placeholder="12345-1234567-1"
-                            required
-                          />
-                          <Form.Text className="text-muted">
-                            Format: 12345-1234567-1 or 1234512345671
-                          </Form.Text>
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={6}>
-                        <Form.Group className="mb-3">
-                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Position</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="position"
-                            value={formData.position}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Enter desired position"
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col md={6}>
-                        <Form.Group className="mb-3">
-                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Qualification</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="qualification"
-                            value={formData.qualification}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Enter your qualification"
-                          />
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={12}>
-                        <Form.Group className="mb-3">
-                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Experience (Years)</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="experience"
-                            value={formData.experience}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Enter years of experience"
-                          />
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={12}>
-                        <Form.Group className="mb-3">
-                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Address</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="address"
-                            value={formData.address}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Enter your address"
-                          />
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={4}>
-                        <Form.Group className="mb-3">
-                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>District</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="district"
-                            value={formData.district}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="District"
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col md={4}>
-                        <Form.Group className="mb-3">
-                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Tehsil</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="tehsil"
-                            value={formData.tehsil}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Tehsil"
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col md={4}>
-                        <Form.Group className="mb-3">
-                          <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>UC (Union Council)</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="uc"
-                            value={formData.uc}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Union Council"
-                          />
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                    <Form.Group className="mb-3">
-                      <Form.Label style={{ fontWeight: 'bold', color: '#000' }}>Cover Letter / Additional Information</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows={5}
-                        name="coverLetter"
-                        value={formData.coverLetter}
-                        onChange={handleInputChange}
-                        required
-                        placeholder="Tell us about yourself and why you're interested in this position"
-                      />
-                    </Form.Group>
-                    <div className="d-grid gap-2">
-                      <Button 
-                        type="submit" 
-                        className={`submit-button ${submitting ? 'loading' : ''}`}
-                        style={{ 
-                          backgroundColor: '#2AA96B', 
-                          borderColor: '#2AA96B',
-                          transition: 'all 0.3s ease',
-                          padding: '12px 30px',
-                          fontSize: '16px',
-                          fontWeight: '500'
-                        }}
-                        disabled={submitting}
-                      >
-                        {submitting ? 'Submitting...' : 'Submit Application'}
-                      </Button>
-                    </div>
-                  </Form>
-                </Col>
-              </Row>
-            </div>
+            <h2 className="section-heading text-white py-2 px-3">
+              <span style={{ color: '#f59e0b' }}>Application</span> Form
+            </h2>
           </Container>
-        </section>
-      )}
-
-      {/* Mobile Application Form (for small screens) */}
-      {showMobileForm && (
-        <MobileApplicationForm 
-          onClose={handleCloseMobileForm} 
-          prefilledPosition={selectedPosition}
-        />
-      )}
-
-      {/* Call to Action */}
-      <section className="py-5 mb-0 text-white" style={{ backgroundColor: '#333333', borderRadius: '0' }}>
+        </div>
         <Container>
-          <Row className="justify-content-center">
-            <Col md={8} className="text-center">
-              <h2 className="mb-3">Questions About <span style={{ color: '#f59e0b' }}>Careers?</span></h2>
-              <p className="lead mb-4">
-                Reach out to our HR team to learn more about working with Rosebelt Consultants
-              </p>
-              <div>
-                {renderButton('contact')}
-              </div>
-            </Col>
-          </Row>
+          <div className="p-4 border rounded mb-4" style={{ backgroundColor: '#ffffff' }}>
+            <ApplicationForm 
+              position={selectedPosition} 
+              onClose={permanentlyShowForm ? undefined : () => setShowApplicationForm(false)} 
+            />
+          </div>
         </Container>
       </section>
 
-      {/* Add failsafe inline styles for mobile */}
-      <style>{`
-        /* Guaranteed mobile button styles - applied directly */
-        @media (max-width: 767px) {
-          a.btn, a.contact-btn, button.btn {
-            -webkit-appearance: none !important;
-            -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
-            display: inline-block !important;
-            text-align: center !important;
-            touch-action: manipulation !important;
-            user-select: none !important;
-            border-radius: 8px !important;
-            transition: none !important;
-            position: relative !important;
-            z-index: 9999 !important;
-            cursor: pointer !important;
-            font-size: 16px !important;
-            padding: 12px 20px !important;
-            margin: 10px auto !important;
-            width: auto !important;
-            min-width: 160px !important;
-            max-width: 100% !important;
-          }
-          
-          a.contact-btn {
-            color: #f59e0b !important;
-            background-color: transparent !important;
-            border: 1px solid #f59e0b !important;
-            text-decoration: none !important;
-          }
-          
-          a.btn-success, button.apply-now-btn {
-            background-color: #2AA96B !important;
-            border-color: #2AA96B !important;
-            color: white !important;
-          }
-          
-          /* Make clickable areas large and obvious */
-          a.btn:before, a.contact-btn:before, button.btn:before {
-            content: "";
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            z-index: -1;
-          }
-          
-          /* Clear any conflicting styles */
-          .mobile-form-overlay, 
-          .mobile-form-container {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            z-index: 99999 !important;
-          }
-        }
-      `}</style>
-
-      {/* Add CSS for the buttons */}
-      <style>{`
-        .contact-btn:hover {
-          background-color: #f59e0b !important;
-          color: #333333 !important;
-          transform: translateY(-3px);
-          box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
-        }
-        
-        .btn-success,
-        button[style*="backgroundColor: '#2AA96B'"] {
-          transition: all 0.3s ease;
-        }
-        
-        .btn-success:hover,
-        button[style*="backgroundColor: '#2AA96B'"]:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 4px 8px rgba(42, 169, 107, 0.3);
-        }
-      `}</style>
+      {/* Mobile Application Form Modal */}
+      {showMobileForm && (
+        <div className="mobile-form-overlay">
+          <div className="mobile-form-container modern-mobile-container" style={{ backgroundColor: '#e4ebf2' }}>
+            <Button 
+              variant="light" 
+              className="close-mobile-form" 
+              onClick={handleCloseMobileForm}
+              aria-label="Close form"
+              size="sm"
+              style={{
+                position: 'absolute',
+                top: '10px',
+                right: '10px',
+                zIndex: 1050,
+                fontSize: '1.2rem',
+                lineHeight: 1,
+                padding: '4px 8px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                border: 'none'
+              }}
+            >
+              ×
+              </Button>
+            <ApplicationForm 
+              position={selectedPosition} 
+              onClose={handleCloseMobileForm}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

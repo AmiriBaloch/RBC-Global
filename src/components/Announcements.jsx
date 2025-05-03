@@ -16,9 +16,10 @@ import {
 } from 'react-icons/fa';
 import { collection, query, orderBy, onSnapshot, limit } from 'firebase/firestore';
 import { db } from '../firebase';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import './Announcements.css';
 import { formatDistanceToNow } from 'date-fns';
+import handleApplyNow from '../utils/applyNowHandler';
 
 const Announcements = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,6 +33,7 @@ const Announcements = () => {
   const [isFirstVisit, setIsFirstVisit] = useState(false);
   const announcementRef = useRef(null);
   const location = useLocation();
+  const navigate = useNavigate();
   
   // Check if we're on the home page
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
@@ -308,6 +310,11 @@ const Announcements = () => {
     return classes;
   };
 
+  // Handler for Apply Now buttons
+  const handleApplyClick = (e) => {
+    handleApplyNow(e, '', navigate);
+  };
+
   // If not on home page, or no announcements and not loading, or component is dismissed, don't render anything
   if (!isHomePage || (!loading && !latestAnnouncement) || !showComponent) return null;
 
@@ -419,7 +426,7 @@ const Announcements = () => {
                           )}
                           <Link 
                             to="/join-our-team"
-                            onClick={(e) => e.stopPropagation()}
+                            onClick={handleApplyClick}
                           >
                             <Button 
                               variant="primary" 
@@ -470,7 +477,7 @@ const Announcements = () => {
                   <span className="detail-time-ago">({getTimeAgo(activeAnnouncement.date)})</span>
                 </div>
                 <div className="detail-actions">
-                  <Link to="/join-our-team">
+                  <Link to="/join-our-team" onClick={handleApplyClick}>
                     <Button 
                       variant="primary" 
                       className="apply-now-button-large"

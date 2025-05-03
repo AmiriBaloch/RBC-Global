@@ -7,7 +7,7 @@ import './Projects.css';
 import './shared.css';
 
 const Projects = () => {
-  console.log('Component rendering');
+  
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,14 +19,14 @@ const Projects = () => {
   useEffect(() => {
     document.title = "Our Projects | Rosebelt Consultants";
     
-    console.log('Effect running');
+    
     let unsubscribe;
 
     try {
       const postsQuery = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
       
       unsubscribe = onSnapshot(postsQuery, (snapshot) => {
-        console.log('Snapshot received');
+        
         const postsData = snapshot.docs.map(doc => {
           const data = doc.data();
           return {
@@ -40,7 +40,7 @@ const Projects = () => {
             updatedAt: data.updatedAt || new Date().toISOString()
           };
         });
-        console.log('Posts data:', postsData);
+        
         setPosts(postsData);
         setFilteredPosts(postsData);
         setLoading(false);
@@ -56,7 +56,7 @@ const Projects = () => {
     }
 
     return () => {
-      console.log('Cleanup running');
+      
       if (unsubscribe) {
         unsubscribe();
       }
@@ -101,7 +101,7 @@ const Projects = () => {
     setSelectedProject(null);
   };
 
-  console.log('Current state:', { loading, posts, status });
+  
 
   // Render loading state
   if (loading) {
@@ -254,37 +254,7 @@ const Projects = () => {
           </Row>
         </section>
 
-        {/* Call to Action */}
-        <section className="py-5 mb-0 text-white" style={{ backgroundColor: '#333333', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)' }}>
-          <Container>
-            <Row className="justify-content-center">
-              <Col md={8} className="text-center">
-                <h2 className="mb-3">Need Our <span style={{ color: '#f59e0b' }}>Consulting Services?</span></h2>
-                <p className="lead mb-4">
-                  Reach out to discuss how we can tailor our expertise to your specific business challenges.
-                </p>
-                <div>
-                  <Button 
-                    variant="outline-light"
-                    size="lg" 
-                    href="/contact"
-                    className="contact-btn"
-                    style={{
-                      backgroundColor: 'transparent', 
-                      borderColor: '#f59e0b',
-                      color: '#f59e0b',
-                      padding: '10px 25px',
-                      borderRadius: '30px',
-                      transition: 'all 0.3s ease'
-                    }}
-                  >
-                    Contact Us
-                  </Button>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </section>
+
       </Container>
 
       {/* Project Detail Modal */}

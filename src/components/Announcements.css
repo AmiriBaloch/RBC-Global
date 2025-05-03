@@ -468,7 +468,7 @@
   word-wrap: break-word;
   width: 100%;
   box-sizing: border-box;
-  white-space: normal;
+  white-space: pre-line;
   word-break: break-word;
   color: #4b5563;
   transition: all 0.3s ease;
@@ -641,6 +641,8 @@
   line-height: 1.6;
   color: #4b5563;
   transition: all 0.3s ease;
+  white-space: pre-line;
+  word-break: break-word;
 }
 
 .announcement-item:hover .announcement-text {
@@ -849,6 +851,8 @@
   margin-bottom: 20px;
   position: relative;
   padding-left: 15px;
+  white-space: pre-line;
+  word-break: break-word;
 }
 
 .detail-text::before {
@@ -1087,6 +1091,59 @@
     padding: 15px 20px;
   }
   
+  /* Make dismiss button smaller on small screens */
+  .announcements-header .header-actions .dismiss-button,
+  button.dismiss-button {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 20px !important;
+    margin-right: 15px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: unset !important;
+    box-shadow: none !important;
+    background-color: #f59f0a !important;
+    background-image: none !important;
+    border: none !important;
+    overflow: hidden !important;
+    text-align: center !important;
+  }
+  
+  /* Position view details button in the bottom right */
+  .announcements-box.closed .announcement-item .announcement-actions .view-details-button,
+  .announcements-box.open .announcement-item .announcement-actions .view-details-button {
+    display: none !important; /* Hide in both states initially */
+  }
+  
+  /* Only show in the latest announcement when closed */
+  .announcements-box.closed .latest-announcement .view-more {
+    position: absolute !important;
+    bottom: 15px !important;
+    right: 15px !important;
+    background: #2AA96B !important;
+    color: white !important;
+    font-size: 12px !important;
+    padding: 5px 12px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 2px 5px rgba(42, 169, 107, 0.3) !important;
+    z-index: 10 !important;
+    margin-left: 0 !important;
+    display: block !important;
+  }
+  
+  /* Hide view more in latest announcement when open */
+  .announcements-box.open .latest-announcement .view-more {
+    display: none !important;
+  }
+  
+  .latest-announcement {
+    position: relative !important;
+    padding-bottom: 50px !important;
+  }
+  
   .announcements-content {
     padding: 16px;
     max-height: 68vh;
@@ -1104,6 +1161,9 @@
   
   .announcement-item {
     padding: 16px;
+    padding-bottom: 50px !important;
+    position: relative !important;
+    margin-bottom: 15px !important;
   }
   
   .announcement-title {
@@ -1117,5 +1177,10 @@
   .announcement-preview {
     margin: 0 0 12px 0;
     min-height: unset;
+  }
+  
+  /* Adjust announcement count spacing */
+  .announcement-count {
+    margin-left: 55px;
   }
 } 
