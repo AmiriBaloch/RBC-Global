@@ -11,9 +11,10 @@
   border: none;
   overflow-y: auto;
   z-index: 2000;
-  transition: left 0.3s ease;
+  transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   text-align: left;
   padding-top: 1rem;
+  will-change: left;
 }
 
 .mobile-nav-slider.show {
@@ -33,7 +34,8 @@
   cursor: pointer;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: opacity, visibility;
 }
 
 .mobile-menu-backdrop.show {

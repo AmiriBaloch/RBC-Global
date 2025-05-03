@@ -25,8 +25,7 @@ const Header = () => {
       const burgerButton = burgerButtonRef.current;
       
       const handleBurgerClick = () => {
-        console.log("Burger button clicked directly!");
-        setExpanded(!expanded);
+        setExpanded(prevState => !prevState);
       };
       
       burgerButton.addEventListener('click', handleBurgerClick);
@@ -35,7 +34,7 @@ const Header = () => {
         burgerButton.removeEventListener('click', handleBurgerClick);
       };
     }
-  }, [expanded]);
+  }, []);
 
   // Close dropdowns when route changes
   useEffect(() => {
@@ -221,7 +220,9 @@ const Header = () => {
                 width: '45px',
                 height: '40px',
                 position: 'relative',
-                zIndex: 2001
+                zIndex: 2001,
+                transition: 'transform 0.3s ease',
+                transform: expanded ? 'scale(1.1)' : 'scale(1)'
               }}
             >
               <span className="navbar-toggler-icon">
