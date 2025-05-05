@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { FaPhone, FaSearch, FaFacebook, FaInstagram, FaWhatsapp, FaLinkedin } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaPhone, FaSearch, FaFacebook, FaInstagram, FaWhatsapp, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Implement search functionality here
-    
+    if (searchQuery.trim()) {
+      // For a real implementation, navigate to a search results page with the query
+      console.log('Searching for:', searchQuery);
+      // Example: navigate to a search page with the query as a parameter
+      // navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
+      
+      // For now, just clear the search input
+      setSearchQuery('');
+    }
   };
 
   return (
@@ -30,11 +38,11 @@ const Footer = () => {
             <h5 className="footer-heading">Quick Links</h5>
             <ul className="footer-links">
               <li><Link to="/">Home</Link></li>
-              <li><Link to="/about">About Us</Link></li>
-              <li><Link to="/services">Services</Link></li>
+              <li><Link to="/our-company/locations">Our Company</Link></li>
+              <li><Link to="/meet-our-experts/leadership">Meet Our Experts</Link></li>
               <li><Link to="/projects">Projects</Link></li>
-              <li><Link to="/careers">Careers</Link></li>
-
+              <li><Link to="/join-our-team">Join Our Team</Link></li>
+              <li><Link to="/newsroom">Newsroom</Link></li>
             </ul>
           </Col>
 
@@ -43,8 +51,8 @@ const Footer = () => {
             <h5 className="footer-heading">Contact Us</h5>
             <ul className="footer-contact">
               <li>
-                <FaPhone className="contact-icon" />
-                <a href="tel:+923051564945">+92 305 1564945</a>
+                <FaEnvelope className="contact-icon" style={{ color: '#f59e0b' }} />
+                <a href="mailto:admin@rbcglobal.org" style={{ marginLeft: '8px' }}>admin@rbcglobal.org</a>
               </li>
             </ul>
             <div className="social-links mt-3">
@@ -57,9 +65,6 @@ const Footer = () => {
               <a href="https://wa.me/923051564945" target="_blank" rel="noopener noreferrer" className="social-icon">
                 <FaWhatsapp />
               </a>
-              <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="social-icon">
-                <FaLinkedin />
-              </a>
             </div>
           </Col>
 
@@ -67,18 +72,17 @@ const Footer = () => {
           <Col lg={3} md={6} className="mb-4 mb-lg-0">
             <h5 className="footer-heading">Search</h5>
             <Form onSubmit={handleSearch} className="footer-search">
-              <Form.Group className="d-flex">
+              <div className="d-flex">
                 <Form.Control
                   type="text"
                   placeholder="Search..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="search-input"
+                  aria-label="Search the website"
+                  style={{ borderRadius: '20px' }}
                 />
-                <Button type="submit" style={{ backgroundColor: '#f59e0b', borderColor: '#f59e0b' }} className="search-btn">
-                  <FaSearch />
-                </Button>
-              </Form.Group>
+              </div>
             </Form>
             <div className="newsletter mt-4">
               <h6 className="footer-subheading">Newsletter</h6>

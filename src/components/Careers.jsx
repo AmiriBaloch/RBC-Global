@@ -67,6 +67,10 @@ const ApplicationForm = ({ position = '', onClose }) => {
     if (!formData.unionCouncil.trim()) newErrors.unionCouncil = 'Union Council is required';
     if (!formData.coverLetter.trim()) newErrors.coverLetter = 'Cover letter is required';
     
+    // Note: Duplicate application validation is performed in handleInputChange and handleSubmit
+    // We don't need to check it again here as it's already being checked when fields change
+    // and will be confirmed again during submission
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -84,6 +88,42 @@ const ApplicationForm = ({ position = '', onClose }) => {
         ...prev,
         [name]: undefined
       }));
+    }
+    
+    // Check for duplicate application when CNIC or position changes and both have values
+    if ((name === 'cnic' || name === 'position') && formData.cnic && formData.position) {
+      const checkForDuplicateApplication = async () => {
+        try {
+          // Use the position that was just selected if that's what changed, otherwise use the existing one
+          const positionToCheck = name === 'position' ? value : formData.position;
+          // Use the CNIC that was just entered if that's what changed, otherwise use the existing one
+          const cnicToCheck = name === 'cnic' ? value : formData.cnic;
+          
+          // Only perform check if both values exist
+          if (positionToCheck && cnicToCheck) {
+            const collectionName = positionToCheck.replace(/\s+/g, '');
+            const existingApplicationsQuery = query(
+              collection(db, collectionName),
+              where("cnic", "==", cnicToCheck)
+            );
+            
+            const existingApplicationsSnapshot = await getDocs(existingApplicationsQuery);
+            
+            if (!existingApplicationsSnapshot.empty) {
+              // Add error for position field
+              setErrors(prev => ({
+                ...prev,
+                position: 'You have already applied for this position with this CNIC'
+              }));
+            }
+          }
+        } catch (error) {
+          console.error("Error checking for duplicate application:", error);
+        }
+      };
+      
+      // Execute the check
+      checkForDuplicateApplication();
     }
   };
   
@@ -104,6 +144,25 @@ const ApplicationForm = ({ position = '', onClose }) => {
     try {
       // Determine which collection to use based on position
       const collectionName = formData.position.replace(/\s+/g, '');
+      
+      // Check if the person has already applied for this position
+      const existingApplicationsQuery = query(
+        collection(db, collectionName),
+        where("cnic", "==", formData.cnic)
+      );
+      
+      const existingApplicationsSnapshot = await getDocs(existingApplicationsQuery);
+      
+      if (!existingApplicationsSnapshot.empty) {
+        setIsSubmitting(false);
+        Swal.fire({
+          icon: 'warning',
+          title: 'Application Already Exists',
+          text: 'You have already applied for this position. You can apply for different positions.',
+          confirmButtonColor: '#f59e0b'
+        });
+        return;
+      }
       
       await addDoc(collection(db, collectionName), {
         ...formData,
@@ -462,15 +521,40 @@ const Careers = () => {
 
   const fetchJobs = async () => {
     try {
-      const jobsQuery = query(collection(db, 'jobs'), orderBy('createdAt', 'desc'));
+      // Use a single orderBy to avoid requiring a composite index
+      const jobsQuery = query(
+        collection(db, 'jobs'), 
+        orderBy('createdAt', 'desc')
+      );
       const jobsSnapshot = await getDocs(jobsQuery);
       
-      const jobsList = jobsSnapshot.docs.map(doc => ({
+      const jobsList = jobsSnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
         id: doc.id,
-        ...doc.data()
-      }));
+          ...data,
+          createdAt: data.createdAt?.toDate?.() || new Date(data.createdAt || Date.now()),
+          timestamp: data.timestamp?.toDate?.() || new Date(data.timestamp || Date.now())
+        };
+      });
       
-      setJobs(jobsList);
+      // Sort in memory by createdAt first, then by timestamp
+      const sortedJobs = jobsList.sort((a, b) => {
+        // Convert to Date objects if they aren't already
+        const dateA = a.createdAt instanceof Date ? a.createdAt : new Date(a.createdAt || 0);
+        const dateB = b.createdAt instanceof Date ? b.createdAt : new Date(b.createdAt || 0);
+        
+        if (dateA.getTime() !== dateB.getTime()) {
+          return dateB - dateA; // Descending order
+        }
+        
+        // If createdAt dates are the same, sort by timestamp
+        const timestampA = a.timestamp instanceof Date ? a.timestamp : new Date(a.timestamp || 0);
+        const timestampB = b.timestamp instanceof Date ? b.timestamp : new Date(b.timestamp || 0);
+        return timestampB - timestampA;
+      });
+      
+      setJobs(sortedJobs);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching jobs:", error);
@@ -659,7 +743,7 @@ const Careers = () => {
                         <h3 className="h5 mb-0">{job.title}</h3>
                       </Card.Header>
                       <Card.Body>
-                        <p className="job-description">{job.description}</p>
+                        <p className="job-description" style={{ whiteSpace: 'pre-line' }}>{job.description}</p>
                         {renderButton('apply', 'Apply Now', job.title)}
                       </Card.Body>
                     </Card>

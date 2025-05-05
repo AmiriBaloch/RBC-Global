@@ -116,24 +116,46 @@ const Announcements = () => {
     // Only fetch if we're on the home page to save resources
     if (!isHomePage) return;
     
+    // Use a simpler query with just one orderBy to avoid needing a composite index
     const announcementsQuery = query(
       collection(db, 'announcements'), 
       orderBy('date', 'desc'),
-      limit(5)
+      limit(10) // Increased limit to ensure we get enough data to sort
     );
     
     const unsubscribe = onSnapshot(announcementsQuery, (snapshot) => {
       const announcementsData = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
+        date: doc.data().date?.toDate?.() || new Date(doc.data().date || Date.now()),
+        timestamp: doc.data().timestamp?.toDate?.() || new Date(doc.data().timestamp || Date.now()),
         isNew: new Date(doc.data().date?.toDate?.() || doc.data().date) > new Date(Date.now() - 86400000 * 2) // Mark as new if less than 2 days old
       }));
       
-      setAnnouncements(announcementsData);
+      // Sort in memory by date first, then by timestamp if dates are equal
+      const sortedData = announcementsData.sort((a, b) => {
+        // First compare by date
+        const dateA = a.date instanceof Date ? a.date : new Date(a.date || 0);
+        const dateB = b.date instanceof Date ? b.date : new Date(b.date || 0);
+        
+        if (dateA.getTime() !== dateB.getTime()) {
+          return dateB - dateA; // Descending by date
+        }
+        
+        // If dates are equal, compare by timestamp
+        const timestampA = a.timestamp instanceof Date ? a.timestamp : new Date(a.timestamp || 0);
+        const timestampB = b.timestamp instanceof Date ? b.timestamp : new Date(b.timestamp || 0);
+        return timestampB - timestampA; // Descending by timestamp
+      });
+      
+      // Limit to 5 after sorting
+      const limitedData = sortedData.slice(0, 5);
+      
+      setAnnouncements(limitedData);
       
       // Set the latest announcement (first in the array) for display in closed state
-      if (announcementsData.length > 0) {
-        setLatestAnnouncement(announcementsData[0]);
+      if (limitedData.length > 0) {
+        setLatestAnnouncement(limitedData[0]);
       }
       
       setLoading(false);
@@ -367,7 +389,7 @@ const Announcements = () => {
                 )}
                 {latestAnnouncement.title}
               </h6>
-              <p className="announcement-preview">
+              <p className="announcement-preview" style={{ whiteSpace: 'pre-line' }}>
                 {latestAnnouncement.content}
               </p>
               <div className="announcement-meta">
@@ -399,7 +421,7 @@ const Announcements = () => {
                         </h6>
                         {announcement.isNew && <FaFireAlt className="hot-icon" />}
                       </div>
-                      <p className="announcement-text">
+                      <p className="announcement-text" style={{ whiteSpace: 'pre-line' }}>
                         {announcement.content.length > 120 
                           ? `${announcement.content.substring(0, 120)}...` 
                           : announcement.content
@@ -470,7 +492,7 @@ const Announcements = () => {
                 </Button>
               </div>
               <div className="detail-content">
-                <p className="detail-text">{activeAnnouncement.content}</p>
+                <p className="detail-text" style={{ whiteSpace: 'pre-line' }}>{activeAnnouncement.content}</p>
                 <div className="detail-meta">
                   <FaCalendarAlt className="meta-icon" />
                   <span className="meta-text">{formatDate(activeAnnouncement.date)}</span>

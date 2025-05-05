@@ -288,70 +288,70 @@ const Header = () => {
                   
                   {/* OUR WORKPLACE dropdown */}
                   <div className="custom-dropdown-wrapper">
-                    <Link to="#" className="nav-link dropdown-toggle fw-bold">OUR WORKPLACE</Link>
+                    <Link to="#" className="nav-link dropdown-toggle fw-bold">OUR COMPANY</Link>
                     <div className="dropdown-menu">
                       <Link 
-                        to="/our-workplace/offices"
+                        to="/our-company/locations"
                         onClick={() => handleDropdownItemClick('about-us')}
                         className="dropdown-item"
                       >
-                        Our Offices
+                        OUR LOCATIONS
                       </Link>
                       <Link 
-                        to="/our-workplace/accredited"
+                        to="/our-company/who-trusts-us"
                         onClick={() => handleDropdownItemClick('about-us')}
                         className="dropdown-item"
                       >
-                        The RoseBelt Accredited
+                        WHO TRUSTS US
                       </Link>
                       <Link 
-                        to="/our-workplace/values"
+                        to="/our-company/what-we-believe"
                         onClick={() => handleDropdownItemClick('about-us')}
                         className="dropdown-item"
                       >
-                        Our Values & Commitments
+                        WHAT WE BELIEVE
                       </Link>
                     </div>
                   </div>
 
                   {/* WHAT WE DO section */}
                   <div className="custom-dropdown-wrapper">
-                    <Link to="#" className="nav-link dropdown-toggle fw-bold">WHAT WE DO</Link>
+                    <Link to="#" className="nav-link dropdown-toggle fw-bold">MEET OUR EXPERTS</Link>
                     <div className="dropdown-menu">
                       <Link 
-                        to="/what-we-do/overview"
+                        to="/meet-our-experts/leadership"
                         onClick={() => handleDropdownItemClick('services-overview')}
                         className="dropdown-item"
                       >
-                        Overview
+                        OUR LEADERSHIP
                       </Link>
                       <Link 
-                        to="/what-we-do/consultants"
+                        to="/meet-our-experts/consultants"
                         onClick={() => handleDropdownItemClick('services-consultants')}
                         className="dropdown-item"
                       >
-                        RoseBelt Consultants
+                        OUR CONSULTANTS
                       </Link>
                       <Link 
-                        to="/what-we-do/health-experts"
+                        to="/meet-our-experts/health-experts"
                         onClick={() => handleDropdownItemClick('services-health')}
                         className="dropdown-item"
                       >
-                        RoseBelt Health Experts
+                        OUR HEALTH EXPERTS
                       </Link>
                       <Link 
-                        to="/what-we-do/it-experts"
+                        to="/meet-our-experts/it-experts"
                         onClick={() => handleDropdownItemClick('services-it')}
                         className="dropdown-item"
                       >
-                        RoseBelt IT Experts
+                        OUR IT EXPERTS
                       </Link>
                       <Link 
-                        to="/what-we-do/researchers"
+                        to="/meet-our-experts/researchers"
                         onClick={() => handleDropdownItemClick('services-researchers')}
                         className="dropdown-item"
                       >
-                        RoseBelt Researchers
+                        OUR RESEARCHERS
                       </Link>
                     </div>
                   </div>
@@ -368,13 +368,20 @@ const Header = () => {
                   {/* Join Our Team */}
                   <Link 
                     to="/join-our-team" 
-                    className={`nav-link fw-bold ${activeLink === 'careers' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('careers')}
+                    className={`nav-link fw-bold ${activeLink === 'join-our-team' ? 'active' : ''}`}
+                    onClick={() => handleNavClick('join-our-team')}
                   >
                     JOIN OUR TEAM
                   </Link>
                   
-
+                  {/* Newsroom - Moved to be after Join Our Team */}
+                  <Link 
+                    to="/newsroom" 
+                    className={`nav-link fw-bold ${activeLink === 'press' ? 'active' : ''}`}
+                    onClick={() => handleNavClick('press')}
+                  >
+                    NEWSROOM
+                  </Link>
                 </Nav>
               </div>
             </Navbar.Collapse>
@@ -385,4 +392,4 @@ const Header = () => {
   );
 };
 
-export default Header; 
+export default Header;

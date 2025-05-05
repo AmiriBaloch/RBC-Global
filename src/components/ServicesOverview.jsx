@@ -32,27 +32,6 @@ const ServicesOverview = () => {
       </div>
 
       <Container className="py-5">
-        {/* Overview Section */}
-        <section className="about-section mb-5">
-          <div className="section-heading-container mb-4">
-            <h2 className="section-heading">
-              <span style={{ color: '#f59e0b' }}>Service</span> Overview
-            </h2>
-          </div>
-          <Row>
-            <Col lg={12}>
-              <div className="about-content p-4 rounded-3 text-dark" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0' }}>
-                <p>
-                  At RoseBelt Consultants, we deliver comprehensive solutions across multiple domains, combining deep industry expertise with innovative approaches to address your most pressing challenges. Our multidisciplinary team of professionals work collaboratively to develop tailored strategies that drive sustainable growth and operational excellence.
-                </p>
-                <p>
-                  Whether you need specialized consulting services, health expertise, IT solutions, or research capabilities, our integrated approach ensures that you receive holistic solutions that address both immediate needs and long-term objectives. We pride ourselves on building lasting partnerships with our clients, becoming trusted advisors who are invested in your success.
-                </p>
-              </div>
-            </Col>
-          </Row>
-        </section>
-
         {/* Leadership Section */}
         <section className="about-section mb-5">
           <div className="section-heading-container mb-4">

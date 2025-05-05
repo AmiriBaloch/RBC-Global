@@ -1874,3 +1874,6 @@ body.no-scroll {
   width: 100%;
   height: 100%;
 } 
+
+/* Remove header search styles since we're moving the search to the footer */
+/* End of file */ 

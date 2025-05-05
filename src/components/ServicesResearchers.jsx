@@ -36,7 +36,7 @@ const ServicesResearchers = () => {
     },
     {
       id: 10,
-      name: "Mudassir Ali",
+      name: "Mudassir Ali Watto",
       role: "Research Associate",
       image: mudassirAli,
       description: "Dedicated to uncovering innovative solutions through meticulous research and data analysis. Specializes in developing evidence-based strategies that drive organizational growth and efficiency.",

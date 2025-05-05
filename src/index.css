@@ -67,3 +67,23 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 12px;
   }
 }
+
+/* Global form/input fixes to prevent overlapping */
+input, 
+select, 
+textarea, 
+button, 
+.form-control {
+  position: relative !important;
+  z-index: 1 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+form, 
+.form-group, 
+.input-group {
+  position: relative !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}

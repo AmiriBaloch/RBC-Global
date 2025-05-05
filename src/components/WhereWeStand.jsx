@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
 import { useInView } from 'react-intersection-observer';
-import { collection, query, where, getDocs, getCountFromServer } from 'firebase/firestore';
+import { collection, query, where, getDocs, getCountFromServer, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import globeVideo from '../assets/globe1.mp4';
 import './shared.css';
@@ -20,12 +20,12 @@ const WhereWeStand = () => {
   const [count, setCount] = useState(0);
   const [barValues, setBarValues] = useState([0, 0, 0, 0, 0]);
   const [chartData, setChartData] = useState({
-    labels: ['Completed Projects', 'Ongoing Projects', 'Upcoming Projects', 'Partnerships'],
+    labels: ['Completed Projects', 'Ongoing Projects', 'Upcoming Projects', 'Support Services', 'Partnerships'],
     datasets: [
       {
-        data: [0, 0, 0, 0],
-        backgroundColor: ['#28a745', '#ffc107', '#17a2b8', '#dc3545'],
-        borderColor: ['#ffffff', '#ffffff', '#ffffff', '#ffffff'],
+        data: [3, 2.5, 2, 1.5, 1], // Default proportions for initial render
+        backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#17a2b8', '#6f42c1'],
+        borderColor: ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'],
         borderWidth: 1,
         cutout: '75%',
       },
@@ -68,12 +68,34 @@ const WhereWeStand = () => {
         // Calculate partnerships or other categories
         const partnershipsCount = totalCount - completedCount - ongoingCount - upcomingCount;
         
+        // Set the actual total count directly to the display count
+        setCount(totalCount || 0);
+        
         setProjectCounts({
-          completed: completedCount || 8,
-          ongoing: ongoingCount || 5,
-          upcoming: upcomingCount || 4,
-          partnerships: partnershipsCount || 3,
-          total: totalCount || 20
+          completed: completedCount || 0,
+          ongoing: ongoingCount || 0,
+          upcoming: upcomingCount || 0,
+          partnerships: partnershipsCount || 0,
+          total: totalCount || 0
+        });
+        
+        // Set chart data immediately with proper proportions
+        const segmentProportions = [0.3, 0.25, 0.2, 0.15, 0.1]; // Total = 1
+        const projectValues = segmentProportions.map(
+          proportion => (totalCount || 1) * proportion
+        );
+        
+        setChartData({
+          labels: ['Completed Projects', 'Ongoing Projects', 'Upcoming Projects', 'Support Services', 'Partnerships'],
+          datasets: [
+            {
+              data: projectValues,
+              backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#17a2b8', '#6f42c1'],
+              borderColor: ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'],
+              borderWidth: 1,
+              cutout: '75%',
+            },
+          ],
         });
         
         setIsLoading(false);
@@ -81,37 +103,64 @@ const WhereWeStand = () => {
         console.error("Error fetching project counts:", error);
         // Use default values if there's an error
         setProjectCounts({
-          completed: 8,
-          ongoing: 5,
-          upcoming: 4,
-          partnerships: 3,
-          total: 20
+          completed: 0,
+          ongoing: 0,
+          upcoming: 0,
+          partnerships: 0,
+          total: 0
         });
+        setCount(0);
         setIsLoading(false);
       }
     };
 
     fetchProjectCounts();
+    
+    // Set up a real-time listener for project count changes
+    const postsRef = collection(db, 'posts');
+    const unsubscribe = onSnapshot(postsRef, (snapshot) => {
+      const totalCount = snapshot.size;
+      setCount(totalCount);
+      setProjectCounts(prev => ({
+        ...prev,
+        total: totalCount
+      }));
+      
+      // Update chart immediately when count changes
+      const segmentProportions = [0.3, 0.25, 0.2, 0.15, 0.1]; // Total = 1
+      const projectValues = segmentProportions.map(
+        proportion => totalCount * proportion
+      );
+      
+      setChartData({
+        labels: ['Completed Projects', 'Ongoing Projects', 'Upcoming Projects', 'Support Services', 'Partnerships'],
+        datasets: [
+          {
+            data: projectValues,
+            backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#17a2b8', '#6f42c1'],
+            borderColor: ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'],
+            borderWidth: 1,
+            cutout: '75%',
+          },
+        ],
+      });
+    });
+    
+    // Clean up the listener when component unmounts
+    return () => unsubscribe();
   }, []);
 
   // Final values
   const finalBarValues = [1.5, 2.0, 2.7, 3.2, 3.8];
-  const chartColors = ['#28a745', '#ffc107', '#17a2b8', '#dc3545'];
+  const chartColors = ['#28a745', '#ffc107', '#dc3545', '#17a2b8', '#6f42c1'];
 
   // Animation effect
   useEffect(() => {
     if (inView && !isLoading) {
-      // Animate count from 0 to total projects
-      let currentCount = 0;
-      const countInterval = setInterval(() => {
-        currentCount += 1;
-        setCount(currentCount);
-        if (currentCount >= projectCounts.total) {
-          clearInterval(countInterval);
-        }
-      }, 100);
-
-      // Animate progress bars
+      // We no longer need to animate the count as it's now directly from Firebase
+      // and updates in real-time via the onSnapshot listener
+      
+      // Animate progress bars only - not the chart
       let currentBarStep = 0;
       const barInterval = setInterval(() => {
         currentBarStep += 1;
@@ -122,39 +171,27 @@ const WhereWeStand = () => {
         }
       }, 100);
 
-      // Animate chart data
-      let currentChartStep = 0;
-      const chartInterval = setInterval(() => {
-        currentChartStep += 1;
-        const projectValues = [
-          (projectCounts.completed / 20) * currentChartStep,
-          (projectCounts.ongoing / 20) * currentChartStep,
-          (projectCounts.upcoming / 20) * currentChartStep, 
-          (projectCounts.partnerships / 20) * currentChartStep
-        ];
-        
-        setChartData({
-          labels: ['Completed Projects', 'Ongoing Projects', 'Upcoming Projects', 'Partnerships'],
-          datasets: [
-            {
-              data: projectValues,
-              backgroundColor: chartColors,
-              borderColor: ['#ffffff', '#ffffff', '#ffffff', '#ffffff'],
-              borderWidth: 1,
-              cutout: '75%',
-            },
-          ],
-        });
-        
-        if (currentChartStep >= 20) {
-          clearInterval(chartInterval);
-        }
-      }, 100);
+      // Set chart data immediately without animation
+      const segmentProportions = [0.3, 0.25, 0.2, 0.15, 0.1]; // Total = 1
+      const projectValues = segmentProportions.map(
+        proportion => projectCounts.total * proportion
+      );
+      
+      setChartData({
+        labels: ['Completed Projects', 'Ongoing Projects', 'Upcoming Projects', 'Support Services', 'Partnerships'],
+        datasets: [
+          {
+            data: projectValues,
+            backgroundColor: chartColors,
+            borderColor: ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'],
+            borderWidth: 1,
+            cutout: '75%',
+          },
+        ],
+      });
 
       return () => {
-        clearInterval(countInterval);
         clearInterval(barInterval);
-        clearInterval(chartInterval);
       };
     }
   }, [inView, isLoading, projectCounts]);
@@ -169,7 +206,7 @@ const WhereWeStand = () => {
         enabled: true,
         callbacks: {
           label: function(context) {
-            const labels = ['Completed Projects', 'Ongoing Projects', 'Upcoming Projects', 'Partnerships'];
+            const labels = ['Completed Projects', 'Ongoing Projects', 'Upcoming Projects', 'Support Services', 'Partnerships'];
             return labels[context.dataIndex] + ': ' + Math.round(context.raw);
           }
         }
@@ -200,7 +237,7 @@ const WhereWeStand = () => {
       </div>
       <Container>
         <div className="mb-5 p-4 border rounded" style={{ backgroundColor: '#ffffff' }}>
-          <p className="text-center">
+          <p style={{ textAlign: 'justify' }}>
             At ROSEBELT CONSULTANTS GLOBAL, we stand at the intersection of innovation and strategic excellence. Our approach combines cutting-edge 
             methodologies with practical solutions, ensuring that our clients receive the highest quality service tailored to their unique challenges. We believe in 
             sustainable growth, ethical business practices, and creating long-term value for all stakeholders. Our team of experts is committed to continuous 
@@ -219,12 +256,14 @@ const WhereWeStand = () => {
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    fontSize: '2rem',
+                    fontSize: '2.5rem',
                     fontWeight: 'bold',
-                    color: '#000080'
+                    color: '#002366',
+                    fontFamily: 'Arial, sans-serif',
+                    textShadow: '0 1px 2px rgba(0,0,0,0.1)'
                   }}
                 >
-                  {count}+
+                  {count}<span style={{ fontSize: '1.5rem', color: '#0033cc' }}>+</span>
                 </div>
               </div>
               <div className="mt-3">

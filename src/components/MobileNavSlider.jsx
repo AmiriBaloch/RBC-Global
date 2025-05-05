@@ -11,7 +11,8 @@ const MobileNavSlider = ({
 }) => {
   const [expandedSections, setExpandedSections] = useState({
     workplace: false,
-    services: false
+    services: false,
+    press: false
   });
 
   // Close all sections when mobile menu is closed
@@ -21,7 +22,8 @@ const MobileNavSlider = ({
     if (!expanded) {
       setExpandedSections({
         workplace: false,
-        services: false
+        services: false,
+        press: false
       });
     }
   }, [expanded]);
@@ -63,6 +65,7 @@ const MobileNavSlider = ({
       return {
         workplace: false,
         services: false,
+        press: false,
         [sectionName]: !wasOpen
       };
     });
@@ -120,7 +123,7 @@ const MobileNavSlider = ({
                 backgroundColor: '#E4EBF2'
               }}
             >
-              <span>OUR WORKPLACE</span>
+              <span>OUR COMPANY</span>
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 width="16" 
@@ -134,25 +137,25 @@ const MobileNavSlider = ({
             </div>
             <div className={`mobile-section-content ${expandedSections.workplace ? 'show' : ''}`}>
               <Link 
-                to="/our-workplace/offices"
+                to="/our-company/locations"
                 className="mobile-submenu-item"
                 onClick={() => handleDropdownItemClick('about-us')}
               >
-                Our Offices
+                OUR LOCATIONS
               </Link>
               <Link 
-                to="/our-workplace/accredited"
+                to="/our-company/who-trusts-us"
                 className="mobile-submenu-item"
                 onClick={() => handleDropdownItemClick('about-us')}
               >
-                The RoseBelt Accredited
+                WHO TRUSTS US
               </Link>
               <Link 
-                to="/our-workplace/values"
+                to="/our-company/what-we-believe"
                 className="mobile-submenu-item"
                 onClick={() => handleDropdownItemClick('about-us')}
               >
-                Our Values & Commitments
+                WHAT WE BELIEVE
               </Link>
             </div>
           </div>
@@ -170,7 +173,7 @@ const MobileNavSlider = ({
                 backgroundColor: '#E4EBF2'
               }}
             >
-              <span>WHAT WE DO</span>
+              <span>MEET OUR EXPERTS</span>
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 width="16" 
@@ -184,39 +187,39 @@ const MobileNavSlider = ({
             </div>
             <div className={`mobile-section-content ${expandedSections.services ? 'show' : ''}`}>
               <Link 
-                to="/what-we-do/overview"
+                to="/meet-our-experts/leadership"
                 className="mobile-submenu-item"
                 onClick={() => handleDropdownItemClick('services-overview')}
               >
-                Overview
+                OUR LEADERSHIP
               </Link>
               <Link 
-                to="/what-we-do/consultants"
+                to="/meet-our-experts/consultants"
                 className="mobile-submenu-item"
                 onClick={() => handleDropdownItemClick('services-consultants')}
               >
-                RoseBelt Consultants
+                OUR CONSULTANTS
               </Link>
               <Link 
-                to="/what-we-do/health-experts"
+                to="/meet-our-experts/health-experts"
                 className="mobile-submenu-item"
                 onClick={() => handleDropdownItemClick('services-health')}
               >
-                RoseBelt Health Experts
+                OUR HEALTH EXPERTS
               </Link>
               <Link 
-                to="/what-we-do/it-experts"
+                to="/meet-our-experts/it-experts"
                 className="mobile-submenu-item"
                 onClick={() => handleDropdownItemClick('services-it')}
               >
-                RoseBelt IT Experts
+                OUR IT EXPERTS
               </Link>
               <Link 
-                to="/what-we-do/researchers"
+                to="/meet-our-experts/researchers"
                 className="mobile-submenu-item"
                 onClick={() => handleDropdownItemClick('services-researchers')}
               >
-                RoseBelt Researchers
+                OUR RESEARCHERS
               </Link>
             </div>
           </div>
@@ -241,8 +244,18 @@ const MobileNavSlider = ({
             JOIN OUR TEAM
           </Link>
           
+          {/* Newsroom - Moved after Join Our Team */}
+          <Link 
+            to="/newsroom" 
+            className={`nav-link ${activeLink === 'press' ? 'active' : ''}`}
+            onClick={() => handleNavClick('press')}
+            style={{ '--item-index': 5 }}
+          >
+            NEWSROOM
+          </Link>
+          
           {/* Social Media Icons */}
-          <div className="mobile-nav-social-icons" style={{ '--item-index': 6 }}>
+          <div className="mobile-nav-social-icons" style={{ '--item-index': 7 }}>
             <div className="social-icons-container">
               <a href="https://www.instagram.com/rosebeltconsultantsglobal/" target="_blank" rel="noopener noreferrer" className="nav-social-icon instagram">
                 <i className="bi bi-instagram"></i>
