@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
 import './AboutUs.css';
@@ -43,10 +43,20 @@ const ServicesConsultants = () => {
     }
   ];
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
   useEffect(() => {
     document.title = "RoseBelt Consultants | Rosebelt Consultants";
     // Force scroll to top on page load
     window.scrollTo(0, 0);
+
+    // Add window resize listener
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
   
   return (
@@ -82,14 +92,15 @@ const ServicesConsultants = () => {
                   overflow: 'hidden',
                   border: '1px solid #e0e0e0',
                   display: 'flex',
-                  flexDirection: consultant.id === 1 ? 'row' : 'column',
-                  minHeight: consultant.id === 1 ? '350px' : '700px'
+                  flexDirection: consultant.id === 1 && !isMobile ? 'row' : 'column',
+                  minHeight: consultant.id === 1 && !isMobile ? '350px' : '700px'
                 }}>
                   {consultant.id === 1 ? (
                     // Horizontal layout for Dr. Rubeena Zakar
                     <>
                       <div style={{ 
-                        width: '25%', 
+                        width: isMobile ? '100%' : '25%', 
+                        height: isMobile ? '300px' : 'auto',
                         overflow: 'hidden',
                         position: 'relative',
                         backgroundColor: '#f8f8f8'
@@ -105,7 +116,7 @@ const ServicesConsultants = () => {
                           }}
                         />
                       </div>
-                      <div style={{ width: '75%' }}>
+                      <div style={{ width: isMobile ? '100%' : '75%' }}>
                         <div className="p-4" style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                           <div>
                             <Card.Title 
@@ -135,9 +146,12 @@ const ServicesConsultants = () => {
                                 marginBottom: '15px',
                                 whiteSpace: 'pre-line',
                                 textAlign: 'justify',
-                                maxHeight: '250px',
-                                overflowY: 'auto'
+                                maxHeight: isMobile ? '200px' : '250px',
+                                overflowY: 'auto',
+                                WebkitOverflowScrolling: 'touch',
+                                padding: '0 5px'
                               }}
+                              className="biography-scroll"
                             >
                               {consultant.description}
                             </Card.Text>
