@@ -6,7 +6,7 @@ import './AboutUs.css';
 
 // Import CEO and Managing Director images
 import Imran from "../assets/3.png";
-import shaguftaShaheen from "../assets/11.jpg";
+import shaguftaShaheen from "../assets/11.png";
 
 const ServicesOverview = () => {
   useEffect(() => {

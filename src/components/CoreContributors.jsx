@@ -95,7 +95,7 @@ const CoreContributors = () => {
     },
     {
       id: 7,
-      name: "Muhammad Muneeb ur Rehman",
+      name: "M.Muneeb ur Rehman",
       role: "Design Expert",
       category: "IT Expert",
       image: muneebRehman,
@@ -129,7 +129,7 @@ const CoreContributors = () => {
     },
     {
       id: 10,
-      name: "Mudassir Ali",
+      name: "Mudassir Ali Watto",
       role: "Research Associate",
       category: "Researcher",
       image: mudassirAli,

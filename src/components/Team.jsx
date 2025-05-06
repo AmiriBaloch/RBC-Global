@@ -15,7 +15,7 @@ import nasikBangash from '../assets/7.png';
 import mudassirAli from '../assets/4.png';
 import sunirAshnae from '../assets/6.png';
 import Imran from "../assets/3.png";
-import shaguftaShaheen from "../assets/11.jpg";
+import shaguftaShaheen from "../assets/11.png";
 import nabghaHashmi from "../assets/9.png";
 import muhammadShahroze from "../assets/14.png";
 

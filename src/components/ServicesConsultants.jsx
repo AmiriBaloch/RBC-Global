@@ -216,109 +216,109 @@ const ServicesConsultants = () => {
                   ) : (
                     // Vertical layout for other consultants
                     <>
-                      <div 
-                        style={{ 
-                          height: '55%', 
-                          overflow: 'hidden',
-                          position: 'relative',
-                          backgroundColor: '#f8f8f8'
-                        }}
-                      >
+                  <div 
+                    style={{ 
+                      height: '55%', 
+                      overflow: 'hidden',
+                      position: 'relative',
+                      backgroundColor: '#f8f8f8'
+                    }}
+                  >
                         <Card.Img 
                           src={consultant.image} 
                           alt={consultant.name} 
-                          style={{ 
-                            width: '100%', 
-                            height: '100%', 
-                            objectFit: 'cover',
-                          }}
+                      style={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        objectFit: 'cover',
+                      }}
                         />
                       </div>
-                      <div className="text-center p-4" style={{ height: '45%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                        <Card.Title 
-                          style={{ 
-                            fontSize: '1.5rem', 
-                            fontWeight: '600', 
-                            color: '#333',
-                            marginBottom: '5px'
-                          }}
-                        >
-                          {consultant.name}
-                        </Card.Title>
-                        <Card.Subtitle 
-                          style={{ 
-                            color: '#f59e0b', 
-                            fontSize: '1.1rem',
-                            marginBottom: '15px'
-                          }}
-                        >
-                          {consultant.role}
-                        </Card.Subtitle>
-                        <Card.Text 
-                          style={{ 
-                            color: '#555', 
-                            fontSize: '0.95rem',
-                            lineHeight: '1.6',
-                            marginBottom: '20px' 
-                          }}
-                        >
-                          {consultant.description}
-                        </Card.Text>
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
-                          <a 
-                            href={consultant.linkedin} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            style={{ 
-                              background: '#0077B5', 
-                              color: 'white',
-                              width: '40px',
-                              height: '40px',
-                              borderRadius: '50%',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontSize: '1.2rem'
-                            }}
-                          >
+                  <div className="text-center p-4" style={{ height: '45%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Card.Title 
+                      style={{ 
+                        fontSize: '1.5rem', 
+                        fontWeight: '600', 
+                        color: '#333',
+                        marginBottom: '5px'
+                      }}
+                    >
+                      {consultant.name}
+                    </Card.Title>
+                    <Card.Subtitle 
+                      style={{ 
+                        color: '#f59e0b', 
+                        fontSize: '1.1rem',
+                        marginBottom: '15px'
+                      }}
+                    >
+                      {consultant.role}
+                    </Card.Subtitle>
+                    <Card.Text 
+                      style={{ 
+                        color: '#555', 
+                        fontSize: '0.95rem',
+                        lineHeight: '1.6',
+                        marginBottom: '20px' 
+                      }}
+                    >
+                      {consultant.description}
+                    </Card.Text>
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
+                      <a 
+                        href={consultant.linkedin} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        style={{ 
+                          background: '#0077B5', 
+                          color: 'white',
+                          width: '40px',
+                          height: '40px',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '1.2rem'
+                        }}
+                      >
                             <FaLinkedin />
                           </a>
-                          <a 
-                            href={consultant.twitter} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            style={{ 
-                              background: '#1DA1F2', 
-                              color: 'white',
-                              width: '40px',
-                              height: '40px',
-                              borderRadius: '50%',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontSize: '1.2rem'
-                            }}
-                          >
+                      <a 
+                        href={consultant.twitter} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        style={{ 
+                          background: '#1DA1F2', 
+                          color: 'white',
+                          width: '40px',
+                          height: '40px',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '1.2rem'
+                        }}
+                      >
                             <FaTwitter />
                           </a>
-                          <a 
-                            href={`mailto:${consultant.email}`} 
-                            style={{ 
-                              background: '#EA4335', 
-                              color: 'white',
-                              width: '40px',
-                              height: '40px',
-                              borderRadius: '50%',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontSize: '1.2rem'
-                            }}
-                          >
+                      <a 
+                        href={`mailto:${consultant.email}`} 
+                        style={{ 
+                          background: '#EA4335', 
+                          color: 'white',
+                          width: '40px',
+                          height: '40px',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '1.2rem'
+                        }}
+                      >
                             <FaEnvelope />
                           </a>
                         </div>
-                      </div>
+                  </div>
                     </>
                   )}
                 </Card>
