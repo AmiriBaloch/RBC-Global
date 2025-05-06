@@ -12,6 +12,11 @@ import muhammadShahroze from '../assets/14.png';
 import farhatAbbas from '../assets/15.png';
 import maheenNisar from '../assets/16.png';
 import mishaShahbaz from '../assets/17.png';
+import ridaBatool from '../assets/19.png';
+import muskanFatima from '../assets/20.png';
+import fizaIjaz from '../assets/21.png';
+import rameenSahar from '../assets/22.png';
+import bushraMaqsood from '../assets/23.png';
 
 const ServicesResearchers = () => {
   // Researchers data from Team.jsx
@@ -21,7 +26,7 @@ const ServicesResearchers = () => {
       name: "S.F. Butt",
       role: "Lead Researcher",
       image: sfButt,
-      description: "A researcher driven by a deep commitment to advancing knowledge through rigorous investigation and thoughtful reflection.",
+      description: "A passionate senior researcher committed to driving evidence-based decision making through methodical investigation. Experienced in leading complex research projects across multiple sectors. Dedicated to creating knowledge that transforms organizations and communities for the better.",
       linkedin: "#",
       twitter: "#",
       email: "sfbutt@rosebeltconsultants.com"
@@ -31,7 +36,7 @@ const ServicesResearchers = () => {
       name: "Nasik Bangash",
       role: "Research Analyst",
       image: nasikBangash,
-      description: "Skilled in research, monitoring, and evaluation, with a focus on translating complex field realities into strategic insights that inform effective interventions and public policy.",
+      description: "A dedicated research analyst focused on translating complex data into actionable insights. Experienced in monitoring and evaluation of public policy interventions. Committed to bridging the gap between research findings and practical implementation for sustainable impact.",
       linkedin: "#",
       twitter: "#",
       email: "nasik@rosebeltconsultants.com"
@@ -41,7 +46,7 @@ const ServicesResearchers = () => {
       name: "Mudassir Ali Watto",
       role: "Research Associate",
       image: mudassirAli,
-      description: "Dedicated to uncovering innovative solutions through meticulous research and data analysis. Specializes in developing evidence-based strategies that drive organizational growth and efficiency.",
+      description: "A methodical research associate passionate about uncovering innovative solutions to complex challenges. Experienced in data analysis and strategic development. Driven to create practical frameworks that enhance organizational effectiveness and community wellbeing.",
       linkedin: "#",
       twitter: "#",
       email: "mudassir@rosebeltconsultants.com"
@@ -51,7 +56,7 @@ const ServicesResearchers = () => {
       name: "Sunir Ashnae",
       role: "Research Specialist",
       image: sunirAshnae,
-      description: "Passionate about exploring new frontiers in research methodology. Combines analytical expertise with creative thinking to identify opportunities for improvement and innovation in various sectors.",
+      description: "A creative research specialist dedicated to exploring new methodological frontiers. Experienced in developing multidisciplinary research designs and analytical frameworks. Committed to generating insights that inspire innovation and drive meaningful change.",
       linkedin: "#",
       twitter: "#",
       email: "sunir@rosebeltconsultants.com"
@@ -61,7 +66,7 @@ const ServicesResearchers = () => {
       name: "Muhammad Shahroze Iqbal",
       role: "Research Associate",
       image: muhammadShahroze,
-      description: "An MPhil scholar in Sociology with a strong focus on security strategies and strategic counseling. Contributes to projects centered around sustainable development with a passion for community engagement and social impact initiatives. Leverages strong problem-solving and leadership skills to address complex challenges effectively.",
+      description: "A passionate sociologist committed to understanding security strategies and community dynamics. Experienced in sustainable development research and strategic counseling. Driven to apply sociological insights to create effective solutions for complex social challenges.",
       linkedin: "#",
       twitter: "#",
       email: "shahroze@rosebeltconsultants.com"
@@ -71,7 +76,7 @@ const ServicesResearchers = () => {
       name: "Farhat Abbas",
       role: "Young Researcher",
       image: farhatAbbas,
-      description: "A dynamic young researcher with a passion for data-driven insights and emerging research methodologies. Specializes in innovative approaches to complex social issues, combining academic rigor with creative problem-solving. Brings fresh perspectives and technological expertise to research projects across multiple domains.",
+      description: "A dynamic young researcher dedicated to data-driven insights and modern research approaches. Experienced in analyzing complex social issues through innovative methods. Passionate about bringing fresh perspectives that lead to creative solutions for contemporary challenges.",
       linkedin: "#",
       twitter: "#",
       email: "farhat@rosebeltconsultants.com"
@@ -81,7 +86,7 @@ const ServicesResearchers = () => {
       name: "Maheen Nisar Khan",
       role: "Young Researcher",
       image: maheenNisar,
-      description: "An emerging talent in qualitative research with a keen interest in social development and public policy analysis. Combines academic excellence with practical field experience to deliver nuanced insights on complex societal challenges. Known for her innovative research methods and ability to engage diverse stakeholders in participatory research processes.",
+      description: "A committed qualitative researcher focused on social development and public policy. Experienced in field research and stakeholder engagement across diverse communities. Driven to ensure research translates into meaningful improvements in people's everyday lives.",
       linkedin: "#",
       twitter: "#",
       email: "maheen@rosebeltconsultants.com"
@@ -91,10 +96,60 @@ const ServicesResearchers = () => {
       name: "Misha Shahbaz",
       role: "Young Researcher",
       image: mishaShahbaz,
-      description: "A promising young researcher specializing in data analytics and socioeconomic research. Combines strong analytical skills with a deep understanding of community dynamics to provide valuable insights for development projects. Adept at translating research findings into practical recommendations that drive positive change across various sectors.",
+      description: "A dedicated data analyst passionate about socioeconomic research and community dynamics. Experienced in translating complex findings into practical recommendations. Committed to using research as a tool for positive change and sustainable development.",
       linkedin: "#",
       twitter: "#",
       email: "misha@rosebeltconsultants.com"
+    },
+    {
+      id: 16,
+      name: "Rida Batool",
+      role: "Young Researcher",
+      image: ridaBatool,
+      description: "A passionate educational researcher committed to improving learning outcomes through evidence-based approaches. Experienced in curriculum development and educational policy analysis. Dedicated to creating inclusive educational environments that empower learners of all backgrounds.",
+      linkedin: "#",
+      twitter: "#",
+      email: "rida@rosebeltconsultants.com"
+    },
+    {
+      id: 17,
+      name: "Muskan Fatima",
+      role: "Young Researcher",
+      image: muskanFatima,
+      description: "A passionate public health researcher committed to fostering healthier communities through sustainable and evidence-based strategies. Experienced in designing health promotion initiatives, research and community engagement. Driven to make health a fundamental right for everyone.",
+      linkedin: "#",
+      twitter: "#",
+      email: "muskan@rosebeltconsultants.com"
+    },
+    {
+      id: 18,
+      name: "Fiza Ijaz",
+      role: "Young Researcher",
+      image: fizaIjaz,
+      description: "A dedicated environmental researcher committed to sustainable development and climate action. Experienced in evaluating environmental policies and their community impact. Passionate about creating research-based solutions that balance ecological preservation with human needs.",
+      linkedin: "#",
+      twitter: "#",
+      email: "fiza@rosebeltconsultants.com"
+    },
+    {
+      id: 19,
+      name: "Rameen Sahar",
+      role: "Young Researcher",
+      image: rameenSahar,
+      description: "A forward-thinking researcher passionate about digital transformation and technological innovation. Experienced in studying adoption patterns across traditional sectors. Committed to harnessing technology's potential to solve pressing social and economic challenges.",
+      linkedin: "#",
+      twitter: "#",
+      email: "rameen@rosebeltconsultants.com"
+    },
+    {
+      id: 20,
+      name: "Bushra Maqsood",
+      role: "Young Researcher",
+      image: bushraMaqsood,
+      description: "A passionate advocate and researcher dedicated to gender equality and social inclusion. Experienced in participatory methodologies that amplify marginalized voices. Driven to create research that catalyzes meaningful policy change and promotes a more equitable society.",
+      linkedin: "#",
+      twitter: "#",
+      email: "bushra@rosebeltconsultants.com"
     }
   ];
 
