@@ -122,7 +122,7 @@ const Team = () => {
     },
     {
       id: 25,
-      name: "Shagufta Shaheen",
+      name: "Dr. Shagufta Shaheen",
       role: "Managing Director RBC-Global",
       image: shaguftaShaheen,
       description: "Member PH initiatives. A dedicated professional with extensive experience in healthcare management and public health initiatives. Passionate about implementing sustainable healthcare solutions and driving organizational excellence through strategic leadership and collaborative approaches.",

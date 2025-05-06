@@ -22,7 +22,7 @@ const ServicesOverview = () => {
         <Container>
           <Row className="justify-content-center text-center">
             <Col md={8}>
-              <h1 className="display-4 mb-3">Our <span style={{ color: '#f59e0b' }}>Services</span></h1>
+              <h1 className="display-4 mb-3">Our <span style={{ color: '#f59e0b' }}>Leadership</span></h1>
               <p className="lead fw-bold" style={{ color: 'white' }}>
                 Comprehensive consulting solutions tailored to your unique challenges
               </p>
@@ -122,7 +122,7 @@ const ServicesOverview = () => {
                     Our multidisciplinary approach allows us to address complex challenges from multiple perspectives, providing integrated solutions that stand the test of time. We believe that true partnership means understanding your unique context, adapting to your evolving needs, and celebrating your successes as our own."
                   </p>
                   <div className="text-end mt-4">
-                    <span style={{ fontWeight: 'bold' }}>Shagufta Shaheen</span><br />
+                    <span style={{ fontWeight: 'bold' }}>Dr. Shagufta Shaheen</span><br />
                     <span style={{ fontSize: '0.9rem' }}>Member PH initiatives</span>
                   </div>
                 </div>
@@ -138,12 +138,12 @@ const ServicesOverview = () => {
               }}>
                 <img 
                   src={shaguftaShaheen} 
-                  alt="Shagufta Shaheen - Managing Director RBC-Global" 
+                  alt="Dr. Shagufta Shaheen - Managing Director RBC-Global" 
                   className="img-fluid rounded" 
                   style={{ width: '100%' }} 
                 />
                 <div className="text-center mt-3">
-                  <h4>Shagufta Shaheen</h4>
+                  <h4>Dr. Shagufta Shaheen</h4>
                   <p style={{ color: '#f59e0b', fontWeight: 'bold' }}>Managing Director RBC-Global</p>
                 </div>
               </div>
