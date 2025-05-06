@@ -10,6 +10,8 @@ import mudassirAli from '../assets/4.png';
 import sunirAshnae from '../assets/6.png';
 import muhammadShahroze from '../assets/14.png';
 import farhatAbbas from '../assets/15.png';
+import maheenNisar from '../assets/16.png';
+import mishaShahbaz from '../assets/17.png';
 
 const ServicesResearchers = () => {
   // Researchers data from Team.jsx
@@ -73,6 +75,26 @@ const ServicesResearchers = () => {
       linkedin: "#",
       twitter: "#",
       email: "farhat@rosebeltconsultants.com"
+    },
+    {
+      id: 14,
+      name: "Maheen Nisar Khan",
+      role: "Young Researcher",
+      image: maheenNisar,
+      description: "An emerging talent in qualitative research with a keen interest in social development and public policy analysis. Combines academic excellence with practical field experience to deliver nuanced insights on complex societal challenges. Known for her innovative research methods and ability to engage diverse stakeholders in participatory research processes.",
+      linkedin: "#",
+      twitter: "#",
+      email: "maheen@rosebeltconsultants.com"
+    },
+    {
+      id: 15,
+      name: "Misha Shahbaz",
+      role: "Young Researcher",
+      image: mishaShahbaz,
+      description: "A promising young researcher specializing in data analytics and socioeconomic research. Combines strong analytical skills with a deep understanding of community dynamics to provide valuable insights for development projects. Adept at translating research findings into practical recommendations that drive positive change across various sectors.",
+      linkedin: "#",
+      twitter: "#",
+      email: "misha@rosebeltconsultants.com"
     }
   ];
 
@@ -171,7 +193,7 @@ const ServicesResearchers = () => {
         <section className="about-section mb-5">
           <div className="section-heading-container mb-4">
             <h2 className="section-heading">
-              <span style={{ color: '#f59e0b' }}>Meet Our</span> Researchers
+              <span style={{ color: '#f59e0b' }}>Meet Our</span> Young Researchers
             </h2>
           </div>
           <Row className="g-4">
