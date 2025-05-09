@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import SelectedApplicantsButton from './components/SelectedApplicantsButton';
 
 // Page components
 import CarouselSlider from './components/CarouselSlider';
@@ -300,6 +301,9 @@ function App() {
         <Announcements />
         
         <Footer />
+        
+        {/* Selected Applicants floating button */}
+        <SelectedApplicantsButton />
       </div>
     </Router>
   );
