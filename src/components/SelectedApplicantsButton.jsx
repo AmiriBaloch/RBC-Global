@@ -68,7 +68,7 @@ const SelectedApplicantsButton = () => {
             lineHeight: '1.2'
           }}
         >
-          Selected Applicants
+          Shortlisted Applicants
         </div>
       </div>
       
