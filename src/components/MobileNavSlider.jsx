@@ -253,6 +253,16 @@ const MobileNavSlider = ({
           >
             NEWSROOM
           </Link>
+
+          {/* See List Link */}
+          <Link 
+            to="/list" 
+            className={`nav-link ${activeLink === 'list' ? 'active' : ''}`}
+            onClick={() => handleNavClick('list')}
+            style={{ '--item-index': 6 }}
+          >
+            SEE LIST
+          </Link>
           
           {/* Social Media Icons */}
           <div className="mobile-nav-social-icons" style={{ '--item-index': 7 }}>

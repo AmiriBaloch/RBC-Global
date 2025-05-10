@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
-import SelectedApplicantsButton from './components/SelectedApplicantsButton';
 
 // Page components
 import CarouselSlider from './components/CarouselSlider';
@@ -42,6 +41,7 @@ import ServicesData from './components/ServicesData';
 import WhatsAppButton from './components/WhatsAppButton';
 import FacebookButton from './components/FacebookButton';
 import InstagramButton from './components/InstagramButton';
+import SeeListButton from './components/SeeListButton';
 
 // Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -296,14 +296,12 @@ function App() {
         <WhatsAppButton />
         <FacebookButton />
         <InstagramButton />
+        <SeeListButton />
         
         {/* Announcements box */}
         <Announcements />
         
         <Footer />
-        
-        {/* Selected Applicants floating button */}
-        <SelectedApplicantsButton />
       </div>
     </Router>
   );

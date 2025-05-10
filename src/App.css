@@ -281,7 +281,8 @@ img {
 /* Hide floating social media buttons when mobile menu is expanded */
 body.menu-expanded .whatsapp-btn,
 body.menu-expanded .facebook-btn,
-body.menu-expanded .instagram-btn {
+body.menu-expanded .instagram-btn,
+body.menu-expanded .see-list-btn {
   display: none !important;
 }
 

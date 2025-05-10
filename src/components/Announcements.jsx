@@ -405,7 +405,7 @@ const Announcements = () => {
           {isOpen && !activeAnnouncement && (
             <div className="announcements-content">
               {announcements.length > 0 ? (
-                announcements.map(announcement => (
+                announcements.map((announcement, index) => (
                   <div 
                     key={announcement.id} 
                     className={`announcement-item ${announcement.isNew ? 'new-announcement' : ''}`}
@@ -446,18 +446,30 @@ const Announcements = () => {
                               <span>View</span>
                             </Button>
                           )}
-                          <Link 
-                            to="/join-our-team"
-                            onClick={handleApplyClick}
-                          >
-                            <Button 
-                              variant="primary" 
-                              size="sm"
-                              className="apply-now-button"
+                          {index === 0 ? (
+                            <Link to="/newsroom">
+                              <Button 
+                                variant="primary" 
+                                size="sm"
+                                className="apply-now-button"
+                              >
+                                See List
+                              </Button>
+                            </Link>
+                          ) : (
+                            <Link 
+                              to="/join-our-team"
+                              onClick={handleApplyClick}
                             >
-                              Apply Now
-                            </Button>
-                          </Link>
+                              <Button 
+                                variant="primary" 
+                                size="sm"
+                                className="apply-now-button"
+                              >
+                                Apply Now
+                              </Button>
+                            </Link>
+                          )}
                         </div>
                       </div>
                     </div>
