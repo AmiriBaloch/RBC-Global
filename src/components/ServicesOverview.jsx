@@ -96,8 +96,8 @@ const ServicesOverview = () => {
           </Row>
           
           {/* Managing Director Row */}
-          <Row>
-            <Col lg={8} md={7} className="order-lg-1 order-md-1 order-2">
+          <Row className="justify-content-center">
+            <Col md={10} className="mx-auto">
               <div className="leadership-message p-4 rounded-3 h-100" style={{ 
                 backgroundColor: '#ffffff', 
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
@@ -123,28 +123,9 @@ const ServicesOverview = () => {
                   </p>
                   <div className="text-end mt-4">
                     <span style={{ fontWeight: 'bold' }}>Dr. S.Shaheen</span><br />
-                    <span style={{ fontSize: '0.9rem' }}>Member PH initiatives</span>
+                    <span style={{ fontSize: '0.9rem' }}>Member PH initiatives</span><br />
+                    <span style={{ color: '#f59e0b', fontWeight: 'bold' }}>Managing Director RBC-Global</span>
                   </div>
-                </div>
-              </div>
-            </Col>
-            <Col lg={4} md={5} className="order-lg-2 order-md-2 order-1 mb-4 mb-md-0">
-              <div className="leadership-image-container p-3" style={{ 
-                backgroundColor: '#ffffff', 
-                borderRadius: '8px', 
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
-                border: '1px solid #e0e0e0',
-                height: '100%'
-              }}>
-                <img 
-                  src={shaguftaShaheen} 
-                  alt="Dr. S.Shaheen - Managing Director RBC-Global" 
-                  className="img-fluid rounded" 
-                  style={{ width: '100%' }} 
-                />
-                <div className="text-center mt-3">
-                  <h4>Dr. S.Shaheen</h4>
-                  <p style={{ color: '#f59e0b', fontWeight: 'bold' }}>Managing Director RBC-Global</p>
                 </div>
               </div>
             </Col>
