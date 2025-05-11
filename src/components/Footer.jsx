@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaPhone, FaSearch, FaFacebook, FaInstagram, FaWhatsapp, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { FaPhone, FaSearch, FaFacebook, FaInstagram, FaWhatsapp, FaLinkedin, FaEnvelope, FaList } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {

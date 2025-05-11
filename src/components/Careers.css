@@ -53,7 +53,7 @@
   left: 0;
   right: 0;
   height: 4rem;
-  background: linear-gradient(to bottom right, transparent 49%, #ffffff 50%);
+  background: linear-gradient(to bottom right, transparent 49%, #000000 50%);
 }
 
 .careers-hero h1 {
@@ -523,7 +523,7 @@ textarea.form-control {
   }
 
   .careers-hero::after {
-    background: linear-gradient(to bottom right, transparent 49%, #1a1a1a 50%);
+    background: linear-gradient(to bottom right, transparent 49%, #000000 50%);
   }
 
   .benefit-card,

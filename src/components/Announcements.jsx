@@ -446,30 +446,6 @@ const Announcements = () => {
                               <span>View</span>
                             </Button>
                           )}
-                          {index === 0 ? (
-                            <Link to="/newsroom">
-                              <Button 
-                                variant="primary" 
-                                size="sm"
-                                className="apply-now-button"
-                              >
-                                See List
-                              </Button>
-                            </Link>
-                          ) : (
-                            <Link 
-                              to="/join-our-team"
-                              onClick={handleApplyClick}
-                            >
-                              <Button 
-                                variant="primary" 
-                                size="sm"
-                                className="apply-now-button"
-                              >
-                                Apply Now
-                              </Button>
-                            </Link>
-                          )}
                         </div>
                       </div>
                     </div>
@@ -509,17 +485,6 @@ const Announcements = () => {
                   <FaCalendarAlt className="meta-icon" />
                   <span className="meta-text">{formatDate(activeAnnouncement.date)}</span>
                   <span className="detail-time-ago">({getTimeAgo(activeAnnouncement.date)})</span>
-                </div>
-                <div className="detail-actions">
-                  <Link to="/join-our-team" onClick={handleApplyClick}>
-                    <Button 
-                      variant="primary" 
-                      className="apply-now-button-large"
-                    >
-                      <span className="button-text">Apply Now</span>
-                      <FaArrowRight className="button-icon-right" />
-                    </Button>
-                  </Link>
                 </div>
               </div>
             </div>

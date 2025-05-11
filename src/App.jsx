@@ -19,6 +19,7 @@ import CoreContributors from './components/CoreContributors';
 import Announcements from './components/Announcements';
 import OurIdeas from './components/OurIdeas';
 import Projects from './components/Projects';
+import ApplicantsList from './components/ApplicantsList';
 
 // Import new Newsroom component
 import Newsroom from './components/Newsroom';
@@ -287,6 +288,9 @@ function App() {
           
           {/* Legacy route for AboutUsSimple */}
           <Route path="/about-us" element={<AboutUsSimple />} />
+          
+          {/* Applicants List route */}
+          <Route path="/applicants-list" element={<ApplicantsList />} />
           
           {/* Redirect all unknown routes to home page */}
           <Route path="*" element={<Navigate to="/" replace />} />

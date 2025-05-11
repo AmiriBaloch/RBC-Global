@@ -1,0 +1,169 @@
+.hover-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none !important;
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Compact Card Styles */
+.compact-card {
+  font-size: 1rem;
+}
+
+.compact-card .card-title {
+  font-size: 1.25rem !important;
+}
+
+.compact-card .card-body {
+  padding: 1rem;
+}
+
+.compact-card strong {
+  font-weight: 600;
+}
+
+.compact-card .card-subtitle {
+  font-size: 0.95rem !important;
+}
+
+.compact-card .small {
+  font-size: 0.95rem !important;
+}
+
+/* Remove underline from email links */
+.compact-card a {
+  text-decoration: none;
+  color: #0d6efd;
+}
+
+.compact-card a:hover {
+  color: #0a58ca;
+  text-decoration: underline;
+}
+
+/* Modern Section Headings */
+.modern-heading {
+  position: relative;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 12px 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #333;
+}
+
+.modern-heading.success {
+  border-left-color: #28a745;
+}
+
+.modern-heading.primary {
+  border-left-color: #0d6efd;
+}
+
+.heading-icon {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modern-heading.success .heading-icon {
+  color: #28a745;
+}
+
+.modern-heading.primary .heading-icon {
+  color: #0d6efd;
+}
+
+.modern-heading h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+.modern-heading.success h2 {
+  color: #28a745;
+}
+
+.modern-heading.primary h2 {
+  color: #0d6efd;
+}
+
+/* Header styles */
+.applicants-header {
+  position: relative;
+  padding-bottom: 2rem;
+  margin-bottom: 3rem;
+}
+
+.applicants-header:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background-color: #f59e0b; /* Match the brand color from Footer */
+  border-radius: 3px;
+}
+
+/* Status badges */
+.badge-selected {
+  background-color: #28a745 !important;
+  font-weight: 500;
+}
+
+.badge-shortlisted {
+  background-color: #007bff !important;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .applicants-header {
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .applicants-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .modern-heading h2 {
+    font-size: 1.3rem;
+  }
+  
+  /* Add margin top for section headings on small screens */
+  .section-container:first-of-type {
+    margin-top: 2rem;
+  }
+}
+
+/* Even smaller screens */
+@media (max-width: 576px) {
+  .modern-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+  
+  .heading-icon {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  .modern-heading h2 {
+    font-size: 1.1rem;
+  }
+  
+  .section-container:first-of-type {
+    margin-top: 1.5rem;
+  }
+} 
