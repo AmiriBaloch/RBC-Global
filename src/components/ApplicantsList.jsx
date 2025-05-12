@@ -166,6 +166,13 @@ const ApplicantsList = () => {
                                 {applicant.cnic}
                               </div>
                             )}
+                            
+                            {applicant.postLocation && (
+                              <div className="mb-2">
+                                <strong>Location: </strong>
+                                {applicant.postLocation}
+                              </div>
+                            )}
                           </Card.Body>
                         </Card>
                       </Col>
@@ -211,6 +218,13 @@ const ApplicantsList = () => {
                               <div className="mb-2">
                                 <strong>CNIC: </strong>
                                 {applicant.cnic}
+                              </div>
+                            )}
+                            
+                            {applicant.postLocation && (
+                              <div className="mb-2">
+                                <strong>Location: </strong>
+                                {applicant.postLocation}
                               </div>
                             )}
                           </Card.Body>
