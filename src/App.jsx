@@ -153,19 +153,33 @@ const PageViewTracker = () => {
       document.title = "RBC Global";
     }
     
-    if (window.dataLayer) {
-      // Push pageview event with timestamp to ensure uniqueness
-      window.dataLayer.push({
-        event: 'virtualPageview',
-        virtualPageURL: location.pathname,
-        virtualPageTitle: document.title,
-        pageTimestamp: new Date().getTime(),
-        page: {
-          path: location.pathname,
-          title: document.title,
-          referrer: document.referrer
-        }
-      });
+    // Make sure dataLayer exists
+    if (typeof window !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      
+      try {
+        // Create a unique event ID to ensure distinct page views
+        const uniqueId = `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+        
+        // Push pageview event with timestamp to ensure uniqueness
+        window.dataLayer.push({
+          event: 'virtualPageview',
+          virtualPageURL: location.pathname,
+          virtualPageTitle: document.title,
+          pageTimestamp: new Date().getTime(),
+          eventId: uniqueId,
+          'gtm.uniqueEventId': Math.floor(Math.random() * 10000000),
+          page: {
+            path: location.pathname,
+            title: document.title,
+            referrer: document.referrer
+          }
+        });
+        
+        console.log(`Pageview tracked: ${location.pathname}`);
+      } catch (err) {
+        console.error('Error pushing to dataLayer:', err);
+      }
     }
   }, [location]);
   
