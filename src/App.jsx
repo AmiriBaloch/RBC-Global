@@ -174,7 +174,16 @@ const PageViewTracker = () => {
         // Create a unique event ID to ensure distinct page views
         const uniqueId = `pageview-${Date.now()}-${Math.floor(Math.random() * 1000000)}`;
         
-        // Push clean pageview event with guaranteed uniqueness
+        // First push a standard GA4 page_view event that most tags use by default
+        window.dataLayer.push({
+          event: 'page_view',
+          page_location: window.location.href,
+          page_path: location.pathname,
+          page_title: document.title,
+          send_to: 'GTM-MLHJMJ7M'
+        });
+        
+        // Then push our custom virtualPageview event
         window.dataLayer.push({
           event: 'virtualPageview',
           virtualPageURL: location.pathname,
