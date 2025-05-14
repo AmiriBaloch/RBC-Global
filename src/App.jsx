@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 // Components
 import Header from './components/Header';
@@ -131,14 +131,50 @@ export const HomePageContent = () => {
   );
 };
 
+// Set default title for the entire app
+document.title = "RBC Global";
+
 // WHO WE ARE landing page
 const WhoWeAre = () => {
+  useEffect(() => {
+    document.title = "RBC Global";
+  }, []);
+  
   return <HomePageContent />;
+};
+
+// Page View Tracker component for GTM
+const PageViewTracker = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    // Default title for the home page
+    if (location.pathname === '/') {
+      document.title = "RBC Global";
+    }
+    
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'pageview',
+        page: {
+          path: location.pathname,
+          title: document.title
+        }
+      });
+    }
+  }, [location]);
+  
+  return null;
 };
 
 function App() {
   // Set browser's scrollRestoration to 'manual' to prevent browser's default scroll position restoration
   useEffect(() => {
+    // Set default title
+    if (window.location.pathname === '/' || window.location.pathname === '') {
+      document.title = "RBC Global";
+    }
+    
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
@@ -171,6 +207,7 @@ function App() {
   return (
     <Router basename="/">
       <ScrollToTop />
+      <PageViewTracker />
       <div className="App">
         <Header />
         <Routes>
