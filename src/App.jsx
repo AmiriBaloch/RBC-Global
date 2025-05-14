@@ -154,11 +154,16 @@ const PageViewTracker = () => {
     }
     
     if (window.dataLayer) {
+      // Push pageview event with timestamp to ensure uniqueness
       window.dataLayer.push({
-        event: 'pageview',
+        event: 'virtualPageview',
+        virtualPageURL: location.pathname,
+        virtualPageTitle: document.title,
+        pageTimestamp: new Date().getTime(),
         page: {
           path: location.pathname,
-          title: document.title
+          title: document.title,
+          referrer: document.referrer
         }
       });
     }
