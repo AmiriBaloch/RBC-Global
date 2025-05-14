@@ -2,26 +2,66 @@
 <html lang="en" style="background-color: #E3EBF2;">
   <head>
     <meta charset="UTF-8" />
-    <!-- Initialize dataLayer -->
+    <!-- Google Tag Manager -->
     <script>
       // Initialize dataLayer first
       window.dataLayer = window.dataLayer || [];
       
+      // Helper function to trigger debug info
+      function trackGTMEvent(eventName, data) {
+        if (window.dataLayer) {
+          try {
+            // Add unique identifier to every GTM event
+            const uniqueId = Date.now() + '-' + Math.floor(Math.random() * 1000000);
+            const eventData = {
+              ...data,
+              eventId: uniqueId,
+              timestamp: new Date().getTime()
+            };
+            
+            // Push to dataLayer
+            window.dataLayer.push(eventData);
+            console.log('GTM event pushed:', eventName, eventData);
+            return true;
+          } catch (error) {
+            console.error('GTM event error:', error);
+            return false;
+          }
+        }
+        return false;
+      }
+      
       // GTM error handling
       function gtmHasLoaded() {
         console.log('GTM successfully loaded');
+        
+        // Force new pageview on successful GTM load
+        trackGTMEvent('initialPageview', {
+          event: 'initialPageview',
+          virtualPageURL: window.location.pathname,
+          virtualPageTitle: 'RBC Global',
+          'gtm.uniqueEventId': Math.floor(Math.random() * 1000000000),
+          page: {
+            path: window.location.pathname,
+            title: 'RBC Global',
+            referrer: document.referrer,
+            host: window.location.hostname
+          }
+        });
       }
       
       // Define dataLayer.push before GTM loads
-      dataLayer.push({
-        'page': {
-          'path': window.location.pathname,
-          'title': 'RBC Global'
-        },
-        'event': 'virtualPageview',
-        'virtualPageURL': window.location.pathname,
-        'virtualPageTitle': 'RBC Global',
-        'pageTimestamp': new Date().getTime()
+      trackGTMEvent('virtualPageview', {
+        event: 'virtualPageview',
+        virtualPageURL: window.location.pathname,
+        virtualPageTitle: 'RBC Global',
+        'gtm.uniqueEventId': Math.floor(Math.random() * 1000000000),
+        page: {
+          path: window.location.pathname,
+          title: 'RBC Global',
+          referrer: document.referrer,
+          host: window.location.hostname
+        }
       });
       
       // GTM standard code with proper error handler

@@ -158,25 +158,39 @@ const PageViewTracker = () => {
       window.dataLayer = window.dataLayer || [];
       
       try {
-        // Create a unique event ID to ensure distinct page views
-        const uniqueId = `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+        // Clear the existing event data to avoid interference between navigations
+        window.dataLayer.push({
+          event: 'clear-page-data'
+        });
         
-        // Push pageview event with timestamp to ensure uniqueness
+        // Reset dataLayer object for this page
+        window.dataLayer.push({
+          'page.path': undefined,
+          'page.title': undefined,
+          'virtualPageURL': undefined, 
+          'virtualPageTitle': undefined
+        });
+        
+        // Create a unique event ID to ensure distinct page views
+        const uniqueId = `pageview-${Date.now()}-${Math.floor(Math.random() * 1000000)}`;
+        
+        // Push clean pageview event with guaranteed uniqueness
         window.dataLayer.push({
           event: 'virtualPageview',
           virtualPageURL: location.pathname,
           virtualPageTitle: document.title,
           pageTimestamp: new Date().getTime(),
           eventId: uniqueId,
-          'gtm.uniqueEventId': Math.floor(Math.random() * 10000000),
+          'gtm.uniqueEventId': Math.floor(Math.random() * 1000000000),
           page: {
             path: location.pathname,
             title: document.title,
-            referrer: document.referrer
+            referrer: document.referrer,
+            host: window.location.hostname
           }
         });
         
-        console.log(`Pageview tracked: ${location.pathname}`);
+        console.log(`Pageview tracked: ${location.pathname} (${uniqueId})`);
       } catch (err) {
         console.error('Error pushing to dataLayer:', err);
       }
