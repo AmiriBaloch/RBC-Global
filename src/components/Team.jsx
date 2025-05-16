@@ -18,6 +18,7 @@ import Imran from "../assets/3.png";
 import shaguftaShaheen from "../assets/11.png";
 import nabghaHashmi from "../assets/9.png";
 import muhammadShahroze from "../assets/14.png";
+import faheemManzoor from "../assets/25.png";
 
 const Team = () => {
   const location = useLocation();
@@ -211,6 +212,16 @@ const Team = () => {
       linkedin: "#",
       twitter: "#",
       email: "shahroze@rosebeltconsultants.com"
+    },
+    {
+      id: 13,
+      name: "Faheem Manzoor",
+      role: "Young Researcher",
+      image: faheemManzoor,
+      description: "An emerging scholar specializing in data-driven socioeconomic research with expertise in quantitative analysis methodologies. Combines academic rigor with innovative approaches to address complex social challenges. Passionate about leveraging research to influence evidence-based policy making and sustainable development initiatives across diverse communities.",
+      linkedin: "#",
+      twitter: "#",
+      email: "faheem@rosebeltconsultants.com"
     }
   ];
 

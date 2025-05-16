@@ -7,6 +7,7 @@ import './AboutUs.css';
 import drHafizImran from '../assets/5.png';
 import nabghaHashmi from "../assets/9.png";
 import drRubeenaZakar from "../assets/18.png";
+import wakarKhan from "../assets/24.png";
 
 const ServicesConsultants = () => {
   // Consultants data from Team.jsx
@@ -40,6 +41,16 @@ const ServicesConsultants = () => {
       linkedin: "#",
       twitter: "#",
       email: "nabgha@rosebeltconsultants.com"
+    },
+    {
+      id: 3,
+      name: "Wakar Khan",
+      role: "Lead Development Expert",
+      image: wakarKhan,
+      description: "A seasoned development professional with 21 years of experience in Project Implementation of both Development and Emergency Projects. Specializes in Monitoring & Evaluation, Communications, Capacity Building and Trainings. Proven track record of successfully managing complex development initiatives and building strategic partnerships across multiple sectors to drive sustainable change.",
+      linkedin: "#",
+      twitter: "#",
+      email: "wakar@rosebeltconsultants.com"
     }
   ];
 
