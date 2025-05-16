@@ -137,7 +137,7 @@ document.title = "RBC Global";
 // WHO WE ARE landing page
 const WhoWeAre = () => {
   useEffect(() => {
-    document.title = "RBC Global";
+    document.title = "RBC | WHO WE ARE";
   }, []);
   
   return <HomePageContent />;

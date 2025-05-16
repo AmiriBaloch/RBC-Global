@@ -461,7 +461,7 @@ const Careers = () => {
   const location = useLocation();
 
   useEffect(() => {
-    document.title = "Careers | Rosebelt Consultants";
+    document.title = "RBC | JOIN OUR TEAM";
     fetchJobs();
     
     // Check if mobile on mount and window resize

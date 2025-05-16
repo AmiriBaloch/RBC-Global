@@ -24,7 +24,7 @@ const Newsroom = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    document.title = "Newsroom | Rosebelt Consultants";
+    document.title = "RBC | NEWSROOM";
     fetchActivities();
   }, []);
 

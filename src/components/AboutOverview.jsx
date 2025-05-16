@@ -9,7 +9,7 @@ const AboutOverview = () => {
   const [selectedOffice, setSelectedOffice] = useState('Lahore');
   
   useEffect(() => {
-    document.title = "Our Offices | Rosebelt Consultants";
+    document.title = "RBC | OUR OFFICES";
   }, []);
 
   // Office locations data

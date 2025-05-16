@@ -56,7 +56,8 @@ const SeeListButton = () => {
   return (
     <Link 
       to="/applicants-list"
-      className="see-list-btn"
+      className="see-list-btn applicants-list"
+      id="see-list-btn"
       aria-label="View Applicants List"
       style={{
         position: 'fixed',
@@ -64,8 +65,8 @@ const SeeListButton = () => {
         right: '20px',
         backgroundColor: '#4285f4', // Google blue color
         color: 'white',
-        borderRadius: '50%', // Make it circular
-        width: '45px',
+        borderRadius: '30px', // Pill shape
+        padding: '0 20px 0 15px', // Increased padding on both sides
         height: '45px',
         display: 'flex',
         alignItems: 'center',
@@ -73,7 +74,10 @@ const SeeListButton = () => {
         boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
         zIndex: 1000,
         cursor: 'pointer',
-        textDecoration: 'none'
+        textDecoration: 'none',
+        gap: '10px', // Increased space between icon and text
+        whiteSpace: 'nowrap', // Prevent text from wrapping
+        minWidth: '165px' // Ensure minimum width to fit text
       }}
     >
       <svg 
@@ -92,6 +96,7 @@ const SeeListButton = () => {
         <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
       </svg>
+      <span style={{ fontWeight: 'bold', fontSize: '14px' }}>Applicants List</span>
     </Link>
   );
 };

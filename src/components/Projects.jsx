@@ -24,7 +24,7 @@ const Projects = ({ limitCount = 0, showViewAllButton = false }) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    document.title = "Our Projects | Rosebelt Consultants";
+    document.title = "RBC | PROJECTS";
     fetchProjects();
   }, [limitCount]);
 

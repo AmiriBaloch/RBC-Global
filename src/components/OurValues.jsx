@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandshake, faGlobe, faLightbulb, faUsers, faHeart, faHandHoldingHeart, faSeedling, faBalanceScale } from '@fortawesome/free-solid-svg-icons';
 import './AboutUs.css';
 
 const OurValues = () => {
+  useEffect(() => {
+    document.title = "RBC | OUR VALUES & COMMITMENTS";
+    // Force scroll to top on page load
+    window.scrollTo(0, 0);
+  }, []);
+
   // Core values data
   const coreValues = [
     {

@@ -25,28 +25,32 @@ const Team = () => {
   const [sectionTitle, setSectionTitle] = useState({ main: 'Meet Our', accent: 'Team' });
 
   useEffect(() => {
-    document.title = "Our Team | Rosebelt Consultants";
-    
     // Set the active section based on the URL path
     const path = location.pathname;
     if (path.includes('/team/board')) {
       setActiveSection('board');
       setSectionTitle({ main: 'Board of', accent: 'Directors' });
+      document.title = "RBC | LEADERSHIP";
     } else if (path.includes('/team/consultants')) {
       setActiveSection('consultants');
       setSectionTitle({ main: 'Our', accent: 'Consultants' });
+      document.title = "RBC | CONSULTANTS";
     } else if (path.includes('/team/health')) {
       setActiveSection('health');
       setSectionTitle({ main: 'Health', accent: 'Experts' });
+      document.title = "RBC | HEALTH EXPERTS";
     } else if (path.includes('/team/it')) {
       setActiveSection('it');
       setSectionTitle({ main: 'IT', accent: 'Experts' });
+      document.title = "RBC | IT EXPERTS";
     } else if (path.includes('/team/researchers')) {
       setActiveSection('researchers');
       setSectionTitle({ main: 'Our', accent: 'Researchers' });
+      document.title = "RBC | YOUNG RESEARCHERS";
     } else {
       setActiveSection('all');
       setSectionTitle({ main: 'Meet Our', accent: 'Team' });
+      document.title = "RBC | LEADERSHIP";
     }
   }, [location]);
 

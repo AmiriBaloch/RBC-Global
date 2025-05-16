@@ -10,7 +10,7 @@ const OurTrust = () => {
   const trustedClientsList = clientsData.slice(0, 8);
   
   useEffect(() => {
-    document.title = "RoseBelt Accredited | Rosebelt Consultants";
+    document.title = "RBC | OUR CLIENTS";
   }, []);
   
   return (

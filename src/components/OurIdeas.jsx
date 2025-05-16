@@ -6,7 +6,7 @@ import './AboutUs.css';
 
 const OurIdeas = () => {
   useEffect(() => {
-    document.title = "Our Ideas | Rosebelt Consultants";
+    document.title = "RBC | IDEAS";
     // Force scroll to top on page load
     window.scrollTo(0, 0);
   }, []);
