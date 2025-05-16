@@ -12,6 +12,38 @@ const ApplicantsList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Set page title
+    document.title = "RBC | APPLICANTS LIST";
+    
+    // Push pageview event to dataLayer for GTM
+    if (typeof window !== 'undefined' && window.dataLayer) {
+      // Clear existing data first
+      window.dataLayer.push({
+        'page.path': undefined,
+        'page.title': undefined,
+        'virtualPageURL': undefined, 
+        'virtualPageTitle': undefined
+      });
+      
+      // Push pageview event
+      window.dataLayer.push({
+        event: 'page_view',
+        page_location: window.location.href,
+        page_path: window.location.pathname,
+        page_title: 'RBC | APPLICANTS LIST',
+        page_type: 'applicants_list',
+        send_to: 'GTM-MLHJMJ7M'
+      });
+      
+      // Push custom event for applicants list view
+      window.dataLayer.push({
+        event: 'view_applicants_list',
+        eventCategory: 'content',
+        eventAction: 'view',
+        eventLabel: 'applicants_list'
+      });
+    }
+    
     fetchApplicants();
   }, []);
 
@@ -44,12 +76,46 @@ const ApplicantsList = () => {
       });
       
       setApplicants(sortedApplicants);
+      
+      // Track successful data load
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'applicants_data_loaded',
+          applicantsCount: sortedApplicants.length,
+          selectedCount: sortedApplicants.filter(a => a.selected).length,
+          shortlistedCount: sortedApplicants.filter(a => a.shortlisted && !a.selected).length
+        });
+      }
     } catch (error) {
       console.error('Error fetching applicants:', error);
       setError('Failed to load applicants. Please try again later.');
+      
+      // Track error
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'applicants_data_error',
+          errorMessage: error.message
+        });
+      }
     } finally {
       setLoading(false);
     }
+  };
+
+  // Track when user clicks "Try Again" button
+  const handleTryAgain = () => {
+    // Track button click
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'button_click',
+        eventCategory: 'error_handling',
+        eventAction: 'click',
+        eventLabel: 'try_again',
+        buttonName: 'try_again'
+      });
+    }
+    
+    fetchApplicants();
   };
 
   // Format date to a readable string
@@ -115,7 +181,7 @@ const ApplicantsList = () => {
             <div className="d-flex justify-content-center">
               <button 
                 className="btn btn-outline-danger"
-                onClick={fetchApplicants}
+                onClick={handleTryAgain}
               >
                 Try Again
               </button>
