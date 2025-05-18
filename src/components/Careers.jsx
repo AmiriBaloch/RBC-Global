@@ -38,7 +38,6 @@ const ApplicationForm = ({ position = '', onClose }) => {
   }, [position]);
   
   const positions = [
-    'Trainer',
     'Supervisor',
     'Surveyor'
   ];
