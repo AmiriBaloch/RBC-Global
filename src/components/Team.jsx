@@ -127,7 +127,7 @@ const Team = () => {
     },
     {
       id: 25,
-      name: "Dr. Shagufta Shaheen",
+      name: "Ms. S.Shaheen",
       role: "Managing Director RBC-Global",
       image: shaguftaShaheen,
       description: "Member PH initiatives. A dedicated professional with extensive experience in healthcare management and public health initiatives. Passionate about implementing sustainable healthcare solutions and driving organizational excellence through strategic leadership and collaborative approaches.",
@@ -237,17 +237,6 @@ const Team = () => {
             <Card.Title className="mb-1">{member.name}</Card.Title>
             <Card.Subtitle className="mb-3" style={{ color: '#f59e0b' }}>{member.role}</Card.Subtitle>
             <Card.Text>{member.description}</Card.Text>
-            <div className="social-links">
-              <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="social-icon">
-                <FaLinkedin />
-              </a>
-              <a href={member.twitter} target="_blank" rel="noopener noreferrer" className="social-icon">
-                <FaTwitter />
-              </a>
-              <a href={`mailto:${member.email}`} className="social-icon">
-                <FaEnvelope />
-              </a>
-            </div>
           </Card.Body>
         </Card>
       </Col>

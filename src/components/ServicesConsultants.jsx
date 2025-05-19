@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
 import './AboutUs.css';
 
 // Import consultant images
@@ -167,60 +166,6 @@ const ServicesConsultants = () => {
                               {consultant.description}
                             </Card.Text>
                           </div>
-                          <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '15px' }}>
-                            <a 
-                              href={consultant.linkedin} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              style={{ 
-                                background: '#0077B5', 
-                                color: 'white',
-                                width: '36px',
-                                height: '36px',
-                                borderRadius: '50%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: '1rem'
-                              }}
-                            >
-                              <FaLinkedin />
-                            </a>
-                            <a 
-                              href={consultant.twitter} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              style={{ 
-                                background: '#1DA1F2', 
-                                color: 'white',
-                                width: '36px',
-                                height: '36px',
-                                borderRadius: '50%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: '1rem'
-                              }}
-                            >
-                              <FaTwitter />
-                            </a>
-                            <a 
-                              href={`mailto:${consultant.email}`} 
-                              style={{ 
-                                background: '#EA4335', 
-                                color: 'white',
-                                width: '36px',
-                                height: '36px',
-                                borderRadius: '50%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: '1rem'
-                              }}
-                            >
-                              <FaEnvelope />
-                            </a>
-                          </div>
                         </div>
                       </div>
                     </>
@@ -275,60 +220,6 @@ const ServicesConsultants = () => {
                     >
                       {consultant.description}
                     </Card.Text>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
-                      <a 
-                        href={consultant.linkedin} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        style={{ 
-                          background: '#0077B5', 
-                          color: 'white',
-                          width: '40px',
-                          height: '40px',
-                          borderRadius: '50%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '1.2rem'
-                        }}
-                      >
-                            <FaLinkedin />
-                          </a>
-                      <a 
-                        href={consultant.twitter} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        style={{ 
-                          background: '#1DA1F2', 
-                          color: 'white',
-                          width: '40px',
-                          height: '40px',
-                          borderRadius: '50%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '1.2rem'
-                        }}
-                      >
-                            <FaTwitter />
-                          </a>
-                      <a 
-                        href={`mailto:${consultant.email}`} 
-                        style={{ 
-                          background: '#EA4335', 
-                          color: 'white',
-                          width: '40px',
-                          height: '40px',
-                          borderRadius: '50%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '1.2rem'
-                        }}
-                      >
-                            <FaEnvelope />
-                          </a>
-                        </div>
                   </div>
                     </>
                   )}

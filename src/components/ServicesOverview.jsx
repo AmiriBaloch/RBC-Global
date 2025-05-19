@@ -96,8 +96,8 @@ const ServicesOverview = () => {
           </Row>
           
           {/* Managing Director Row */}
-          <Row className="justify-content-center">
-            <Col md={10} className="mx-auto">
+          <Row className="justify-content-center mb-5">
+            <Col lg={8} md={7}>
               <div className="leadership-message p-4 rounded-3 h-100" style={{ 
                 backgroundColor: '#ffffff', 
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
@@ -122,10 +122,30 @@ const ServicesOverview = () => {
                     Our multidisciplinary approach allows us to address complex challenges from multiple perspectives, providing integrated solutions that stand the test of time. We believe that true partnership means understanding your unique context, adapting to your evolving needs, and celebrating your successes as our own."
                   </p>
                   <div className="text-end mt-4">
-                    <span style={{ fontWeight: 'bold' }}>Dr. S.Shaheen</span><br />
+                    <span style={{ fontWeight: 'bold' }}>Ms. S.Shaheen</span><br />
                     <span style={{ fontSize: '0.9rem' }}>Member PH initiatives</span><br />
                     <span style={{ color: '#f59e0b', fontWeight: 'bold' }}>Managing Director RBC-Global</span>
                   </div>
+                </div>
+              </div>
+            </Col>
+            <Col lg={4} md={5}>
+              <div className="leadership-image-container p-3" style={{ 
+                backgroundColor: '#ffffff', 
+                borderRadius: '8px', 
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
+                border: '1px solid #e0e0e0',
+                height: '100%'
+              }}>
+                <img 
+                  src={shaguftaShaheen} 
+                  alt="Ms. S.Shaheen - Managing Director RBC-Global" 
+                  className="img-fluid rounded" 
+                  style={{ width: '100%' }} 
+                />
+                <div className="text-center mt-3">
+                  <h4>Ms. S.Shaheen</h4>
+                  <p style={{ color: '#f59e0b', fontWeight: 'bold' }}>Managing Director RBC-Global</p>
                 </div>
               </div>
             </Col>

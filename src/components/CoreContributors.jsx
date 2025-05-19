@@ -188,17 +188,6 @@ const CoreContributors = () => {
                     <Card.Title className="card-title">{expert.name}</Card.Title>
                     <Card.Subtitle className="card-subtitle">{expert.role}</Card.Subtitle>
                     <span className="category-badge">{expert.category}</span>
-                    <div className="social-links">
-                      <a href={expert.linkedin} target="_blank" rel="noopener noreferrer" className="social-icon linkedin">
-                        <FaLinkedin />
-                      </a>
-                      <a href={expert.twitter} target="_blank" rel="noopener noreferrer" className="social-icon twitter">
-                        <FaTwitter />
-                      </a>
-                      <a href={`mailto:${expert.email}`} className="social-icon email">
-                        <FaEnvelope />
-                      </a>
-                    </div>
                   </Card.Body>
                 </Card>
               </div>
