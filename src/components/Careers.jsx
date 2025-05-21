@@ -40,7 +40,7 @@ const Careers = () => {
       const jobsList = jobsSnapshot.docs.map(doc => {
         const data = doc.data();
         return {
-          id: doc.id,
+        id: doc.id,
           ...data,
           createdAt: data.createdAt?.toDate?.() || new Date(data.createdAt || Date.now()),
           timestamp: data.timestamp?.toDate?.() || new Date(data.timestamp || Date.now())
