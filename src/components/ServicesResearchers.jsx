@@ -13,8 +13,6 @@ import maheenNisar from '../assets/16.png';
 import mishaShahbaz from '../assets/17.png';
 import ridaBatool from '../assets/19.png';
 import muskanFatima from '../assets/20.png';
-import fizaIjaz from '../assets/21.png';
-import rameenSahar from '../assets/22.png';
 import bushraMaqsood from '../assets/23.png';
 import faheemManzoor from '../assets/25.png';
 
@@ -130,26 +128,6 @@ const ServicesResearchers = () => {
       linkedin: "#",
       twitter: "#",
       email: "muskan@rosebeltconsultants.com"
-    },
-    {
-      id: 18,
-      name: "Fiza Ijaz",
-      role: "Young Researcher",
-      image: fizaIjaz,
-      description: "A dedicated environmental researcher committed to sustainable development and climate action. Experienced in evaluating environmental policies and their community impact. Passionate about creating research-based solutions that balance ecological preservation with human needs.",
-      linkedin: "#",
-      twitter: "#",
-      email: "fiza@rosebeltconsultants.com"
-    },
-    {
-      id: 19,
-      name: "Rameen Sahar",
-      role: "Young Researcher",
-      image: rameenSahar,
-      description: "A forward-thinking researcher passionate about digital transformation and technological innovation. Experienced in studying adoption patterns across traditional sectors. Committed to harnessing technology's potential to solve pressing social and economic challenges.",
-      linkedin: "#",
-      twitter: "#",
-      email: "rameen@rosebeltconsultants.com"
     },
     {
       id: 20,
