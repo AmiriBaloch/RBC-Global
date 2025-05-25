@@ -26,7 +26,7 @@ const ServicesConsultants = () => {
       name: "Dr. Hafiz Muhammad Imran",
       role: "Public Health Consultant",
       image: drHafizImran,
-      description: "PhD Public Health-PU, M.Phil Public Health-PU, MS Public Policy-UMT, MBA-IBA. Experienced public health consultant with expertise in health policy development and implementation.",
+      description: "Dr. Hafiz Muhammad Imran is a highly qualified Public Health Consultant with PhD and M.Phil degrees from Punjab University, an MS in Public Policy, and an MBA. He specializes in health policy development and implementation, leveraging his extensive background to analyze challenges and design strategic public health interventions for various organizations. His work focuses on evidence-based policy to improve population health and well-being.",
       linkedin: "#",
       twitter: "#",
       email: "dr.imran@rosebeltconsultants.com"
@@ -36,7 +36,7 @@ const ServicesConsultants = () => {
       name: "Nabgha Najeeb Hashmi",
       role: "Education Consultant",
       image: nabghaHashmi,
-      description: "Consultant- Education (UNICEF, JICA, WHO, UNWOMEN). An experienced education specialist with expertise in coordinating multi-stakeholder initiatives and international development projects. Skilled in fostering partnerships between government agencies and global organizations to enhance educational outcomes and implement effective policy frameworks.",
+      description: "Nabgha Najeeb Hashmi is an experienced Education Consultant who has partnered with UNICEF, JICA, WHO, and UNWOMEN. She excels in coordinating multi-stakeholder initiatives and international development projects in education. Nabgha is skilled in fostering partnerships and developing effective policy frameworks to enhance educational outcomes and empower communities through quality education initiatives.",
       linkedin: "#",
       twitter: "#",
       email: "nabgha@rosebeltconsultants.com"
@@ -46,7 +46,7 @@ const ServicesConsultants = () => {
       name: "Wakar Khan",
       role: "Lead Development Expert",
       image: wakarKhan,
-      description: "A seasoned development professional with 21 years of experience in Project Implementation of both Development and Emergency Projects. Specializes in Monitoring & Evaluation, Communications, Capacity Building and Trainings. Proven track record of successfully managing complex development initiatives and building strategic partnerships across multiple sectors to drive sustainable change.",
+      description: "Wakar Khan is a seasoned Development Professional with over 21 years of experience in implementing Development and Emergency Projects. He specializes in Monitoring & Evaluation, Communications, Capacity Building, and Trainings. Wakar has a proven track record of managing complex initiatives and building strategic partnerships to drive sustainable change and deliver impactful results in challenging environments.",
       linkedin: "#",
       twitter: "#",
       email: "wakar@rosebeltconsultants.com"
@@ -272,13 +272,13 @@ const ServicesConsultants = () => {
             </Col>
             <Col md={6} lg={4} className="mb-4">
               <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Program Evaluation</h4>
+                <h4 className="mb-3">Monitoring & Evaluation & Research</h4>
                 <p>Rigorous assessment of program effectiveness, identifying strengths, areas for improvement, and strategies for enhancing impact.</p>
               </div>
             </Col>
             <Col md={6} lg={4} className="mb-4">
               <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Educational Consulting</h4>
+                <h4 className="mb-3">Education Advisory</h4>
                 <p>Specialized consulting for educational institutions, focusing on curriculum development, teacher training, and learning outcomes improvement.</p>
               </div>
             </Col>

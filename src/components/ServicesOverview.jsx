@@ -58,7 +58,7 @@ const ServicesOverview = () => {
                 />
                 <div className="text-center mt-3">
                   <h4>Amin Ul Haq Ch</h4>
-                  <p style={{ color: '#f59e0b', fontWeight: 'bold' }}>CEO RBC-Global</p>
+                  <p style={{ color: '#f59e0b', fontWeight: 'bold' }}>Chief Executive Officer RBC-Global</p>
                 </div>
               </div>
             </Col>
@@ -79,7 +79,7 @@ const ServicesOverview = () => {
                   zIndex: '0'
                 }}>❝</div>
                 <div style={{ position: 'relative', zIndex: '1' }}>
-                  <h3 className="mb-4">CEO's Message</h3>
+                  <h3 className="mb-4">Chief Executive Officer's Message</h3>
                   <p>
                     "As the CEO of RoseBelt Consultants Global, I am committed to leading an organization that stands at the forefront of innovation and excellence in consulting services. Our journey has been defined by a steadfast commitment to integrity, collaboration, and delivering tangible results for our clients.
                   </p>
@@ -181,7 +181,7 @@ const ServicesOverview = () => {
                       as={Link} 
                       to="/services/consultants" 
                       variant="outline-dark" 
-                      className="rounded-pill px-4"
+                      className="rounded-pill px-4 service-category-button"
                       style={{ borderColor: '#f59e0b', color: '#333' }}
                     >
                       Learn More
@@ -211,7 +211,7 @@ const ServicesOverview = () => {
                       as={Link} 
                       to="/services/health-experts" 
                       variant="outline-dark" 
-                      className="rounded-pill px-4"
+                      className="rounded-pill px-4 service-category-button"
                       style={{ borderColor: '#f59e0b', color: '#333' }}
                     >
                       Learn More
@@ -241,7 +241,7 @@ const ServicesOverview = () => {
                       as={Link} 
                       to="/services/it-experts" 
                       variant="outline-dark" 
-                      className="rounded-pill px-4"
+                      className="rounded-pill px-4 service-category-button"
                       style={{ borderColor: '#f59e0b', color: '#333' }}
                     >
                       Learn More
@@ -271,7 +271,7 @@ const ServicesOverview = () => {
                       as={Link} 
                       to="/services/researchers" 
                       variant="outline-dark" 
-                      className="rounded-pill px-4"
+                      className="rounded-pill px-4 service-category-button"
                       style={{ borderColor: '#f59e0b', color: '#333' }}
                     >
                       Learn More

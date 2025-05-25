@@ -12,7 +12,8 @@ const MobileNavSlider = ({
   const [expandedSections, setExpandedSections] = useState({
     workplace: false,
     services: false,
-    press: false
+    press: false,
+    works: false
   });
 
   // Close all sections when mobile menu is closed
@@ -23,7 +24,8 @@ const MobileNavSlider = ({
       setExpandedSections({
         workplace: false,
         services: false,
-        press: false
+        press: false,
+        works: false
       });
     }
   }, [expanded]);
@@ -66,6 +68,7 @@ const MobileNavSlider = ({
         workplace: false,
         services: false,
         press: false,
+        works: false,
         [sectionName]: !wasOpen
       };
     });
@@ -141,14 +144,14 @@ const MobileNavSlider = ({
                 className="mobile-submenu-item"
                 onClick={() => handleDropdownItemClick('about-us')}
               >
-                OUR LOCATIONS
+                OUR OFFICES
               </Link>
               <Link 
                 to="/our-company/who-trusts-us"
                 className="mobile-submenu-item"
                 onClick={() => handleDropdownItemClick('about-us')}
               >
-                WHO TRUSTS US
+                OUR PARTNERS
               </Link>
               <Link 
                 to="/our-company/what-we-believe"
@@ -224,15 +227,55 @@ const MobileNavSlider = ({
             </div>
           </div>
           
-          {/* Our Ideas */}
-          <Link 
-            to="/our-ideas" 
-            className={`nav-link ${activeLink === 'ideas' ? 'active' : ''}`}
-            onClick={() => handleNavClick('ideas')}
-            style={{ '--item-index': 3 }}
-          >
-            OUR IDEAS
-          </Link>
+          {/* Our Works Section */}
+          <div className="mobile-section" style={{ '--item-index': 3 }}>
+            <div 
+              className="mobile-section-header"
+              onClick={(e) => toggleSection('works', e)}
+              style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                width: '100%',
+                backgroundColor: '#E4EBF2'
+              }}
+            >
+              <span>OUR WORKS</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="16" 
+                height="16" 
+                fill="currentColor" 
+                className={`bi bi-chevron-down ${expandedSections.works ? 'rotate' : ''}`} 
+                viewBox="0 0 16 16"
+              >
+                <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+              </svg>
+            </div>
+            <div className={`mobile-section-content ${expandedSections.works ? 'show' : ''}`}>
+              <Link 
+                to="/our-ideas"
+                className="mobile-submenu-item"
+                onClick={() => handleDropdownItemClick('ideas')}
+              >
+                OUR IDEAS
+              </Link>
+              <Link 
+                to="/projects"
+                className="mobile-submenu-item"
+                onClick={() => handleDropdownItemClick('projects')}
+              >
+                OUR PROJECTS
+              </Link>
+              <Link 
+                to="/newsroom"
+                className="mobile-submenu-item"
+                onClick={() => handleDropdownItemClick('press')}
+              >
+                NEWSROOM
+              </Link>
+            </div>
+          </div>
           
           {/* Join Our Team */}
           <Link 
@@ -244,18 +287,18 @@ const MobileNavSlider = ({
             JOIN OUR TEAM
           </Link>
           
-          {/* Newsroom - Moved after Join Our Team */}
-          <Link 
-            to="/newsroom" 
-            className={`nav-link ${activeLink === 'press' ? 'active' : ''}`}
-            onClick={() => handleNavClick('press')}
+          {/* Contact Us Button */}
+          <Link
+            to="/contact-us"
+            className="nav-link fw-bold btn btn-outline-success mt-3"
+            onClick={() => handleNavClick('contact-us')}
             style={{ '--item-index': 5 }}
           >
-            NEWSROOM
+            CONTACT US
           </Link>
           
           {/* Social Media Icons */}
-          <div className="mobile-nav-social-icons" style={{ '--item-index': 7 }}>
+          <div className="mobile-nav-social-icons" style={{ '--item-index': 6 }}>
             <div className="social-icons-container">
               <a href="https://www.instagram.com/rosebeltconsultantsglobal/" target="_blank" rel="noopener noreferrer" className="nav-social-icon instagram">
                 <i className="bi bi-instagram"></i>

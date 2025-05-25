@@ -15,7 +15,7 @@ const ServicesHealthExperts = () => {
       name: "Dr. Ume Farwa",
       role: "Clinical Dietitian & Nutritionist",
       image: image2,
-      description: "A qualified clinical dietitian specialized in medical nutrition therapy. Experienced in treating nutrient deficiencies and diseases through therapeutic diets. Currently works at OBGY hospital with Prof. M. Saeed and as Consultant Dietitian at Halcyon Medical Centre.",
+      description: "A distinguished clinical dietitian with expertise in medical nutrition therapy and therapeutic diet planning. Specializes in treating nutrient deficiencies and managing chronic diseases through evidence-based nutritional interventions. Combines clinical expertise with research methodologies to develop personalized nutrition strategies. Committed to advancing patient care through innovative nutritional approaches and comprehensive health management.",
       linkedin: "#",
       twitter: "#",
       email: "dr.umefarwa@rosebeltconsultants.com"
@@ -25,7 +25,7 @@ const ServicesHealthExperts = () => {
       name: "Dr. Naveed Haider",
       role: "Health Expert",
       image: drNaveedHaider,
-      description: "MBBS, FCPS Paediatric Surgery, FACS (USA), Diploma in laparoscopic surgery (Germany), Mphil Public Health, PhD Public Health. Specialized in pediatric surgical care and public health management.",
+      description: "A skilled pediatric surgeon with comprehensive expertise in surgical care and public health management. Specializes in advanced laparoscopic procedures and pediatric surgical interventions. Combines surgical expertise with public health knowledge to enhance healthcare delivery systems. Dedicated to improving pediatric healthcare outcomes through innovative surgical approaches and evidence-based practices.",
       linkedin: "#",
       twitter: "#",
       email: "dr.naveed@rosebeltconsultants.com"
@@ -35,7 +35,7 @@ const ServicesHealthExperts = () => {
       name: "Dr. Muhammad Tariq Saif",
       role: "Health Expert",
       image: drTariqSaif,
-      description: "MBBS, FCPS (Paeds medicine), KEMU, M.Phil Public Health-PU. Specialized in pediatric medicine and public health management.",
+      description: "An experienced pediatric medicine specialist with expertise in clinical care and public health management. Specializes in pediatric disease management and preventive healthcare strategies. Combines clinical practice with research methodologies to improve child health outcomes. Committed to advancing pediatric healthcare through evidence-based interventions and comprehensive patient care approaches.",
       linkedin: "#",
       twitter: "#",
       email: "dr.tariq@rosebeltconsultants.com"
@@ -65,75 +65,7 @@ const ServicesHealthExperts = () => {
       </div>
 
       <Container className="py-5">
-        {/* Service Overview Section */}
-        <section className="about-section mb-5">
-          <div className="section-heading-container mb-4">
-            <h2 className="section-heading">
-              <span style={{ color: '#f59e0b' }}>Service</span> Overview
-            </h2>
-          </div>
-          <Row>
-            <Col lg={12}>
-              <div className="about-content p-4 rounded-3 text-dark" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0' }}>
-                <p>
-                  RoseBelt Health Experts provides specialized healthcare consulting services, bringing together a team of experienced medical professionals with diverse expertise in nutrition, pediatric care, surgery, and public health management. We work with healthcare organizations, public health agencies, and institutions to improve health outcomes and strengthen healthcare systems.
-                </p>
-                <p>
-                  Our multidisciplinary approach enables us to address complex health challenges from multiple perspectives, developing comprehensive solutions that consider clinical, operational, and policy dimensions. We are committed to evidence-based practices and patient-centered care in all our consulting engagements.
-                </p>
-              </div>
-            </Col>
-          </Row>
-        </section>
-
-        {/* Key Services Section */}
-        <section className="about-section mb-5">
-          <div className="section-heading-container mb-4">
-            <h2 className="section-heading">
-              <span style={{ color: '#f59e0b' }}>Key</span> Services
-            </h2>
-          </div>
-          <Row className="mb-4">
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Medical Nutrition Therapy</h4>
-                <p>Specialized nutritional consulting for healthcare facilities and individual patients, focusing on therapeutic diets and nutritional health improvement.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Pediatric Care Consulting</h4>
-                <p>Expert guidance on pediatric healthcare services, including surgical care, medical management, and facility optimization.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Public Health Program Design</h4>
-                <p>Development of comprehensive public health initiatives that address community needs and improve population health outcomes.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Healthcare Facility Optimization</h4>
-                <p>Analysis and improvement of healthcare facility operations, workflows, and patient care processes to enhance efficiency and quality.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Clinical Training Programs</h4>
-                <p>Development and delivery of specialized training programs for healthcare professionals in various clinical disciplines.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Health Policy Advisory</h4>
-                <p>Strategic guidance on health policy development, implementation, and evaluation to maximize public health impact.</p>
-              </div>
-            </Col>
-          </Row>
-        </section>
-
-        {/* Meet Our Health Experts Section */}
+        {/* Meet Our Health Experts Section - Moved to top */}
         <section className="about-section mb-5">
           <div className="section-heading-container mb-4">
             <h2 className="section-heading">
@@ -204,6 +136,74 @@ const ServicesHealthExperts = () => {
                 </Card>
               </Col>
             ))}
+          </Row>
+        </section>
+
+        {/* Service Overview Section - Moved down */}
+        <section className="about-section mb-5">
+          <div className="section-heading-container mb-4">
+            <h2 className="section-heading">
+              <span style={{ color: '#f59e0b' }}>Service</span> Overview
+            </h2>
+          </div>
+          <Row>
+            <Col lg={12}>
+              <div className="about-content p-4 rounded-3 text-dark" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0' }}>
+                <p>
+                  RoseBelt Health Experts provides specialized healthcare consulting services, bringing together a team of experienced medical professionals with diverse expertise in nutrition, pediatric care, surgery, and public health management. We work with healthcare organizations, public health agencies, and institutions to improve health outcomes and strengthen healthcare systems.
+                </p>
+                <p>
+                  Our multidisciplinary approach enables us to address complex health challenges from multiple perspectives, developing comprehensive solutions that consider clinical, operational, and policy dimensions. We are committed to evidence-based practices and patient-centered care in all our consulting engagements.
+                </p>
+              </div>
+            </Col>
+          </Row>
+        </section>
+
+        {/* Key Services Section - Moved down */}
+        <section className="about-section mb-5">
+          <div className="section-heading-container mb-4">
+            <h2 className="section-heading">
+              <span style={{ color: '#f59e0b' }}>Key</span> Services
+            </h2>
+          </div>
+          <Row className="mb-4">
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Medical Nutrition Therapy</h4>
+                <p>Specialized nutritional consulting for healthcare facilities and individual patients, focusing on therapeutic diets and nutritional health improvement.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Pediatric Care Consulting</h4>
+                <p>Expert guidance on pediatric healthcare services, including surgical care, medical management, and facility optimization.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Public Health Program Design</h4>
+                <p>Development of comprehensive public health initiatives that address community needs and improve population health outcomes.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Healthcare Facility Optimization</h4>
+                <p>Analysis and improvement of healthcare facility operations, workflows, and patient care processes to enhance efficiency and quality.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Clinical Training Programs</h4>
+                <p>Development and delivery of specialized training programs for healthcare professionals in various clinical disciplines.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Health Policy Advisory</h4>
+                <p>Strategic guidance on health policy development, implementation, and evaluation to maximize public health impact.</p>
+              </div>
+            </Col>
           </Row>
         </section>
         

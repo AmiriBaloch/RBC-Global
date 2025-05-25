@@ -266,6 +266,26 @@ const WhereWeStand = () => {
                   {count}<span style={{ fontSize: '1.5rem', color: '#0033cc' }}>+</span>
                 </div>
               </div>
+              {/* Legend for Impactful Endeavors */}
+              <div className="mt-3" style={{ width: '100%' }}>
+                <div className="d-flex flex-wrap justify-content-center" style={{ fontSize: '0.9rem' }}>
+                  {chartData.labels.map((label, index) => (
+                    <div key={index} className="d-flex align-items-center me-3 mb-1">
+                      <span 
+                        style={{
+                          display: 'inline-block',
+                          width: '12px',
+                          height: '12px',
+                          backgroundColor: chartColors[index],
+                          marginRight: '5px',
+                          borderRadius: '3px'
+                        }}
+                      ></span>
+                      {label}
+                    </div>
+                  ))}
+                </div>
+              </div>
               <div className="mt-3">
                 <span className="d-inline-block px-4 py-2 bg-success text-white rounded-pill" style={{ backgroundColor: '#2AA96B !important' }}>
                   Impactful Endeavors
@@ -280,7 +300,7 @@ const WhereWeStand = () => {
                 {progressBars.map((bar, index) => (
                   <div key={index} className="mb-3">
                     <div className="d-flex justify-content-between mb-1">
-                      <span>{bar.id}</span>
+                      <span>{`Project ${index + 1}`}</span>
                       <span>&nbsp;</span>
                     </div>
                     <div className="progress" style={{ height: '20px' }}>
@@ -322,6 +342,31 @@ const WhereWeStand = () => {
                   muted
                   playsInline
                 />
+              </div>
+              {/* Legend for In Planning Phase */}
+              <div className="mt-3" style={{ width: '100%' }}>
+                <div className="d-flex flex-wrap justify-content-center" style={{ fontSize: '0.9rem' }}>
+                  <div className="d-flex align-items-center me-3 mb-1">
+                    <span style={{ display: 'inline-block', width: '12px', height: '12px', backgroundColor: '#ffc107', marginRight: '5px', borderRadius: '3px' }}></span>
+                    Consulting Projects
+                  </div>
+                  <div className="d-flex align-items-center me-3 mb-1">
+                    <span style={{ display: 'inline-block', width: '12px', height: '12px', backgroundColor: '#28a745', marginRight: '5px', borderRadius: '3px' }}></span>
+                    Health Projects
+                  </div>
+                  <div className="d-flex align-items-center me-3 mb-1">
+                    <span style={{ display: 'inline-block', width: '12px', height: '12px', backgroundColor: '#17a2b8', marginRight: '5px', borderRadius: '3px' }}></span>
+                    IT Projects
+                  </div>
+                  <div className="d-flex align-items-center me-3 mb-1">
+                    <span style={{ display: 'inline-block', width: '12px', height: '12px', backgroundColor: '#6f42c1', marginRight: '5px', borderRadius: '3px' }}></span>
+                    Research Projects
+                  </div>
+                  <div className="d-flex align-items-center me-3 mb-1">
+                    <span style={{ display: 'inline-block', width: '12px', height: '12px', backgroundColor: '#0033cc', marginRight: '5px', borderRadius: '3px' }}></span>
+                    Internal Initiatives
+                  </div>
+                </div>
               </div>
               <div className="mt-3">
                 <span className="d-inline-block px-4 py-2 bg-success text-white rounded-pill" style={{ backgroundColor: '#2AA96B !important' }}>

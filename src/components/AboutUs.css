@@ -207,4 +207,11 @@
     /* Ensure touch scrolling works on iOS */
     touch-action: pan-y;
   }
+}
+
+/* Custom styles for Service Category buttons hover effect */
+.service-category-button:hover {
+  background-color: #333333 !important; /* Dark background color */
+  color: white !important; /* White text color */
+  border-color: #333333 !important; /* Match border color */
 } 

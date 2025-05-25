@@ -20,6 +20,7 @@ import Announcements from './components/Announcements';
 import OurIdeas from './components/OurIdeas';
 import Projects from './components/Projects';
 import ApplicantsList from './components/ApplicantsList';
+import ContactUsPage from './pages/ContactUsPage';
 
 // Import new Newsroom component
 import Newsroom from './components/Newsroom';
@@ -354,8 +355,11 @@ function App() {
           {/* Legacy CAREERS route for backward compatibility */}
           <Route path="/careers" element={<Navigate to="/join-our-team" replace />} />
           
-          {/* CONTACT route - redirect to home */}
-          <Route path="/contact" element={<Navigate to="/" replace />} />
+          {/* CONTACT route */}
+          <Route path="/contact-us" element={<ContactUsPage />} />
+
+          {/* Legacy CONTACT route - redirect to home */}
+          <Route path="/contact" element={<Navigate to="/contact-us" replace />} />
           
           {/* Projects routes with placeholder components */}
           <Route path="/projects" element={<Projects />} />

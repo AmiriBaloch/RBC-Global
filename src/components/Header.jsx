@@ -288,21 +288,24 @@ const Header = () => {
                   
                   {/* OUR WORKPLACE dropdown */}
                   <div className="custom-dropdown-wrapper">
-                    <Link to="#" className="nav-link dropdown-toggle fw-bold">OUR COMPANY</Link>
+                    <Link to="#" className="nav-link dropdown-toggle fw-bold">
+                      OUR COMPANY
+                      <i className="bi bi-chevron-down ms-1"></i>
+                    </Link>
                     <div className="dropdown-menu">
                       <Link 
                         to="/our-company/locations"
                         onClick={() => handleDropdownItemClick('about-us')}
                         className="dropdown-item"
                       >
-                        OUR LOCATIONS
+                        OUR OFFICES
                       </Link>
                       <Link 
                         to="/our-company/who-trusts-us"
                         onClick={() => handleDropdownItemClick('about-us')}
                         className="dropdown-item"
                       >
-                        WHO TRUSTS US
+                        OUR PARTNERS
                       </Link>
                       <Link 
                         to="/our-company/what-we-believe"
@@ -316,7 +319,10 @@ const Header = () => {
 
                   {/* WHAT WE DO section */}
                   <div className="custom-dropdown-wrapper">
-                    <Link to="#" className="nav-link dropdown-toggle fw-bold">MEET OUR EXPERTS</Link>
+                    <Link to="#" className="nav-link dropdown-toggle fw-bold">
+                      MEET OUR EXPERTS
+                      <i className="bi bi-chevron-down ms-1"></i>
+                    </Link>
                     <div className="dropdown-menu">
                       <Link 
                         to="/meet-our-experts/leadership"
@@ -356,14 +362,36 @@ const Header = () => {
                     </div>
                   </div>
                   
-                  {/* Our Ideas */}
-                  <Link 
-                    to="/our-ideas" 
-                    className={`nav-link fw-bold ${activeLink === 'ideas' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('ideas')}
-                  >
-                    OUR IDEAS
-                  </Link>
+                  {/* Our Works Dropdown */}
+                  <div className="custom-dropdown-wrapper">
+                    <Link to="#" className="nav-link dropdown-toggle fw-bold">
+                      OUR WORKS
+                      <i className="bi bi-chevron-down ms-1"></i>
+                    </Link>
+                    <div className="dropdown-menu">
+                      <Link 
+                        to="/our-ideas"
+                        onClick={() => handleDropdownItemClick('ideas')}
+                        className="dropdown-item"
+                      >
+                        OUR IDEAS
+                      </Link>
+                      <Link 
+                        to="/projects"
+                        onClick={() => handleDropdownItemClick('projects')}
+                        className="dropdown-item"
+                      >
+                        OUR PROJECTS
+                      </Link>
+                      <Link 
+                        to="/newsroom"
+                        onClick={() => handleDropdownItemClick('press')}
+                        className="dropdown-item"
+                      >
+                        NEWSROOM
+                      </Link>
+                    </div>
+                  </div>
                   
                   {/* Join Our Team */}
                   <Link 
@@ -373,15 +401,16 @@ const Header = () => {
                   >
                     JOIN OUR TEAM
                   </Link>
-                  
-                  {/* Newsroom - Moved to be after Join Our Team */}
-                  <Link 
-                    to="/newsroom" 
-                    className={`nav-link fw-bold ${activeLink === 'press' ? 'active' : ''}`}
-                    onClick={() => handleNavClick('press')}
+
+                  {/* Contact Us Button */}
+                  <Button
+                    as={Link}
+                    to="/contact-us"
+                    variant="outline-success"
+                    className="fw-bold ms-lg-3"
                   >
-                    NEWSROOM
-                  </Link>
+                    CONTACT US
+                  </Button>
                 </Nav>
               </div>
             </Navbar.Collapse>

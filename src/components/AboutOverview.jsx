@@ -34,6 +34,13 @@ const AboutOverview = () => {
       isPrimary: true,
       mapUrl: "https://maps.app.goo.gl/J52y7orwEWsWcVT79?g_st=aw",
       embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57908.76967302843!2d67.01247761433072!3d24.892290947954358!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f90157042d3%3A0x93d609e8bec9a880!2sBALDIA%20TOWN%2C%20Karachi%2C%20Karachi%20City%2C%20Sindh%2C%20Pakistan!5e0!3m2!1sen!2s!4v1716390910209!5m2!1sen!2s"
+    },
+    {
+      city: "Ishøj, Denmark",
+      address: "Østergården 15. DK - 2635. Ishøj. Denmark",
+      isPrimary: true,
+      mapUrl: "https://maps.google.com/?q=%C3%98sterg%C3%A5rden%2015.%20DK%20-%202635.%20Ish%C3%B8j.%20Denmark",
+      embedUrl: "https://www.google.com/maps/embed/v1/place?q=%C3%98sterg%C3%A5rden%2015.%20DK%20-%202635.%20Ish%C3%B8j.%20Denmark"
     }
   ];
 

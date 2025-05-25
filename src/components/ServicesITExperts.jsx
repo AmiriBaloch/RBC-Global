@@ -14,7 +14,7 @@ const ServicesITExperts = () => {
       name: "Muhammad Amir",
       role: "IT Solutions Specialist",
       image: muhammadAmir,
-      description: "IT professional with expertise in digital transformation and custom solutions development. Skilled in designing systems that optimize business operations and enhance user experience. Combines technical knowledge with strategic thinking to deliver scalable, secure technology solutions.",
+      description: "A seasoned IT professional with comprehensive expertise in digital transformation and enterprise solutions development. Specializes in designing and implementing scalable systems that optimize business operations and enhance user experience. Combines technical knowledge with strategic thinking to deliver innovative technology solutions. Committed to driving organizational success through cutting-edge digital solutions and robust system architecture.",
       linkedin: "#",
       twitter: "#",
       email: "amir@rosebeltconsultants.com"
@@ -24,7 +24,7 @@ const ServicesITExperts = () => {
       name: "Muhammad Muneeb ur Rehman",
       role: "Design Expert",
       image: muneebRehman,
-      description: "With a passion for creativity and a keen eye for detail, I craft innovative designs that inspire and elevate. As a design expert, I bring visions to life through thoughtful and precise solutions, blending art and functionality to deliver exceptional results.",
+      description: "A creative design expert with extensive expertise in user interface and experience design. Specializes in crafting innovative visual solutions that enhance digital product usability and engagement. Combines artistic vision with technical proficiency to create compelling user experiences. Dedicated to delivering exceptional design solutions that bridge the gap between aesthetics and functionality.",
       linkedin: "#",
       twitter: "#",
       email: "muneeb@rosebeltconsultants.com"
@@ -54,75 +54,7 @@ const ServicesITExperts = () => {
       </div>
 
       <Container className="py-5">
-        {/* Service Overview Section */}
-        <section className="about-section mb-5">
-          <div className="section-heading-container mb-4">
-            <h2 className="section-heading">
-              <span style={{ color: '#f59e0b' }}>Service</span> Overview
-            </h2>
-          </div>
-          <Row>
-            <Col lg={12}>
-              <div className="about-content p-4 rounded-3 text-dark" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0' }}>
-                <p>
-                  RoseBelt IT Experts delivers innovative technology solutions that enable organizations to thrive in the digital era. Our team of skilled IT professionals specializes in developing customized systems, implementing digital strategies, and creating compelling designs that enhance user experience and drive business growth.
-                </p>
-                <p>
-                  We approach each project with a deep understanding of both technology and business objectives, ensuring that our solutions not only address immediate technical needs but also contribute to long-term organizational success. Our expertise spans across system development, UX/UI design, digital transformation, and technology integration.
-                </p>
-              </div>
-            </Col>
-          </Row>
-        </section>
-
-        {/* Key Services Section */}
-        <section className="about-section mb-5">
-          <div className="section-heading-container mb-4">
-            <h2 className="section-heading">
-              <span style={{ color: '#f59e0b' }}>Key</span> Services
-            </h2>
-          </div>
-          <Row className="mb-4">
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Custom Software Solutions</h4>
-                <p>Development of tailored software applications and systems that address specific business needs and streamline operations.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">UX/UI Design</h4>
-                <p>Creation of intuitive and engaging user interfaces that enhance user experience and improve digital product adoption.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Digital Transformation</h4>
-                <p>Strategic guidance and implementation support for organizations looking to evolve their digital capabilities and processes.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Web & Mobile Development</h4>
-                <p>Development of responsive websites and mobile applications that deliver seamless experiences across all devices.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Technology Integration</h4>
-                <p>Implementation of solutions that connect disparate systems and enable seamless data flow across the organization.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">IT Strategy Consulting</h4>
-                <p>Strategic advice on technology investments, digital roadmaps, and IT infrastructure optimization.</p>
-              </div>
-            </Col>
-          </Row>
-        </section>
-
-        {/* Meet Our IT Experts Section */}
+        {/* Meet Our IT Experts Section - Moved to top */}
         <section className="about-section mb-5">
           <div className="section-heading-container mb-4">
             <h2 className="section-heading">
@@ -193,6 +125,74 @@ const ServicesITExperts = () => {
                 </Card>
               </Col>
             ))}
+          </Row>
+        </section>
+
+        {/* Service Overview Section - Moved down */}
+        <section className="about-section mb-5">
+          <div className="section-heading-container mb-4">
+            <h2 className="section-heading">
+              <span style={{ color: '#f59e0b' }}>Service</span> Overview
+            </h2>
+          </div>
+          <Row>
+            <Col lg={12}>
+              <div className="about-content p-4 rounded-3 text-dark" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0' }}>
+                <p>
+                  RoseBelt IT Experts delivers innovative technology solutions that enable organizations to thrive in the digital era. Our team of skilled IT professionals specializes in developing customized systems, implementing digital strategies, and creating compelling designs that enhance user experience and drive business growth.
+                </p>
+                <p>
+                  We approach each project with a deep understanding of both technology and business objectives, ensuring that our solutions not only address immediate technical needs but also contribute to long-term organizational success. Our expertise spans across system development, UX/UI design, digital transformation, and technology integration.
+                </p>
+              </div>
+            </Col>
+          </Row>
+        </section>
+
+        {/* Key Services Section - Moved down */}
+        <section className="about-section mb-5">
+          <div className="section-heading-container mb-4">
+            <h2 className="section-heading">
+              <span style={{ color: '#f59e0b' }}>Key</span> Services
+            </h2>
+          </div>
+          <Row className="mb-4">
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Custom Software Solutions</h4>
+                <p>Development of tailored software applications and systems that address specific business needs and streamline operations.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">UX/UI Design</h4>
+                <p>Creation of intuitive and engaging user interfaces that enhance user experience and improve digital product adoption.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Digital Transformation</h4>
+                <p>Strategic guidance and implementation support for organizations looking to evolve their digital capabilities and processes.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Web & Mobile Development</h4>
+                <p>Development of responsive websites and mobile applications that deliver seamless experiences across all devices.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Technology Integration</h4>
+                <p>Implementation of solutions that connect disparate systems and enable seamless data flow across the organization.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">IT Strategy Consulting</h4>
+                <p>Strategic advice on technology investments, digital roadmaps, and IT infrastructure optimization.</p>
+              </div>
+            </Col>
           </Row>
         </section>
         

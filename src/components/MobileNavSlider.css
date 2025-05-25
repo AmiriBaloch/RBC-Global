@@ -243,4 +243,13 @@ body.no-scroll {
   font-weight: 400;
   color: #f59e0b;
   background-color: #E4EBF2 !important; /* Same as non-active items */
+}
+
+/* Apply hover style to Contact Us button by default on small screens */
+@media (max-width: 767.98px) {
+  .mobile-nav-slider .btn-outline-success {
+    background-color: #2AA96B !important; /* Bootstrap success color */
+    color: white !important; /* White text color */
+    border-color: #2AA96B !important; /* Match border color */
+  }
 } 

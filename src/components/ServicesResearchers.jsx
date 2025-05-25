@@ -15,6 +15,15 @@ import ridaBatool from '../assets/19.png';
 import muskanFatima from '../assets/20.png';
 import bushraMaqsood from '../assets/23.png';
 import faheemManzoor from '../assets/25.png';
+import shehzalEman from '../assets/26.png';
+import harramMubarik from '../assets/27.png';
+import joatKhalid from '../assets/28.png';
+import zunairaHumail from '../assets/29.png';
+import maimoonaMunir from '../assets/30.png';
+import fatimaAli from '../assets/31.png';
+import areeba from '../assets/33.png';
+import aminaAkram from '../assets/34.png';
+import ahtshamKhan from '../assets/36.jpg';
 
 const ServicesResearchers = () => {
   // Researchers data from Team.jsx
@@ -24,7 +33,7 @@ const ServicesResearchers = () => {
       name: "S.F. Butt",
       role: "Lead Researcher",
       image: sfButt,
-      description: "A passionate senior researcher committed to driving evidence-based decision making through methodical investigation. Experienced in leading complex research projects across multiple sectors. Dedicated to creating knowledge that transforms organizations and communities for the better.",
+      description: "A distinguished senior researcher with extensive experience in driving evidence-based decision making through methodical investigation. Leads complex research projects across multiple sectors with a focus on sustainable development and policy impact. Combines academic rigor with practical insights to create knowledge that transforms organizations and communities. Dedicated to fostering innovation and excellence in research methodologies while maintaining the highest standards of analytical integrity.",
       linkedin: "#",
       twitter: "#",
       email: "sfbutt@rosebeltconsultants.com"
@@ -34,7 +43,7 @@ const ServicesResearchers = () => {
       name: "Nasik Bangash",
       role: "Research Analyst",
       image: nasikBangash,
-      description: "A dedicated research analyst focused on translating complex data into actionable insights. Experienced in monitoring and evaluation of public policy interventions. Committed to bridging the gap between research findings and practical implementation for sustainable impact.",
+      description: "A dedicated research analyst with expertise in translating complex data into actionable insights. Specializes in monitoring and evaluation of public policy interventions, with a focus on sustainable development outcomes. Combines quantitative and qualitative methodologies to bridge the gap between research findings and practical implementation. Committed to delivering comprehensive analyses that drive informed decision-making and create lasting impact in communities.",
       linkedin: "#",
       twitter: "#",
       email: "nasik@rosebeltconsultants.com"
@@ -44,7 +53,7 @@ const ServicesResearchers = () => {
       name: "Mudassir Ali Watto",
       role: "Research Associate",
       image: mudassirAli,
-      description: "A methodical research associate passionate about uncovering innovative solutions to complex challenges. Experienced in data analysis and strategic development. Driven to create practical frameworks that enhance organizational effectiveness and community wellbeing.",
+      description: "A methodical research associate with a passion for uncovering innovative solutions to complex challenges. Specializes in data analysis and strategic development, focusing on organizational effectiveness and community wellbeing. Combines analytical expertise with practical insights to create frameworks that enhance program implementation. Dedicated to developing evidence-based strategies that drive sustainable development and positive social change.",
       linkedin: "#",
       twitter: "#",
       email: "mudassir@rosebeltconsultants.com"
@@ -54,7 +63,7 @@ const ServicesResearchers = () => {
       name: "Sunir Ashnae",
       role: "Research Specialist",
       image: sunirAshnae,
-      description: "A creative research specialist dedicated to exploring new methodological frontiers. Experienced in developing multidisciplinary research designs and analytical frameworks. Committed to generating insights that inspire innovation and drive meaningful change.",
+      description: "A creative research specialist dedicated to exploring new methodological frontiers in social and development research. Develops innovative multidisciplinary research designs and analytical frameworks that address complex societal challenges. Combines theoretical knowledge with practical applications to generate insights that inspire innovation. Committed to advancing research methodologies while ensuring findings translate into meaningful, actionable outcomes.",
       linkedin: "#",
       twitter: "#",
       email: "sunir@rosebeltconsultants.com"
@@ -64,7 +73,7 @@ const ServicesResearchers = () => {
       name: "Muhammad Shahroze Iqbal",
       role: "Research Associate",
       image: muhammadShahroze,
-      description: "A passionate sociologist committed to understanding security strategies and community dynamics. Experienced in sustainable development research and strategic counseling. Driven to apply sociological insights to create effective solutions for complex social challenges.",
+      description: "A passionate sociologist with expertise in security strategies and community dynamics. Specializes in sustainable development research and strategic counseling, focusing on social impact and community engagement. Combines sociological insights with practical approaches to address complex social challenges. Dedicated to developing evidence-based solutions that promote social cohesion and sustainable community development.",
       linkedin: "#",
       twitter: "#",
       email: "shahroze@rosebeltconsultants.com"
@@ -74,7 +83,7 @@ const ServicesResearchers = () => {
       name: "Farhat Abbas",
       role: "Young Researcher",
       image: farhatAbbas,
-      description: "A dynamic young researcher dedicated to data-driven insights and modern research approaches. Experienced in analyzing complex social issues through innovative methods. Passionate about bringing fresh perspectives that lead to creative solutions for contemporary challenges.",
+      description: "A dynamic young researcher with expertise in data-driven insights and modern research approaches. Specializes in analyzing complex social issues through innovative methodologies and contemporary analytical tools. Combines academic knowledge with practical research skills to develop creative solutions for contemporary challenges. Dedicated to advancing research practices while ensuring findings contribute to meaningful social development.",
       linkedin: "#",
       twitter: "#",
       email: "farhat@rosebeltconsultants.com"
@@ -84,7 +93,7 @@ const ServicesResearchers = () => {
       name: "Faheem Manzoor",
       role: "Young Researcher",
       image: faheemManzoor,
-      description: "An emerging scholar specializing in data-driven socioeconomic research with expertise in quantitative analysis methodologies. Combines academic rigor with innovative approaches to address complex social challenges. Passionate about leveraging research to influence evidence-based policy making and sustainable development initiatives across diverse communities.",
+      description: "An emerging scholar specializing in data-driven socioeconomic research with expertise in quantitative analysis methodologies. Combines academic rigor with innovative approaches to address complex social challenges. Focuses on leveraging research to influence evidence-based policy making and sustainable development initiatives. Dedicated to developing comprehensive research frameworks that drive positive change across diverse communities.",
       linkedin: "#",
       twitter: "#",
       email: "faheem@rosebeltconsultants.com"
@@ -94,7 +103,7 @@ const ServicesResearchers = () => {
       name: "Maheen Nisar Khan",
       role: "Young Researcher",
       image: maheenNisar,
-      description: "A committed qualitative researcher focused on social development and public policy. Experienced in field research and stakeholder engagement across diverse communities. Driven to ensure research translates into meaningful improvements in people's everyday lives.",
+      description: "A committed qualitative researcher with expertise in social development and public policy analysis. Specializes in field research and stakeholder engagement across diverse communities. Combines methodological expertise with practical insights to ensure research translates into meaningful improvements. Dedicated to developing comprehensive research approaches that address complex social challenges and drive sustainable development.",
       linkedin: "#",
       twitter: "#",
       email: "maheen@rosebeltconsultants.com"
@@ -104,17 +113,27 @@ const ServicesResearchers = () => {
       name: "Misha Shahbaz",
       role: "Young Researcher",
       image: mishaShahbaz,
-      description: "A dedicated data analyst passionate about socioeconomic research and community dynamics. Experienced in translating complex findings into practical recommendations. Committed to using research as a tool for positive change and sustainable development.",
+      description: "A dedicated data analyst with expertise in socioeconomic research and community dynamics. Specializes in translating complex findings into practical recommendations for sustainable development. Combines analytical skills with research methodologies to drive positive social change. Committed to developing evidence-based solutions that address community needs and promote sustainable development initiatives.",
       linkedin: "#",
       twitter: "#",
       email: "misha@rosebeltconsultants.com"
+    },
+    {
+      id: 29,
+      name: "Amina Akram",
+      role: "Allied Health Sciences Specialist",
+      image: aminaAkram,
+      description: "A distinguished Allied Health Sciences Professional with comprehensive expertise in molecular biology and genetic engineering applications. Specializes in developing innovative biotechnological solutions for healthcare and industrial applications. Combines advanced laboratory techniques with research methodologies to develop evidence-based biotechnological protocols. Dedicated to advancing biotechnological innovations through cutting-edge approaches and research-driven methodologies in healthcare and industrial sectors.",
+      linkedin: "#",
+      twitter: "#",
+      email: "amina@rosebeltconsultants.com"
     },
     {
       id: 16,
       name: "Rida Batool",
       role: "Young Researcher",
       image: ridaBatool,
-      description: "A passionate educational researcher committed to improving learning outcomes through evidence-based approaches. Experienced in curriculum development and educational policy analysis. Dedicated to creating inclusive educational environments that empower learners of all backgrounds.",
+      description: "A passionate educational researcher with expertise in evidence-based approaches to learning outcomes. Specializes in curriculum development and educational policy analysis across diverse learning environments. Combines research methodologies with practical insights to create inclusive educational environments. Dedicated to developing comprehensive strategies that empower learners and promote educational excellence.",
       linkedin: "#",
       twitter: "#",
       email: "rida@rosebeltconsultants.com"
@@ -124,7 +143,7 @@ const ServicesResearchers = () => {
       name: "Muskan Fatima",
       role: "Young Researcher",
       image: muskanFatima,
-      description: "A passionate public health researcher committed to fostering healthier communities through sustainable and evidence-based strategies. Experienced in designing health promotion initiatives, research and community engagement. Driven to make health a fundamental right for everyone.",
+      description: "A passionate public health researcher with expertise in sustainable and evidence-based health strategies. Specializes in designing health promotion initiatives and conducting community engagement programs. Combines research methodologies with practical approaches to improve community health outcomes. Dedicated to advancing public health initiatives that make healthcare accessible and effective for all communities.",
       linkedin: "#",
       twitter: "#",
       email: "muskan@rosebeltconsultants.com"
@@ -134,10 +153,90 @@ const ServicesResearchers = () => {
       name: "Bushra Maqsood",
       role: "Young Researcher",
       image: bushraMaqsood,
-      description: "A passionate advocate and researcher dedicated to gender equality and social inclusion. Experienced in participatory methodologies that amplify marginalized voices. Driven to create research that catalyzes meaningful policy change and promotes a more equitable society.",
+      description: "A passionate advocate and researcher with expertise in gender equality and social inclusion. Specializes in participatory methodologies that amplify marginalized voices in research and policy development. Combines research expertise with practical approaches to create meaningful policy change. Dedicated to developing inclusive research frameworks that promote equity and social justice in communities.",
       linkedin: "#",
       twitter: "#",
       email: "bushra@rosebeltconsultants.com"
+    },
+    {
+      id: 22,
+      name: "Shehzal Eman",
+      role: "Public Health Researcher",
+      image: shehzalEman,
+      description: "A dedicated public health researcher with extensive experience as a WHO Independent Monitor. Specializes in field operations, vaccination campaign monitoring, and program evaluation for immunization initiatives. Combines public health expertise with practical field experience to advance health programs. Committed to developing research-driven strategies that improve healthcare delivery and outcomes in Pakistan.",
+      linkedin: "#",
+      twitter: "#",
+      email: "shehzal@rosebeltconsultants.com"
+    },
+    {
+      id: 23,
+      name: "Harram Mubarik",
+      role: "Nutritionist & Dietetics Specialist",
+      image: harramMubarik,
+      description: "A dedicated nutritionist and dietetics specialist with expertise in personalized nutrition planning and community health programs. Specializes in nutritional assessment, counseling, and chronic disease management through dietary interventions. Combines clinical knowledge with research methodologies to develop evidence-based nutrition strategies. Committed to advancing public health through education and tailored nutritional interventions.",
+      linkedin: "#",
+      twitter: "#",
+      email: "harram@rosebeltconsultants.com"
+    },
+    {
+      id: 24,
+      name: "Joat Khalid",
+      role: "Public Health Researcher",
+      image: joatKhalid,
+      description: "A passionate public health researcher with expertise in maternal and child health research and health equity initiatives. Specializes in applying rigorous, evidence-based research to improve health outcomes and inform policy development. Combines research methodologies with practical approaches to create meaningful community impact. Dedicated to developing comprehensive strategies that address health disparities and promote sustainable health solutions.",
+      linkedin: "#",
+      twitter: "#",
+      email: "joat@rosebeltconsultants.com"
+    },
+    {
+      id: 25,
+      name: "Zunaira Humail",
+      role: "Sociologist",
+      image: zunairaHumail,
+      description: "A results-driven sociologist with expertise in field monitoring, data collection, and community-based research. Specializes in evaluating vaccination campaigns and strengthening health initiatives as a former WHO Independent Monitor. Combines sociological insights with practical fieldwork to support health and development programs. Dedicated to advancing social equity through evidence-based research and community engagement strategies.",
+      linkedin: "#",
+      twitter: "#",
+      email: "zunaira@rosebeltconsultants.com"
+    },
+    {
+      id: 26,
+      name: "Maimoona Munir",
+      role: "Public Health Researcher",
+      image: maimoonaMunir,
+      description: "A dedicated public health researcher with expertise in vaccination campaign monitoring and maternal and child health research. Specializes in program evaluation and field data collection to inform evidence-based health interventions. Combines research methodologies with practical approaches to improve health outcomes. Committed to developing comprehensive strategies that address public health challenges and promote community wellbeing.",
+      linkedin: "#",
+      twitter: "#",
+      email: "maimoona@rosebeltconsultants.com"
+    },
+    {
+      id: 27,
+      name: "Fatima Ali",
+      role: "Public Health Researcher",
+      image: fatimaAli,
+      description: "A dedicated public health researcher and WHO Independent Campaign Monitor with expertise in research design and data analysis. Specializes in immunization initiatives and field work to support public health development in Pakistan. Combines research methodologies with practical approaches to drive impactful health recommendations. Committed to advancing public health policies through evidence-based research and strategic interventions.",
+      linkedin: "#",
+      twitter: "#",
+      email: "fatima@rosebeltconsultants.com"
+    },
+    {
+      id: 28,
+      name: "Areeba",
+      role: "Public Health Professional",
+      image: areeba,
+      description: "A dedicated public health professional with expertise in data analysis, program management, and community engagement. Specializes in monitoring intra-campaign activities and developing evidence-based health programs. Combines research methodologies with practical approaches to inform policy and drive health initiatives. Committed to advancing health equity through strategic interventions and community-driven research approaches.",
+      linkedin: "#",
+      twitter: "#",
+      email: "areeba@rosebeltconsultants.com"
+    },
+    {
+      id: 35,
+      name: "Ahtsham Ahmad Khan",
+      role: "Agricultural Researcher",
+      image: ahtshamKhan,
+      description: "A dedicated public health professional with expertise in data analysis, program management, and community engagement. Specializes in monitoring intra-campaign activities and developing evidence-based health programs. Combines research methodologies with practical approaches to inform policy and drive health initiatives. Committed to advancing health equity through strategic interventions and community-driven research approaches.",
+      linkedin: "#",
+      twitter: "#",
+      email: "kahtsham@gmail.com"
     }
   ];
 
@@ -164,75 +263,7 @@ const ServicesResearchers = () => {
       </div>
 
       <Container className="py-5">
-        {/* Service Overview Section */}
-        <section className="about-section mb-5">
-          <div className="section-heading-container mb-4">
-            <h2 className="section-heading">
-              <span style={{ color: '#f59e0b' }}>Service</span> Overview
-            </h2>
-          </div>
-          <Row>
-            <Col lg={12}>
-              <div className="about-content p-4 rounded-3 text-dark" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0' }}>
-                <p>
-                  RoseBelt Researchers provides comprehensive research and analysis services that deliver actionable insights for decision-makers. Our team of experienced research professionals specializes in collecting, analyzing, and interpreting data across various domains to inform strategy development, policy formulation, and program design.
-                </p>
-                <p>
-                  We employ a rigorous, methodical approach to research that combines both quantitative and qualitative methodologies, ensuring that our findings are robust, reliable, and relevant to your specific context. Our interdisciplinary expertise allows us to tackle complex research questions from multiple perspectives, providing holistic solutions to multifaceted challenges.
-                </p>
-              </div>
-            </Col>
-          </Row>
-        </section>
-
-        {/* Key Services Section */}
-        <section className="about-section mb-5">
-          <div className="section-heading-container mb-4">
-            <h2 className="section-heading">
-              <span style={{ color: '#f59e0b' }}>Key</span> Services
-            </h2>
-          </div>
-          <Row className="mb-4">
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Market Research</h4>
-                <p>Comprehensive market analysis to identify opportunities, understand consumer behavior, and inform business strategy development.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Policy Research</h4>
-                <p>Analysis of existing policies and development of evidence-based recommendations for policy formulation and improvement.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Impact Assessment</h4>
-                <p>Evaluation of program outcomes and impacts to measure effectiveness and identify areas for improvement.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Data Analysis</h4>
-                <p>Advanced statistical analysis and data interpretation to extract meaningful insights from complex datasets.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Needs Assessment</h4>
-                <p>Identification of community or organizational needs through systematic research and stakeholder engagement.</p>
-              </div>
-            </Col>
-            <Col md={6} lg={4} className="mb-4">
-              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
-                <h4 className="mb-3">Research Training</h4>
-                <p>Capacity building programs to enhance research skills within organizations and institutions.</p>
-              </div>
-            </Col>
-          </Row>
-        </section>
-
-        {/* Meet Our Researchers Section */}
+        {/* Meet Our Researchers Section - Moved to top */}
         <section className="about-section mb-5">
           <div className="section-heading-container mb-4">
             <h2 className="section-heading">
@@ -303,6 +334,74 @@ const ServicesResearchers = () => {
                 </Card>
               </Col>
             ))}
+          </Row>
+        </section>
+
+        {/* Service Overview Section - Moved down */}
+        <section className="about-section mb-5">
+          <div className="section-heading-container mb-4">
+            <h2 className="section-heading">
+              <span style={{ color: '#f59e0b' }}>Service</span> Overview
+            </h2>
+          </div>
+          <Row>
+            <Col lg={12}>
+              <div className="about-content p-4 rounded-3 text-dark" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0' }}>
+                <p>
+                  RoseBelt Researchers provides comprehensive research and analysis services that deliver actionable insights for decision-makers. Our team of experienced research professionals specializes in collecting, analyzing, and interpreting data across various domains to inform strategy development, policy formulation, and program design.
+                </p>
+                <p>
+                  We employ a rigorous, methodical approach to research that combines both quantitative and qualitative methodologies, ensuring that our findings are robust, reliable, and relevant to your specific context. Our interdisciplinary expertise allows us to tackle complex research questions from multiple perspectives, providing holistic solutions to multifaceted challenges.
+                </p>
+              </div>
+            </Col>
+          </Row>
+        </section>
+
+        {/* Key Services Section - Moved down */}
+        <section className="about-section mb-5">
+          <div className="section-heading-container mb-4">
+            <h2 className="section-heading">
+              <span style={{ color: '#f59e0b' }}>Key</span> Services
+            </h2>
+          </div>
+          <Row className="mb-4">
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Market Research</h4>
+                <p>Comprehensive market analysis to identify opportunities, understand consumer behavior, and inform business strategy development.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Policy Research</h4>
+                <p>Analysis of existing policies and development of evidence-based recommendations for policy formulation and improvement.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Impact Assessment</h4>
+                <p>Evaluation of program outcomes and impacts to measure effectiveness and identify areas for improvement.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Data Analysis</h4>
+                <p>Advanced statistical analysis and data interpretation to extract meaningful insights from complex datasets.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Needs Assessment</h4>
+                <p>Identification of community or organizational needs through systematic research and stakeholder engagement.</p>
+              </div>
+            </Col>
+            <Col md={6} lg={4} className="mb-4">
+              <div className="p-4 h-100 rounded-3" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border: '1px solid #e0e0e0', borderLeft: '4px solid #f59e0b' }}>
+                <h4 className="mb-3">Research Training</h4>
+                <p>Capacity building programs to enhance research skills within organizations and institutions.</p>
+              </div>
+            </Col>
           </Row>
         </section>
         

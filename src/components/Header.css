@@ -1877,3 +1877,36 @@ body.no-scroll {
 
 /* Remove header search styles since we're moving the search to the footer */
 /* End of file */ 
+
+/* Add chevron icon styles */
+.custom-dropdown-wrapper .bi-chevron-down {
+  font-size: 14px; /* Increased size for better visibility */
+  transition: transform 0.3s ease;
+  color: #000000; /* Changed to black */
+  margin-left: 4px;
+  font-weight: 900; /* Added bold weight */
+}
+
+.custom-dropdown-wrapper:hover .bi-chevron-down {
+  transform: rotate(180deg);
+}
+
+/* Update dropdown toggle to accommodate icon */
+.custom-dropdown-wrapper .dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Ensure proper spacing in mobile view */
+@media (max-width: 991px) {
+  .custom-dropdown-wrapper .bi-chevron-down {
+    margin-left: auto;
+    color: #000000; /* Ensure black color on mobile too */
+    font-weight: 900; /* Ensure bold weight on mobile */
+  }
+  
+  .custom-dropdown-wrapper .dropdown-toggle {
+    justify-content: space-between;
+  }
+} 
