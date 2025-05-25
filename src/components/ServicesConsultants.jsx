@@ -7,7 +7,7 @@ import drHafizImran from '../assets/5.png';
 import nabghaHashmi from "../assets/9.png";
 import drRubeenaZakar from "../assets/18.png";
 import wakarKhan from "../assets/24.png";
-import ahtshamKhan from "../assets/35.png";
+import ahtshamKhan from "../assets/36.jpg";
 
 const ServicesConsultants = () => {
   // Consultants data from Team.jsx
