@@ -227,16 +227,6 @@ const ServicesResearchers = () => {
       linkedin: "#",
       twitter: "#",
       email: "areeba@rosebeltconsultants.com"
-    },
-    {
-      id: 35,
-      name: "Ahtsham Ahmad Khan",
-      role: "Agricultural Researcher",
-      image: ahtshamKhan,
-      description: "A dedicated public health professional with expertise in data analysis, program management, and community engagement. Specializes in monitoring intra-campaign activities and developing evidence-based health programs. Combines research methodologies with practical approaches to inform policy and drive health initiatives. Committed to advancing health equity through strategic interventions and community-driven research approaches.",
-      linkedin: "#",
-      twitter: "#",
-      email: "kahtsham@gmail.com"
     }
   ];
 

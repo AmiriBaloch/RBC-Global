@@ -7,6 +7,7 @@ import drHafizImran from '../assets/5.png';
 import nabghaHashmi from "../assets/9.png";
 import drRubeenaZakar from "../assets/18.png";
 import wakarKhan from "../assets/24.png";
+import ahtshamKhan from "../assets/35.png";
 
 const ServicesConsultants = () => {
   // Consultants data from Team.jsx
@@ -50,6 +51,16 @@ const ServicesConsultants = () => {
       linkedin: "#",
       twitter: "#",
       email: "wakar@rosebeltconsultants.com"
+    },
+    {
+      id: 35,
+      name: "Ahtsham Ahmad Khan",
+      role: "Agrologist | RBC-GLOBAL representative in Europe",
+      image: ahtshamKhan,
+      description: "A dedicated Agrology professional with expertise in data analysis, program management, and community engagement. Specializes in monitoring intra-campaign activities and developing evidence-based agri programs. Combines research methodologies with practical approaches to inform policy and drive agri initiatives. Committed to advancing health equity through strategic interventions and community-driven research approaches.",
+      linkedin: "#",
+      twitter: "#",
+      email: "kahtsham@gmail.com"
     }
   ];
 
