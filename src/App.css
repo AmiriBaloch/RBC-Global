@@ -394,9 +394,16 @@ body.modal-open {
     height: 32px !important; /* Further reduced from 40px */
   }
   
+  .linkedin-btn {
+    bottom: 146px !important; /* Positioned above Instagram button */
+    width: 32px !important;
+    height: 32px !important;
+  }
+  
   .whatsapp-btn svg,
   .facebook-btn svg, 
-  .instagram-btn svg {
+  .instagram-btn svg,
+  .linkedin-btn svg {
     width: 16px !important; /* Further reduced from 20px */
     height: 16px !important; /* Further reduced from 20px */
   }

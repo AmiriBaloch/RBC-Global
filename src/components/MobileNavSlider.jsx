@@ -309,6 +309,9 @@ const MobileNavSlider = ({
               <a href="https://wa.me/923051564945" target="_blank" rel="noopener noreferrer" className="nav-social-icon whatsapp">
                 <i className="bi bi-whatsapp"></i>
               </a>
+              <a href="https://www.linkedin.com/company/rosebelt/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="nav-social-icon linkedin">
+                <i className="bi bi-linkedin"></i>
+              </a>
             </div>
           </div>
         </div>

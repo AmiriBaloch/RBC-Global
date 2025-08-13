@@ -27,14 +27,14 @@ const SeeListButton = () => {
       @media (max-width: 576px) {
         .see-list-btn {
           right: 15px !important;
-          bottom: 145px !important;
+          bottom: 185px !important; /* Moved higher up for mobile */
         }
       }
       
       /* Desktop alignment with other social buttons */
       @media (min-width: 992px) {
         .see-list-btn {
-          bottom: 146px !important;
+          bottom: 188px !important; /* Moved higher up for desktop */
           width: 32px !important;
           height: 32px !important;
         }
@@ -61,7 +61,7 @@ const SeeListButton = () => {
       aria-label="View Applicants List"
       style={{
         position: 'fixed',
-        bottom: '140px',
+        bottom: '180px', // Moved higher up to make room for LinkedIn button
         right: '20px',
         backgroundColor: '#4285f4', // Google blue color
         color: 'white',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { FaFacebook, FaInstagram, FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaPhone, FaLinkedin } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
@@ -45,6 +45,9 @@ const Footer = () => {
                   </a>
                   <a href="https://wa.me/923051564945" target="_blank" rel="noopener noreferrer" className="social-icon">
                     <FaWhatsapp />
+                  </a>
+                  <a href="https://www.linkedin.com/company/rosebelt/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="social-icon">
+                    <FaLinkedin />
                   </a>
                 </div>
               </div>

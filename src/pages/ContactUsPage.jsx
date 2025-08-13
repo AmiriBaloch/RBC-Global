@@ -80,6 +80,9 @@ const ContactUsPage = () => {
               <a href="https://wa.me/923051564945" target="_blank" rel="noopener noreferrer" className="contact-icon me-3">
                 <i className="bi bi-whatsapp"></i>
               </a>
+              <a href="https://www.linkedin.com/company/rosebelt/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="contact-icon me-3">
+                <i className="bi bi-linkedin"></i>
+              </a>
               <a href="mailto:your.email@example.com" className="contact-icon">
                  <i className="bi bi-envelope-fill"></i>
               </a>

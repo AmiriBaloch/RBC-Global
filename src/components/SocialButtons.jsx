@@ -3,6 +3,7 @@ import { NavbarContext } from './Header';
 import InstagramButton from './InstagramButton';
 import FacebookButton from './FacebookButton';
 import WhatsAppButton from './WhatsAppButton';
+import LinkedInButton from './LinkedInButton';
 
 const SocialButtons = () => {
   const { expanded, isMobile } = useContext(NavbarContext);
@@ -21,6 +22,7 @@ const SocialButtons = () => {
       <InstagramButton />
       <FacebookButton />
       <WhatsAppButton />
+      <LinkedInButton />
     </div>
   );
 };

@@ -43,6 +43,7 @@ import ServicesData from './components/ServicesData';
 import WhatsAppButton from './components/WhatsAppButton';
 import FacebookButton from './components/FacebookButton';
 import InstagramButton from './components/InstagramButton';
+import LinkedInButton from './components/LinkedInButton';
 import SeeListButton from './components/SeeListButton';
 
 // Styles
@@ -383,6 +384,7 @@ function App() {
         <WhatsAppButton />
         <FacebookButton />
         <InstagramButton />
+        <LinkedInButton />
         <SeeListButton />
         
         {/* Announcements box */}
