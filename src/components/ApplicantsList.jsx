@@ -150,157 +150,151 @@ const ApplicantsList = () => {
     }
   };
 
+  // Group applicants by position
+  const groupApplicantsByPosition = () => {
+    const grouped = {};
+    
+    applicants.forEach(applicant => {
+      const position = applicant.position || 'Unknown Position';
+      if (!grouped[position]) {
+        grouped[position] = {
+          selected: [],
+          shortlisted: []
+        };
+      }
+      
+      if (applicant.selected) {
+        grouped[position].selected.push(applicant);
+      } else if (applicant.shortlisted) {
+        grouped[position].shortlisted.push(applicant);
+      }
+    });
+    
+    return grouped;
+  };
+
+  // Render applicant card
+  const renderApplicantCard = (applicant) => (
+    <Col md={6} lg={4} key={applicant.id} className="mb-4">
+      <Card className="h-100 shadow-sm hover-card compact-card">
+        <Card.Body className="py-3">
+          <div className="d-flex justify-content-between align-items-start mb-2">
+            <Card.Title className="mb-1">{applicant.fullName || 'Unnamed Applicant'}</Card.Title>
+            <Badge bg={applicant.selected ? "success" : "primary"} pill>
+              {applicant.selected ? 'Selected' : 'Shortlisted'}
+            </Badge>
+          </div>
+          
+          <Card.Subtitle className="mb-2 text-muted">
+            {applicant.position || 'Position not specified'}
+          </Card.Subtitle>
+          
+          <div className="mb-2">
+            <strong>Email: </strong>
+            <a href={`mailto:${applicant.email}`}>{applicant.email}</a>
+          </div>
+          
+          {applicant.cnic && (
+            <div className="mb-2">
+              <strong>CNIC: </strong>
+              {applicant.cnic}
+            </div>
+          )}
+          
+          {applicant.postLocation && (
+            <div className="mb-2">
+              <strong>Location: </strong>
+              {applicant.postLocation}
+            </div>
+          )}
+        </Card.Body>
+      </Card>
+    </Col>
+  );
+
+  // Render position sections
+  const renderPositionSections = () => {
+    const groupedApplicants = groupApplicantsByPosition();
+    const positions = Object.keys(groupedApplicants);
+    
+    if (positions.length === 0) {
+      return (
+        <Alert variant="info" className="text-center">
+          <p className="mb-0">No applicants found in the database.</p>
+        </Alert>
+      );
+    }
+
+    return positions.map(position => {
+      const { selected, shortlisted } = groupedApplicants[position];
+      const hasSelected = selected.length > 0;
+      const hasShortlisted = shortlisted.length > 0;
+      
+      if (!hasSelected && !hasShortlisted) return null;
+      
+      return (
+        <div key={position} className="section-container mb-5">
+          {/* Selected Applicants Section for this position */}
+          {hasSelected && (
+            <>
+              <div className="modern-heading success">
+                <span className="heading-icon"><FaUserCheck size={22} /></span>
+                <h2>Selected Applicants for {position}</h2>
+              </div>
+              
+              <Row>
+                {selected.map(renderApplicantCard)}
+              </Row>
+            </>
+          )}
+          
+          {/* Shortlisted Applicants Section for this position */}
+          {hasShortlisted && (
+            <>
+              <div className={`modern-heading primary ${hasSelected ? 'mt-4' : ''}`}>
+                <span className="heading-icon"><FaUserClock size={22} /></span>
+                <h2>Applicants were Shortlisted for {position}</h2>
+              </div>
+              
+              <Row>
+                {shortlisted.map(renderApplicantCard)}
+              </Row>
+            </>
+          )}
+        </div>
+      );
+    });
+  };
+
   return (
     <div className="applicants-list-page">
-      {/* Hero Section */}
-      <div className="careers-hero text-white py-5" style={{ backgroundColor: '#333333' }}>
-        <Container>
-          <Row className="justify-content-center text-center">
-            <Col md={8}>
-              <h1 className="display-4 mb-3">Applicants <span style={{ color: '#f59e0b' }}>List</span></h1>
-              <p className="lead fw-bold" style={{ color: 'white' }}>
-              Discover top-tier professionals advancing through our selection process.
-              </p>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+      <Container>
+        {/* Header Section */}
+        <div className="applicants-header text-center">
+          <h1>Applicants List</h1>
+          <p className="text-muted">
+            View and manage all applicants and their current status
+          </p>
+        </div>
 
-      <Container className="py-5">
+        {/* Loading State */}
         {loading ? (
           <div className="text-center py-5">
-            <Spinner animation="border" role="status" variant="primary">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-            <p className="mt-3">Loading applicants data...</p>
+            <Spinner animation="border" variant="primary" size="lg" />
+            <p className="mt-3 text-muted">Loading applicants...</p>
           </div>
         ) : error ? (
           <Alert variant="danger" className="text-center">
-            <Alert.Heading>Error Loading Data</Alert.Heading>
-            <p>{error}</p>
-            <div className="d-flex justify-content-center">
-              <button 
-                className="btn btn-outline-danger"
-                onClick={handleTryAgain}
-              >
-                Try Again
-              </button>
-            </div>
-          </Alert>
-        ) : applicants.length === 0 ? (
-          <Alert variant="info" className="text-center">
-            <p className="mb-0">No applicants found in the database.</p>
+            <p className="mb-3">{error}</p>
+            <button 
+              className="btn btn-primary"
+              onClick={handleTryAgain}
+            >
+              Try Again
+            </button>
           </Alert>
         ) : (
-          <>
-            {/* Selected Applicants Section */}
-            <div className="section-container mb-5">
-              <div className="modern-heading success">
-                <span className="heading-icon"><FaUserCheck size={22} /></span>
-                <h2>Selected Applicants for District Manager</h2>
-              </div>
-              
-              {applicants.filter(a => a.selected).length === 0 ? (
-                <Alert variant="light" className="text-center">
-                  <p className="mb-0">No selected applicants found.</p>
-                </Alert>
-              ) : (
-                <Row>
-                  {applicants
-                    .filter(applicant => applicant.selected)
-                    .map(applicant => (
-                      <Col md={6} lg={4} key={applicant.id} className="mb-4">
-                        <Card className="h-100 shadow-sm hover-card compact-card">
-                          <Card.Body className="py-3">
-                            <div className="d-flex justify-content-between align-items-start mb-2">
-                              <Card.Title className="mb-1">{applicant.fullName || 'Unnamed Applicant'}</Card.Title>
-                              <Badge bg="success" pill>Selected</Badge>
-                            </div>
-                            
-                            <Card.Subtitle className="mb-2 text-muted">
-                              {applicant.position || 'Position not specified'}
-                            </Card.Subtitle>
-                            
-                            <div className="mb-2">
-                              <strong>Email: </strong>
-                              <a href={`mailto:${applicant.email}`}>{applicant.email}</a>
-                            </div>
-                            
-                            {applicant.cnic && (
-                              <div className="mb-2">
-                                <strong>CNIC: </strong>
-                                {applicant.cnic}
-                              </div>
-                            )}
-                            
-                            {applicant.postLocation && (
-                              <div className="mb-2">
-                                <strong>Location: </strong>
-                                {applicant.postLocation}
-                              </div>
-                            )}
-                          </Card.Body>
-                        </Card>
-                      </Col>
-                    ))}
-                </Row>
-              )}
-            </div>
-            
-            {/* Shortlisted Applicants Section */}
-            <div className="section-container">
-              <div className="modern-heading primary">
-                <span className="heading-icon"><FaUserClock size={22} /></span>
-                <h2>Applicants were Shortlisted for District Manager</h2>
-              </div>
-              
-              {applicants.filter(a => a.shortlisted && !a.selected).length === 0 ? (
-                <Alert variant="light" className="text-center">
-                  <p className="mb-0">No shortlisted applicants found.</p>
-                </Alert>
-              ) : (
-                <Row>
-                  {applicants
-                    .filter(applicant => applicant.shortlisted && !applicant.selected)
-                    .map(applicant => (
-                      <Col md={6} lg={4} key={applicant.id} className="mb-4">
-                        <Card className="h-100 shadow-sm hover-card compact-card">
-                          <Card.Body className="py-3">
-                            <div className="d-flex justify-content-between align-items-start mb-2">
-                              <Card.Title className="mb-1">{applicant.fullName || 'Unnamed Applicant'}</Card.Title>
-                              <Badge bg="primary" pill>Shortlisted</Badge>
-                            </div>
-                            
-                            <Card.Subtitle className="mb-2 text-muted">
-                              {applicant.position || 'Position not specified'}
-                            </Card.Subtitle>
-                            
-                            <div className="mb-2">
-                              <strong>Email: </strong>
-                              <a href={`mailto:${applicant.email}`}>{applicant.email}</a>
-                            </div>
-                            
-                            {applicant.cnic && (
-                              <div className="mb-2">
-                                <strong>CNIC: </strong>
-                                {applicant.cnic}
-                              </div>
-                            )}
-                            
-                            {applicant.postLocation && (
-                              <div className="mb-2">
-                                <strong>Location: </strong>
-                                {applicant.postLocation}
-                              </div>
-                            )}
-                          </Card.Body>
-                        </Card>
-                      </Col>
-                    ))}
-                </Row>
-              )}
-            </div>
-          </>
+          renderPositionSections()
         )}
       </Container>
     </div>
