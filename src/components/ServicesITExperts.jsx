@@ -5,10 +5,21 @@ import './AboutUs.css';
 // Import IT expert images
 import muhammadAmir from '../assets/1.png';
 import muneebRehman from '../assets/12.png';
+import danyalZakar from '../assets/37.jpg';
 
 const ServicesITExperts = () => {
   // IT Experts data from Team.jsx
   const itExperts = [
+    {
+      id: 7,
+      name: "Danyal Zakar",
+      role: "Software Developer",
+      image: danyalZakar,
+      description: "A software developer with experience in application development, web development, database management, and systems integration. Skilled in Python, Flutter, and SQL, Danyal contributes to the design and implementation of digital solutions that enhance efficiency and support project delivery. At RoseBelt Consultants Global, he assists in building and maintaining technology systems that strengthen organizational performance.",
+      linkedin: "#",
+      twitter: "#",
+      email: "danyal@rosebeltconsultants.com"
+    },
     {
       id: 5,
       name: "Muhammad Amir",
@@ -91,13 +102,14 @@ const ServicesITExperts = () => {
                       }}
                     />
                   </div>
-                  <div className="text-center p-4" style={{ height: '45%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <div className="p-4" style={{ height: '45%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
                     <Card.Title 
                       style={{ 
                         fontSize: '1.5rem', 
                         fontWeight: '600', 
                         color: '#333',
-                        marginBottom: '5px'
+                        marginBottom: '5px',
+                        textAlign: 'left'
                       }}
                     >
                       {expert.name}
@@ -106,7 +118,8 @@ const ServicesITExperts = () => {
                       style={{ 
                         color: '#f59e0b', 
                         fontSize: '1.1rem',
-                        marginBottom: '15px'
+                        marginBottom: '8px',
+                        textAlign: 'left'
                       }}
                     >
                       {expert.role}
@@ -116,7 +129,9 @@ const ServicesITExperts = () => {
                         color: '#555', 
                         fontSize: '0.95rem',
                         lineHeight: '1.6',
-                        marginBottom: '20px' 
+                        marginBottom: '0px',
+                        textAlign: 'left',
+                        flex: 1
                       }}
                     >
                       {expert.description}

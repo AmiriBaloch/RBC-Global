@@ -19,6 +19,7 @@ import shaguftaShaheen from "../assets/11.png";
 import nabghaHashmi from "../assets/9.png";
 import muhammadShahroze from "../assets/14.png";
 import faheemManzoor from "../assets/25.png";
+import danyalZakar from "../assets/37.jpg";
 
 const Team = () => {
   const location = useLocation();
@@ -140,6 +141,16 @@ const Team = () => {
   // IT Experts
   const itExperts = [
     {
+      id: 7,
+      name: "Danyal Zakar",
+      role: "Software Developer",
+      image: danyalZakar,
+      description: "A software developer with experience in application development, web development, database management, and systems integration. Skilled in Python, Flutter, and SQL, Danyal contributes to the design and implementation of digital solutions that enhance efficiency and support project delivery. At RoseBelt Consultants Global, he assists in building and maintaining technology systems that strengthen organizational performance.",
+      linkedin: "#",
+      twitter: "#",
+      email: "danyal@rosebeltconsultants.com"
+    },
+    {
       id: 5,
       name: "Muhammad Amir",
       role: "IT Solutions Specialist",
@@ -233,10 +244,10 @@ const Team = () => {
           <div className="card-img-wrapper">
             <Card.Img variant="top" src={member.image} alt={member.name} />
           </div>
-          <Card.Body>
-            <Card.Title className="mb-1">{member.name}</Card.Title>
-            <Card.Subtitle className="mb-3" style={{ color: '#f59e0b' }}>{member.role}</Card.Subtitle>
-            <Card.Text>{member.description}</Card.Text>
+          <Card.Body style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', paddingBottom: '1rem' }}>
+            <Card.Title className="mb-1" style={{ textAlign: 'left' }}>{member.name}</Card.Title>
+            <Card.Subtitle className="mb-2" style={{ color: '#f59e0b', textAlign: 'left' }}>{member.role}</Card.Subtitle>
+            <Card.Text style={{ textAlign: 'left', marginBottom: '0', flex: 1 }}>{member.description}</Card.Text>
           </Card.Body>
         </Card>
       </Col>
