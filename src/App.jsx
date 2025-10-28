@@ -385,7 +385,7 @@ function App() {
         <FacebookButton />
         <InstagramButton />
         <LinkedInButton />
-        <SeeListButton />
+        {/* <SeeListButton /> */}
         
         {/* Announcements box */}
         <Announcements />

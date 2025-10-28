@@ -35,18 +35,11 @@ const Projects = ({ limitCount = 0, showViewAllButton = false }) => {
       // Create query for projects, using the posts collection
       let projectsQuery;
       
-      if (limitCount > 0) {
-        projectsQuery = query(
-          collection(db, 'posts'),
-          orderBy('createdAt', 'desc'),
-          limit(limitCount)
-        );
-      } else {
-        projectsQuery = query(
-          collection(db, 'posts'),
-          orderBy('createdAt', 'desc')
-        );
-      }
+      // Always fetch all projects first, then apply custom sorting and limit
+      projectsQuery = query(
+        collection(db, 'posts'),
+        orderBy('createdAt', 'desc')
+      );
       
       logDebug("Attempting to fetch projects...");
       const querySnapshot = await getDocs(projectsQuery);
@@ -58,8 +51,47 @@ const Projects = ({ limitCount = 0, showViewAllButton = false }) => {
         createdAt: doc.data().createdAt?.toDate?.() || new Date(doc.data().createdAt || Date.now())
       }));
       
-      logDebug("Projects data processed:", projectsData.length);
-      setProjects(projectsData);
+      // Custom sorting: Keep "Rosebelt Pioneers Pakistan's First National HPV Prevention Program" at top
+      const priorityProjectTitle = "Rosebelt Pioneers Pakistan's First National HPV Prevention Program";
+      const priorityProjectKeywords = ["Rosebelt", "HPV", "Prevention", "Pakistan"];
+      
+      const sortedProjects = projectsData.sort((a, b) => {
+        // Check if project A is the priority project (exact match or contains keywords)
+        const isPriorityA = a.title === priorityProjectTitle || 
+          priorityProjectKeywords.every(keyword => a.title?.includes(keyword));
+        
+        // Check if project B is the priority project (exact match or contains keywords)
+        const isPriorityB = b.title === priorityProjectTitle || 
+          priorityProjectKeywords.every(keyword => b.title?.includes(keyword));
+        
+        // If project A is the priority project, it should come first
+        if (isPriorityA && !isPriorityB) {
+          return -1;
+        }
+        // If project B is the priority project, it should come first
+        if (isPriorityB && !isPriorityA) {
+          return 1;
+        }
+        // For all other projects, maintain descending order by createdAt
+        return b.createdAt - a.createdAt;
+      });
+      
+      // Apply limit after custom sorting for Featured Projects
+      const finalProjects = limitCount > 0 ? sortedProjects.slice(0, limitCount) : sortedProjects;
+      
+      // Debug: Log all project titles to console
+      console.log('All project titles:', finalProjects.map(p => p.title));
+      console.log('Looking for priority project:', priorityProjectTitle);
+      console.log('Priority project found:', finalProjects.some(p => p.title === priorityProjectTitle));
+      console.log('Limit applied:', limitCount > 0 ? `${limitCount} projects` : 'No limit');
+      
+      logDebug("Projects data processed:", finalProjects.length);
+      logDebug("Project titles:", finalProjects.map(p => p.title));
+      logDebug("Priority project found (exact):", finalProjects.some(p => p.title === priorityProjectTitle));
+      logDebug("Priority project found (keywords):", finalProjects.some(p => 
+        priorityProjectKeywords.every(keyword => p.title?.includes(keyword))
+      ));
+      setProjects(finalProjects);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching projects:', error);
