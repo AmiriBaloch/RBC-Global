@@ -422,10 +422,10 @@ const Careers = () => {
               <Row>
                 <Col md={6} className="mb-3">
                   <Form.Group controlId="applyFathersName">
-                    <Form.Label>Father’s / Middle Name</Form.Label>
+                    <Form.Label>Father’s Name</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Enter father’s or middle name"
+                      placeholder="Enter father’s name"
                       name="fathersName"
                       value={formData.fathersName}
                       onChange={handleFormChange}
