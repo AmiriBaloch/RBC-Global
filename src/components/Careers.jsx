@@ -98,6 +98,14 @@ const Careers = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Ensure nothing blocks input interactions on mobile by tagging the body
+  useEffect(() => {
+    document.body.classList.add('careers-page-active');
+    return () => {
+      document.body.classList.remove('careers-page-active');
+    };
+  }, []);
+
   const fetchJobs = async () => {
     try {
       const jobsQuery = query(

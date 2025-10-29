@@ -192,15 +192,18 @@
   width: 100%;
   margin: 0;
   padding: 20px 0;
+  pointer-events: auto !important;
 }
 
-#applicationForm {
+#applicationForm,
+#application-form-section {
   scroll-margin-top: 60px;
   visibility: visible !important;
   display: block !important;
   opacity: 1 !important;
   z-index: 1000;
   width: 100%;
+  pointer-events: auto !important;
 }
 
 /* Form Controls */
@@ -212,6 +215,10 @@
   border-radius: 8px;
   -webkit-appearance: none;
   margin-bottom: 15px;
+  pointer-events: auto !important;
+  touch-action: manipulation;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .form-control:focus,
@@ -369,8 +376,22 @@ textarea.form-control {
   input[type="text"],
   input[type="email"],
   input[type="tel"],
+  input[type="date"],
   textarea {
     font-size: 16px !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+  }
+  
+  /* Ensure selects are also interactive */
+  select,
+  .form-select {
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    -webkit-appearance: menulist !important;
+    appearance: menulist !important;
+    /* Avoid duplicate chevron (Bootstrap adds one via background-image) */
+    background-image: none !important;
   }
 
   /* Add some spacing between stacked fields */
@@ -422,20 +443,37 @@ textarea.form-control {
   .form-select {
     -webkit-appearance: none;
     border-radius: 8px;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
   }
 
   /* Prevent zoom on iOS */
   input[type="text"],
   input[type="email"],
   input[type="tel"],
+  input[type="date"],
   textarea {
     font-size: 16px !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+  }
+  
+  /* iOS select fixes */
+  select,
+  .form-select {
+    -webkit-appearance: menulist !important;
+    appearance: menulist !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    background-image: none !important; /* Remove Bootstrap arrow to keep only native */
   }
 
   /* Fix iOS button appearance */
   .submit-button {
     -webkit-appearance: none;
     border-radius: 8px;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
   }
 }
 
@@ -581,11 +619,12 @@ textarea.form-control {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 99999;
-  display: flex;
+  display: none; /* Hide by default - only show when explicitly needed */
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
+  pointer-events: auto;
 }
 
 .mobile-form-container {
@@ -626,6 +665,40 @@ textarea.form-control {
     font-size: 16px;
     padding: 12px;
     height: auto;
+    /* Ensure inputs are clickable on mobile */
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    position: relative;
+    z-index: 10;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Ensure form container allows interaction */
+  #application-form-section,
+  #application-form-section * {
+    pointer-events: auto !important;
+  }
+  
+  /* Make form groups interactive */
+  .form-group {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 10;
+  }
+  
+  /* Ensure inputs and selects are always interactive */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  textarea,
+  select {
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    z-index: 10;
+    position: relative;
   }
   
   /* Ensure buttons are easy to tap */
@@ -666,6 +739,28 @@ button[style*="backgroundColor: '#2AA96B'"]:hover {
 
 /* Guaranteed mobile button styles */
 @media (max-width: 767px) {
+  /* On the Careers page, force all possible mobile overlays to stop intercepting taps */
+  body.careers-page-active .mobile-nav-slider,
+  body.careers-page-active .mobile-menu-backdrop,
+  body.careers-page-active .navbar-collapse,
+  body.careers-page-active .navbar-collapse-backdrop {
+    pointer-events: none !important;
+  }
+  body.careers-page-active .mobile-nav-slider.show,
+  body.careers-page-active .mobile-menu-backdrop.show,
+  body.careers-page-active .navbar-collapse.show {
+    pointer-events: auto !important;
+  }
+
+  /* Ensure form is interactive, without forcing it above the menu */
+  body.careers-page-active #application-form-section,
+  body.careers-page-active #application-form-section * {
+    position: relative;
+    z-index: 1000;
+    pointer-events: auto !important;
+  }
+  
+  /* Let menu render normally (we only control pointer-events above) */
   a.btn, a.contact-btn, button.btn {
     -webkit-appearance: none !important;
     -webkit-tap-highlight-color: rgba(0,0,0,0) !important;

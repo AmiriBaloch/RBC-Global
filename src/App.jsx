@@ -211,6 +211,154 @@ const PageViewTracker = () => {
   return null;
 };
 
+function AppShell() {
+  const location = useLocation();
+  const isCareersPage = location.pathname === '/join-our-team' || location.pathname === '/careers';
+
+  return (
+    <div className="App">
+      <Header />
+      <Routes>
+        {/* WHO WE ARE as the home page */}
+        <Route path="/" element={<WhoWeAre />} />
+        
+        {/* OUR COMPANY routes (formerly OUR WORKPLACE) */}
+        <Route path="/our-company">
+          <Route index element={<Navigate to="/our-company/locations" replace />} />
+          <Route path="locations" element={<AboutOverview />} />
+          <Route path="who-trusts-us" element={<OurTrust />} />
+          <Route path="what-we-believe" element={<OurValues />} />
+          {/* Catch any other /our-company/* paths and redirect to locations */}
+          <Route path="*" element={<Navigate to="/our-company/locations" replace />} />
+        </Route>
+        
+        {/* Legacy OUR WORKPLACE routes for backward compatibility */}
+        <Route path="/our-workplace">
+          <Route index element={<Navigate to="/our-company/locations" replace />} />
+          <Route path="offices" element={<Navigate to="/our-company/locations" replace />} />
+          <Route path="accredited" element={<Navigate to="/our-company/who-trusts-us" replace />} />
+          <Route path="values" element={<Navigate to="/our-company/what-we-believe" replace />} />
+          <Route path="*" element={<Navigate to="/our-company/locations" replace />} />
+        </Route>
+        
+        {/* Legacy ABOUT routes for backward compatibility */}
+        <Route path="/about">
+          <Route index element={<Navigate to="/our-company/locations" replace />} />
+          <Route path="overview" element={<Navigate to="/our-company/locations" replace />} />
+          <Route path="trust" element={<Navigate to="/our-company/who-trusts-us" replace />} />
+          <Route path="values" element={<Navigate to="/our-company/what-we-believe" replace />} />
+          <Route path="*" element={<Navigate to="/our-company/locations" replace />} />
+        </Route>
+        
+        {/* MEET OUR EXPERTS routes (formerly WHAT WE DO) */}
+        <Route path="/meet-our-experts">
+          <Route index element={<Navigate to="/meet-our-experts/leadership" replace />} />
+          <Route path="leadership" element={<ServicesOverview />} />
+          <Route path="consultants" element={<ServicesConsultants />} />
+          <Route path="health-experts" element={<ServicesHealthExperts />} />
+          <Route path="it-experts" element={<ServicesITExperts />} />
+          <Route path="researchers" element={<ServicesResearchers />} />
+          {/* Removed advisors and data as they don't appear in the nav menu */}
+          {/* Catch any other /meet-our-experts/* paths and redirect to leadership */}
+          <Route path="*" element={<Navigate to="/meet-our-experts/leadership" replace />} />
+        </Route>
+        
+        {/* Legacy WHAT WE DO routes for backward compatibility */}
+        <Route path="/what-we-do">
+          <Route index element={<Navigate to="/meet-our-experts/leadership" replace />} />
+          <Route path="overview" element={<Navigate to="/meet-our-experts/leadership" replace />} />
+          <Route path="consultants" element={<Navigate to="/meet-our-experts/consultants" replace />} />
+          <Route path="health-experts" element={<Navigate to="/meet-our-experts/health-experts" replace />} />
+          <Route path="it-experts" element={<Navigate to="/meet-our-experts/it-experts" replace />} />
+          <Route path="researchers" element={<Navigate to="/meet-our-experts/researchers" replace />} />
+          <Route path="advisors" element={<Navigate to="/meet-our-experts/leadership" replace />} />
+          <Route path="data" element={<Navigate to="/meet-our-experts/leadership" replace />} />
+          <Route path="*" element={<Navigate to="/meet-our-experts/leadership" replace />} />
+        </Route>
+        
+        {/* Legacy SERVICES routes for backward compatibility */}
+        <Route path="/services">
+          <Route index element={<Navigate to="/meet-our-experts/leadership" replace />} />
+          <Route path="overview" element={<Navigate to="/meet-our-experts/leadership" replace />} />
+          <Route path="consultants" element={<Navigate to="/meet-our-experts/consultants" replace />} />
+          <Route path="health-experts" element={<Navigate to="/meet-our-experts/health-experts" replace />} />
+          <Route path="it-experts" element={<Navigate to="/meet-our-experts/it-experts" replace />} />
+          <Route path="researchers" element={<Navigate to="/meet-our-experts/researchers" replace />} />
+          <Route path="advisors" element={<Navigate to="/meet-our-experts/leadership" replace />} />
+          <Route path="data" element={<Navigate to="/meet-our-experts/leadership" replace />} />
+          <Route path="*" element={<Navigate to="/meet-our-experts/leadership" replace />} />
+        </Route>
+        
+        {/* OUR IDEAS routes */}
+        <Route path="/our-ideas">
+          <Route index element={<OurIdeas />} />
+          <Route path="details/:id" element={<IdeaDetails />} />
+          <Route path="article/:id" element={<ArticleDetails />} />
+          <Route path="articles" element={<AllArticles />} />
+          {/* Catch any other /our-ideas/* paths and redirect to ideas index */}
+          <Route path="*" element={<Navigate to="/our-ideas" replace />} />
+        </Route>
+        
+        {/* Legacy IDEAS routes for backward compatibility */}
+        <Route path="/ideas">
+          <Route index element={<Navigate to="/our-ideas" replace />} />
+          <Route path="details/:id" element={<Navigate to={to => `/our-ideas/details/${to.params.id}`} replace />} />
+          <Route path="article/:id" element={<Navigate to={to => `/our-ideas/article/${to.params.id}`} replace />} />
+          <Route path="articles" element={<Navigate to="/our-ideas/articles" replace />} />
+          <Route path="*" element={<Navigate to="/our-ideas" replace />} />
+        </Route>
+        
+        {/* NEWSROOM routes (formerly PRESS) */}
+        <Route path="/newsroom" element={<Newsroom />} />
+        
+        {/* Legacy PRESS route for backward compatibility */}
+        <Route path="/press" element={<Navigate to="/newsroom" replace />} />
+        
+        {/* JOIN OUR TEAM routes */}
+        <Route path="/join-our-team" element={<Careers />} />
+        
+        {/* Legacy CAREERS route for backward compatibility */}
+        <Route path="/careers" element={<Navigate to="/join-our-team" replace />} />
+        
+        {/* CONTACT route */}
+        <Route path="/contact-us" element={<ContactUsPage />} />
+
+        {/* Legacy CONTACT route - redirect to home */}
+        <Route path="/contact" element={<Navigate to="/contact-us" replace />} />
+        
+        {/* Projects routes with placeholder components */}
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/project-details/:id" element={<ProjectDetailsPlaceholder />} />
+        <Route path="/team">
+          <Route index element={<Team />} />
+          <Route path="*" element={<Navigate to="/team" replace />} />
+        </Route>
+        
+        {/* Legacy route for AboutUsSimple */}
+        <Route path="/about-us" element={<AboutUsSimple />} />
+        
+        {/* Applicants List route */}
+        <Route path="/applicants-list" element={<ApplicantsList />} />
+        
+        {/* Redirect all unknown routes to home page */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+      {/* Social media buttons and announcements hidden on careers page to avoid overlays */}
+      {!isCareersPage && (
+        <>
+          <WhatsAppButton />
+          <FacebookButton />
+          <InstagramButton />
+          <LinkedInButton />
+          {/* <SeeListButton /> */}
+          <Announcements />
+        </>
+      )}
+      <Footer />
+    </div>
+  );
+}
+
 function App() {
   // Set browser's scrollRestoration to 'manual' to prevent browser's default scroll position restoration
   useEffect(() => {
@@ -252,146 +400,7 @@ function App() {
     <Router basename="/">
       <ScrollToTop />
       <PageViewTracker />
-      <div className="App">
-        <Header />
-        <Routes>
-          {/* WHO WE ARE as the home page */}
-          <Route path="/" element={<WhoWeAre />} />
-          
-          {/* OUR COMPANY routes (formerly OUR WORKPLACE) */}
-          <Route path="/our-company">
-            <Route index element={<Navigate to="/our-company/locations" replace />} />
-            <Route path="locations" element={<AboutOverview />} />
-            <Route path="who-trusts-us" element={<OurTrust />} />
-            <Route path="what-we-believe" element={<OurValues />} />
-            {/* Catch any other /our-company/* paths and redirect to locations */}
-            <Route path="*" element={<Navigate to="/our-company/locations" replace />} />
-          </Route>
-          
-          {/* Legacy OUR WORKPLACE routes for backward compatibility */}
-          <Route path="/our-workplace">
-            <Route index element={<Navigate to="/our-company/locations" replace />} />
-            <Route path="offices" element={<Navigate to="/our-company/locations" replace />} />
-            <Route path="accredited" element={<Navigate to="/our-company/who-trusts-us" replace />} />
-            <Route path="values" element={<Navigate to="/our-company/what-we-believe" replace />} />
-            <Route path="*" element={<Navigate to="/our-company/locations" replace />} />
-          </Route>
-          
-          {/* Legacy ABOUT routes for backward compatibility */}
-          <Route path="/about">
-            <Route index element={<Navigate to="/our-company/locations" replace />} />
-            <Route path="overview" element={<Navigate to="/our-company/locations" replace />} />
-            <Route path="trust" element={<Navigate to="/our-company/who-trusts-us" replace />} />
-            <Route path="values" element={<Navigate to="/our-company/what-we-believe" replace />} />
-            <Route path="*" element={<Navigate to="/our-company/locations" replace />} />
-          </Route>
-          
-          {/* MEET OUR EXPERTS routes (formerly WHAT WE DO) */}
-          <Route path="/meet-our-experts">
-            <Route index element={<Navigate to="/meet-our-experts/leadership" replace />} />
-            <Route path="leadership" element={<ServicesOverview />} />
-            <Route path="consultants" element={<ServicesConsultants />} />
-            <Route path="health-experts" element={<ServicesHealthExperts />} />
-            <Route path="it-experts" element={<ServicesITExperts />} />
-            <Route path="researchers" element={<ServicesResearchers />} />
-            {/* Removed advisors and data as they don't appear in the nav menu */}
-            {/* Catch any other /meet-our-experts/* paths and redirect to leadership */}
-            <Route path="*" element={<Navigate to="/meet-our-experts/leadership" replace />} />
-          </Route>
-          
-          {/* Legacy WHAT WE DO routes for backward compatibility */}
-          <Route path="/what-we-do">
-            <Route index element={<Navigate to="/meet-our-experts/leadership" replace />} />
-            <Route path="overview" element={<Navigate to="/meet-our-experts/leadership" replace />} />
-            <Route path="consultants" element={<Navigate to="/meet-our-experts/consultants" replace />} />
-            <Route path="health-experts" element={<Navigate to="/meet-our-experts/health-experts" replace />} />
-            <Route path="it-experts" element={<Navigate to="/meet-our-experts/it-experts" replace />} />
-            <Route path="researchers" element={<Navigate to="/meet-our-experts/researchers" replace />} />
-            <Route path="advisors" element={<Navigate to="/meet-our-experts/leadership" replace />} />
-            <Route path="data" element={<Navigate to="/meet-our-experts/leadership" replace />} />
-            <Route path="*" element={<Navigate to="/meet-our-experts/leadership" replace />} />
-          </Route>
-          
-          {/* Legacy SERVICES routes for backward compatibility */}
-          <Route path="/services">
-            <Route index element={<Navigate to="/meet-our-experts/leadership" replace />} />
-            <Route path="overview" element={<Navigate to="/meet-our-experts/leadership" replace />} />
-            <Route path="consultants" element={<Navigate to="/meet-our-experts/consultants" replace />} />
-            <Route path="health-experts" element={<Navigate to="/meet-our-experts/health-experts" replace />} />
-            <Route path="it-experts" element={<Navigate to="/meet-our-experts/it-experts" replace />} />
-            <Route path="researchers" element={<Navigate to="/meet-our-experts/researchers" replace />} />
-            <Route path="advisors" element={<Navigate to="/meet-our-experts/leadership" replace />} />
-            <Route path="data" element={<Navigate to="/meet-our-experts/leadership" replace />} />
-            <Route path="*" element={<Navigate to="/meet-our-experts/leadership" replace />} />
-          </Route>
-          
-          {/* OUR IDEAS routes */}
-          <Route path="/our-ideas">
-            <Route index element={<OurIdeas />} />
-            <Route path="details/:id" element={<IdeaDetails />} />
-            <Route path="article/:id" element={<ArticleDetails />} />
-            <Route path="articles" element={<AllArticles />} />
-            {/* Catch any other /our-ideas/* paths and redirect to ideas index */}
-            <Route path="*" element={<Navigate to="/our-ideas" replace />} />
-          </Route>
-          
-          {/* Legacy IDEAS routes for backward compatibility */}
-          <Route path="/ideas">
-            <Route index element={<Navigate to="/our-ideas" replace />} />
-            <Route path="details/:id" element={<Navigate to={to => `/our-ideas/details/${to.params.id}`} replace />} />
-            <Route path="article/:id" element={<Navigate to={to => `/our-ideas/article/${to.params.id}`} replace />} />
-            <Route path="articles" element={<Navigate to="/our-ideas/articles" replace />} />
-            <Route path="*" element={<Navigate to="/our-ideas" replace />} />
-          </Route>
-          
-          {/* NEWSROOM routes (formerly PRESS) */}
-          <Route path="/newsroom" element={<Newsroom />} />
-          
-          {/* Legacy PRESS route for backward compatibility */}
-          <Route path="/press" element={<Navigate to="/newsroom" replace />} />
-          
-          {/* JOIN OUR TEAM routes */}
-          <Route path="/join-our-team" element={<Careers />} />
-          
-          {/* Legacy CAREERS route for backward compatibility */}
-          <Route path="/careers" element={<Navigate to="/join-our-team" replace />} />
-          
-          {/* CONTACT route */}
-          <Route path="/contact-us" element={<ContactUsPage />} />
-
-          {/* Legacy CONTACT route - redirect to home */}
-          <Route path="/contact" element={<Navigate to="/contact-us" replace />} />
-          
-          {/* Projects routes with placeholder components */}
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/project-details/:id" element={<ProjectDetailsPlaceholder />} />
-          <Route path="/team">
-            <Route index element={<Team />} />
-            <Route path="*" element={<Navigate to="/team" replace />} />
-          </Route>
-          
-          {/* Legacy route for AboutUsSimple */}
-          <Route path="/about-us" element={<AboutUsSimple />} />
-          
-          {/* Applicants List route */}
-          <Route path="/applicants-list" element={<ApplicantsList />} />
-          
-          {/* Redirect all unknown routes to home page */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-        
-        {/* Social media buttons */}
-        <WhatsAppButton />
-        <FacebookButton />
-        <InstagramButton />
-        <LinkedInButton />
-        {/* <SeeListButton /> */}
-        
-        {/* Announcements box */}
-        <Announcements />
-        
-        <Footer />
-      </div>
+      <AppShell />
     </Router>
   );
 }
