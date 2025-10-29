@@ -9,6 +9,36 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import handleApplyNow from '../utils/applyNowHandler';
 
+const COUNTRY_LIST = [
+  'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina',
+  'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh',
+  'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina',
+  'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia',
+  'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros',
+  'Congo (Congo-Brazzaville)', 'Costa Rica', 'Côte d’Ivoire', 'Croatia', 'Cuba', 'Cyprus',
+  'Czechia (Czech Republic)', 'Democratic Republic of the Congo', 'Denmark', 'Djibouti', 'Dominica',
+  'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia',
+  'Eswatini (fmr. "Swaziland")', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Gambia', 'Georgia',
+  'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti',
+  'Holy See', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland',
+  'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kuwait',
+  'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein',
+  'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta',
+  'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco',
+  'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar (formerly Burma)', 'Namibia', 'Nauru',
+  'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Korea',
+  'North Macedonia', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Palestine State', 'Panama',
+  'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Romania',
+  'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines',
+  'Samoa', 'San Marino', 'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles',
+  'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa',
+  'South Korea', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Sweden', 'Switzerland',
+  'Syria', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste', 'Togo', 'Tonga', 'Trinidad and Tobago',
+  'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates',
+  'United Kingdom', 'United States of America', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Venezuela',
+  'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'
+];
+
 const Careers = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -446,13 +476,15 @@ const Careers = () => {
                 <Col md={3} className="mb-3">
                   <Form.Group controlId="applyGender">
                     <Form.Label>Gender</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter gender"
+                    <Form.Select
                       name="gender"
                       value={formData.gender}
                       onChange={handleFormChange}
-                    />
+                    >
+                      <option value="">Select Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </Form.Select>
                   </Form.Group>
                 </Col>
               </Row>
@@ -461,25 +493,30 @@ const Careers = () => {
                 <Col md={6} className="mb-3">
                   <Form.Group controlId="applyNationality">
                     <Form.Label>Nationality</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter nationality"
+                    <Form.Select
                       name="nationality"
                       value={formData.nationality}
                       onChange={handleFormChange}
-                    />
+                    >
+                      <option value="">Select Nationality</option>
+                      {COUNTRY_LIST.map(country => (
+                        <option key={country} value={country}>{country}</option>
+                      ))}
+                    </Form.Select>
                   </Form.Group>
                 </Col>
                 <Col md={6} className="mb-3">
                   <Form.Group controlId="applyMarital">
                     <Form.Label>Marital Status</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter marital status"
+                    <Form.Select
                       name="maritalStatus"
                       value={formData.maritalStatus}
                       onChange={handleFormChange}
-                    />
+                    >
+                      <option value="">Select Marital Status</option>
+                      <option value="Married">Married</option>
+                      <option value="Single">Single</option>
+                    </Form.Select>
                   </Form.Group>
                 </Col>
               </Row>
@@ -519,14 +556,15 @@ const Careers = () => {
                 <Col md={6} className="mb-3">
                   <Form.Group controlId="applyPosition">
                     <Form.Label>Position</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter the position you are applying for"
+                    <Form.Select
                       name="position"
                       value={formData.position}
                       onChange={handleFormChange}
                       required
-                    />
+                    >
+                      <option value="">Select Position</option>
+                      <option value="Divisional Coordinator for Monitoring and Evaluation of Vaccination Campaign">Divisional Coordinator for Monitoring and Evaluation of Vaccination Campaign</option>
+                    </Form.Select>
                   </Form.Group>
                 </Col>
               </Row>
