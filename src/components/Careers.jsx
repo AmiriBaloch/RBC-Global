@@ -1,16 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import React, { useState, useEffect, useRef } from 'react';
+import { Container, Row, Col, Card, Button, Form, Alert } from 'react-bootstrap';
 import { FaBriefcase } from 'react-icons/fa';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import './Careers.css';
 import './shared.css';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import handleApplyNow from '../utils/applyNowHandler';
 
 const Careers = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isMobileView, setIsMobileView] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    // Personal Information
+    fullName: '',
+    fathersName: '',
+    dob: '',
+    gender: '',
+    nationality: '',
+    maritalStatus: '',
+    email: '',
+    phone: '',
+    address: '',
+    // Position Details
+    position: '',
+    preferredLocation: '',
+    expectedSalary: '',
+    // Education Details
+    educationDegree: '',
+    educationInstitution: '',
+    educationMajor: '',
+    // Documents
+    cvFile: null,
+    profilePhotoFile: null
+  });
+  const formRef = useRef(null);
+  const cvInputRef = useRef(null);
+  const photoInputRef = useRef(null);
+
+  // Cloudinary client-only configuration (requires an unsigned upload preset)
+  // Create an unsigned preset in Cloudinary console and set its name below or in env as VITE_CLOUDINARY_UPLOAD_PRESET
+  const CLOUDINARY_CLOUD_NAME = 'dxaommd67';
+  const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'cv_unsigned';
+  const CLOUDINARY_IMAGE_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_IMAGE_UPLOAD_PRESET || 'profile_unsigned';
+  const CLOUDINARY_FOLDER = 'cvs';
+  const CLOUDINARY_PHOTO_FOLDER = 'profile-photoes';
 
   useEffect(() => {
     document.title = "RBC | JOIN OUR TEAM";
@@ -82,8 +121,7 @@ const Careers = () => {
             padding: '8px 16px',
             fontSize: '0.9rem'
           }}
-          as={Link}
-          to="/contact"
+          onClick={(e) => handleApplyNow(e, text === 'Apply Now' ? '' : text)}
         >
           {text || 'Apply Now'}
         </Button>
@@ -133,6 +171,185 @@ const Careers = () => {
     return null;
   };
 
+  const handleFormChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === 'cvFile') {
+      const selectedFile = files && files[0] ? files[0] : null;
+      if (selectedFile) {
+        const isPdf = selectedFile.type === 'application/pdf' ||
+                      selectedFile.name.toLowerCase().endsWith('.pdf');
+        if (!isPdf) {
+          if (e.target) {
+            e.target.value = '';
+          }
+          Swal.fire({
+            title: 'Invalid file type',
+            text: 'Please upload a PDF file only.',
+            icon: 'warning',
+            confirmButtonColor: '#2AA96B'
+          });
+          setFormData(prev => ({ ...prev, cvFile: null }));
+          return;
+        }
+        const maxBytes = 1024 * 1024; // 1 MB
+        if (selectedFile.size > maxBytes) {
+          if (e.target) {
+            e.target.value = '';
+          }
+          Swal.fire({
+            title: 'File too large',
+            text: 'CV must be smaller than 1 MB.',
+            icon: 'warning',
+            confirmButtonColor: '#2AA96B'
+          });
+          setFormData(prev => ({ ...prev, cvFile: null }));
+          return;
+        }
+      }
+      setFormData(prev => ({ ...prev, cvFile: selectedFile }));
+    } else if (name === 'profilePhotoFile') {
+      const selectedPhoto = files && files[0] ? files[0] : null;
+      if (selectedPhoto) {
+        const isImage = selectedPhoto.type.startsWith('image/') || /\.(jpg|jpeg|png|webp)$/i.test(selectedPhoto.name);
+        if (!isImage) {
+          if (e.target) e.target.value = '';
+          Swal.fire({
+            title: 'Invalid file type',
+            text: 'Profile photo must be an image (JPG, PNG, WEBP).',
+            icon: 'warning',
+            confirmButtonColor: '#2AA96B'
+          });
+          setFormData(prev => ({ ...prev, profilePhotoFile: null }));
+          return;
+        }
+        const maxBytes = 1024 * 1024; // 1 MB
+        if (selectedPhoto.size > maxBytes) {
+          if (e.target) e.target.value = '';
+          Swal.fire({
+            title: 'File too large',
+            text: 'Profile photo must be smaller than 1 MB.',
+            icon: 'warning',
+            confirmButtonColor: '#2AA96B'
+          });
+          setFormData(prev => ({ ...prev, profilePhotoFile: null }));
+          return;
+        }
+      }
+      setFormData(prev => ({ ...prev, profilePhotoFile: selectedPhoto }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitStatus(null);
+    setErrorMessage('');
+    
+    if (!formData.cvFile) {
+      setSubmitStatus('error');
+      setErrorMessage('Please attach your CV (PDF).');
+      return;
+    }
+    if (!formData.profilePhotoFile) {
+      setSubmitStatus('error');
+      setErrorMessage('Please attach your profile photo.');
+      return;
+    }
+    
+    if (!CLOUDINARY_UPLOAD_PRESET) {
+      setSubmitStatus('error');
+      setErrorMessage('Upload preset is not configured.');
+      return;
+    }
+    if (!CLOUDINARY_IMAGE_UPLOAD_PRESET) {
+      setSubmitStatus('error');
+      setErrorMessage('Image upload preset is not configured.');
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      // Upload Profile Photo first (image)
+      const photoUploadUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+      const photoData = new FormData();
+      photoData.append('file', formData.profilePhotoFile);
+      photoData.append('upload_preset', CLOUDINARY_IMAGE_UPLOAD_PRESET);
+      photoData.append('folder', CLOUDINARY_PHOTO_FOLDER);
+      photoData.append('tags', 'applications,profile-photo');
+      const photoPublicId = `${(formData.fullName || 'applicant')}_photo_${Date.now()}`.replace(/[^a-zA-Z0-9_-]/g, '_');
+      photoData.append('public_id', photoPublicId);
+      const photoResp = await fetch(photoUploadUrl, { method: 'POST', body: photoData });
+      if (!photoResp.ok) {
+        throw new Error('Failed to upload profile photo to Cloudinary');
+      }
+      const photoResult = await photoResp.json();
+
+      // Upload CV to Cloudinary (use resource_type raw for PDFs)
+      const uploadUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/raw/upload`;
+      const data = new FormData();
+      data.append('file', formData.cvFile);
+      data.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+      data.append('folder', CLOUDINARY_FOLDER);
+      // Tag for unsigned listing in admin (requires 'Resource lists' enabled in Cloudinary settings)
+      data.append('tags', 'applications,cv');
+      // Enrich with context/metadata
+      data.append('context', `full_name=${formData.fullName}|email=${formData.email}|phone=${formData.phone}|position=${formData.position}`);
+      const publicIdSafe = `${formData.fullName || 'applicant'}_${Date.now()}`.replace(/[^a-zA-Z0-9_-]/g, '_');
+      data.append('public_id', publicIdSafe);
+
+      const resp = await fetch(uploadUrl, { method: 'POST', body: data });
+      if (!resp.ok) {
+        throw new Error('Failed to upload CV to Cloudinary');
+      }
+      const result = await resp.json();
+
+      await Swal.fire({
+        title: 'Application submitted',
+        html: 'Thank you for applying. Your CV has been uploaded successfully.',
+        icon: 'success',
+        confirmButtonColor: '#2AA96B',
+        confirmButtonText: 'OK'
+      });
+
+      setFormData({
+        fullName: '',
+        fathersName: '',
+        dob: '',
+        gender: '',
+        nationality: '',
+        maritalStatus: '',
+        email: '',
+        phone: '',
+        address: '',
+        position: '',
+        preferredLocation: '',
+        expectedSalary: '',
+        educationDegree: '',
+        educationInstitution: '',
+        educationMajor: '',
+        cvFile: null,
+        profilePhotoFile: null
+      });
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+      if (cvInputRef.current) {
+        cvInputRef.current.value = '';
+      }
+      if (photoInputRef.current) {
+        photoInputRef.current.value = '';
+      }
+      setSubmitStatus('success');
+    } catch (err) {
+      setSubmitStatus('error');
+      setErrorMessage('Something went wrong while uploading your CV. Please try again.');
+    }
+    finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="careers-page" style={{ backgroundColor: 'var(--page-bg)' }}>
       {/* Hero Section */}
@@ -159,49 +376,267 @@ const Careers = () => {
           </Container>
         </div>
         <Container>
-          <div className="p-4 border rounded mb-4" style={{ backgroundColor: '#ffffff' }}>
-            {loading ? (
-              <div className="text-center py-5">
-                <div className="spinner-border text-primary" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </div>
-              </div>
-            ) : jobs.length > 0 ? (
+
+          {/* Application Form Section */}
+          <div id="application-form-section" className="p-4 border rounded mb-4" style={{ backgroundColor: '#ffffff' }}>
+            <h3 className="mb-3" style={{ color: '#2AA96B' }}>Apply Now</h3>
+            <p className="text-muted" style={{ marginTop: '-8px' }}>Fill out the form below to apply for a position.</p>
+
+            {submitStatus === 'error' && (
+              <Alert variant="danger" onClose={() => setSubmitStatus(null)} dismissible>
+                {errorMessage || 'Something went wrong. Please try again.'}
+              </Alert>
+            )}
+
+            <Form onSubmit={handleSubmit} ref={formRef}>
+              <h4 className="mb-3 mt-4" style={{ color: '#2AA96B', fontWeight: 'bold', borderBottom: '2px solid #2AA96B', paddingBottom: '8px' }}>Personal Information</h4>
               <Row>
-                {jobs.map(job => (
-                  <Col lg={6} key={job.id} className="mb-4">
-                    <Card className="job-card h-100" style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)', border: '1px solid #dee2e6' }}>
-                      <Card.Header style={{ backgroundColor: '#2AA96B', color: 'white' }}>
-                        <h3 className="h5 mb-0">{job.title}</h3>
-                      </Card.Header>
-                      <Card.Body>
-                        <p className="job-description" style={{ whiteSpace: 'pre-line' }}>{job.description}</p>
-                        {renderButton('apply', 'Apply Now')}
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                ))}
-              </Row>
-            ) : (
-              <Row className="justify-content-center">
-                <Col md={8}>
-                  <Card className="no-jobs-card text-center p-5" style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)', border: '1px solid #dee2e6' }}>
-                    <Card.Body>
-                      <div className="mb-4">
-                        <FaBriefcase className="no-jobs-icon" style={{ fontSize: '4rem', color: '#2AA96B' }} />
-                      </div>
-                      <h3 className="mb-3" style={{ color: '#2AA96B' }}>No Positions Available</h3>
-                      <p className="text-muted mb-4">
-                        We currently don't have any open positions. Please check back later or contact us to learn more about future opportunities.
-                      </p>
-                      <div className="d-grid gap-2 col-md-8 mx-auto">
-                        {renderButton('apply', 'Join Our Talent Pool')}
-                      </div>
-                    </Card.Body>
-                  </Card>
+                <Col md={6} className="mb-3">
+                  <Form.Group controlId="applyFullName">
+                    <Form.Label>Full Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter your full name"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleFormChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Form.Group controlId="applyEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter your email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleFormChange}
+                      required
+                    />
+                  </Form.Group>
                 </Col>
               </Row>
-            )}
+
+              <Row>
+                <Col md={6} className="mb-3">
+                  <Form.Group controlId="applyFathersName">
+                    <Form.Label>Father’s / Middle Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter father’s or middle name"
+                      name="fathersName"
+                      value={formData.fathersName}
+                      onChange={handleFormChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={3} className="mb-3">
+                  <Form.Group controlId="applyDob">
+                    <Form.Label>Date of Birth</Form.Label>
+                    <Form.Control
+                      type="date"
+                      name="dob"
+                      value={formData.dob}
+                      onChange={handleFormChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={3} className="mb-3">
+                  <Form.Group controlId="applyGender">
+                    <Form.Label>Gender</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter gender"
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleFormChange}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md={6} className="mb-3">
+                  <Form.Group controlId="applyNationality">
+                    <Form.Label>Nationality</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter nationality"
+                      name="nationality"
+                      value={formData.nationality}
+                      onChange={handleFormChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Form.Group controlId="applyMarital">
+                    <Form.Label>Marital Status</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter marital status"
+                      name="maritalStatus"
+                      value={formData.maritalStatus}
+                      onChange={handleFormChange}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md={6} className="mb-3">
+                  <Form.Group controlId="applyPhone">
+                    <Form.Label>Phone</Form.Label>
+                    <Form.Control
+                      type="tel"
+                      placeholder="Enter your phone number"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleFormChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Form.Group controlId="applyAddress">
+                    <Form.Label>Address</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      rows={1}
+                      size="sm"
+                      placeholder="Enter your current address"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleFormChange}
+                      style={{ height: '48px', minHeight: '48px', paddingTop: '6px', paddingBottom: '6px' }}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <h4 className="mb-3 mt-4" style={{ color: '#2AA96B', fontWeight: 'bold', borderBottom: '2px solid #2AA96B', paddingBottom: '8px' }}>Position Details</h4>
+              <Row>
+                <Col md={6} className="mb-3">
+                  <Form.Group controlId="applyPosition">
+                    <Form.Label>Position</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter the position you are applying for"
+                      name="position"
+                      value={formData.position}
+                      onChange={handleFormChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md={6} className="mb-3">
+                  <Form.Group controlId="applyPreferredLocation">
+                    <Form.Label>Preferred Work Location</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="City / Region"
+                      name="preferredLocation"
+                      value={formData.preferredLocation}
+                      onChange={handleFormChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Form.Group controlId="applyExpectedSalary">
+                    <Form.Label>Expected Salary</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="e.g. 100,000 PKR"
+                      name="expectedSalary"
+                      value={formData.expectedSalary}
+                      onChange={handleFormChange}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <h4 className="mb-3 mt-4" style={{ color: '#2AA96B', fontWeight: 'bold', borderBottom: '2px solid #2AA96B', paddingBottom: '8px' }}>Education Details</h4>
+              <Row>
+                <Col md={4} className="mb-3">
+                  <Form.Group controlId="applyEduDegree">
+                    <Form.Label>Degree / Qualification</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="e.g. BSc, MSc"
+                      name="educationDegree"
+                      value={formData.educationDegree}
+                      onChange={handleFormChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={4} className="mb-3">
+                  <Form.Group controlId="applyEduInstitution">
+                    <Form.Label>Institution Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="University / College"
+                      name="educationInstitution"
+                      value={formData.educationInstitution}
+                      onChange={handleFormChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={4} className="mb-3">
+                  <Form.Group controlId="applyEduMajor">
+                    <Form.Label>Major / Field of Study</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="e.g. Computer Science"
+                      name="educationMajor"
+                      value={formData.educationMajor}
+                      onChange={handleFormChange}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <h4 className="mb-3 mt-4" style={{ color: '#2AA96B', fontWeight: 'bold', borderBottom: '2px solid #2AA96B', paddingBottom: '8px' }}>Documents Upload</h4>
+              <Row>
+                <Col md={6} className="mb-3">
+                  <Form.Group controlId="applyCv">
+                    <Form.Label>Upload CV</Form.Label>
+                    <Form.Control
+                      type="file"
+                      size="sm"
+                      name="cvFile"
+                      accept=".pdf,application/pdf"
+                      onChange={handleFormChange}
+                      ref={cvInputRef}
+                    />
+                    <Form.Text muted>Accepted: PDF only, max size 1 MB</Form.Text>
+                  </Form.Group>
+                  </Col>
+              </Row>
+
+              <Row>
+                <Col md={6} className="mb-3">
+                  <Form.Group controlId="applyProfilePhoto">
+                    <Form.Label>Profile Photo</Form.Label>
+                    <Form.Control
+                      type="file"
+                      size="sm"
+                      name="profilePhotoFile"
+                      accept="image/*,.jpg,.jpeg,.png,.webp"
+                      onChange={handleFormChange}
+                      ref={photoInputRef}
+                    />
+                    <Form.Text muted>Accepted: JPG/PNG/WEBP, max size 1 MB</Form.Text>
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Button type="submit" variant="primary" style={{ backgroundColor: '#2AA96B', borderColor: '#2AA96B' }} disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting...' : 'Submit Application'}
+              </Button>
+            </Form>
           </div>
         </Container>
       </section>

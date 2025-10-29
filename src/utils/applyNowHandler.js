@@ -53,16 +53,21 @@ function scrollToApplicationForm(jobTitle = '') {
         behavior: 'smooth'
       });
       
-      // Try to find and set the position dropdown if a job title was provided
+      // Try to find and set the position field if a job title was provided
       if (jobTitle) {
         setTimeout(() => {
+          const positionInput = document.querySelector('input[name="position"]');
+          if (positionInput) {
+            positionInput.value = jobTitle;
+            const event = new Event('input', { bubbles: true });
+            positionInput.dispatchEvent(event);
+            return;
+          }
           const positionSelect = document.querySelector('select[name="position"]');
           if (positionSelect) {
-            // Set the value if it matches an option
             for (let i = 0; i < positionSelect.options.length; i++) {
               if (positionSelect.options[i].text === jobTitle) {
                 positionSelect.value = positionSelect.options[i].value;
-                // Trigger change event
                 const event = new Event('change', { bubbles: true });
                 positionSelect.dispatchEvent(event);
                 break;

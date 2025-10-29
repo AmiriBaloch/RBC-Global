@@ -206,7 +206,7 @@
 /* Form Controls */
 .form-control, .form-select {
   background-color: #ffffff;
-  border: 1px solid #ced4da;
+  border: 1px solid #000000;
   font-size: 16px;
   padding: 12px;
   border-radius: 8px;
@@ -216,8 +216,8 @@
 
 .form-control:focus,
 .form-select:focus {
-  border-color: #2AA96B;
-  box-shadow: 0 0 0 0.25rem rgba(42, 169, 107, 0.25);
+  border-color: #000000;
+  box-shadow: 0 0 0 0.15rem rgba(0, 0, 0, 0.15);
 }
 
 textarea.form-control {
@@ -535,20 +535,20 @@ textarea.form-control {
 
   .form-control,
   .form-select {
-    background-color: #333333;
-    border-color: #444444;
-    color: #ffffff;
+    background-color: #ffffff;
+    border-color: #000000;
+    color: #000000;
   }
 
   .form-control:focus,
   .form-select:focus {
-    background-color: #404040;
-    border-color: #198754;
-    color: #ffffff;
+    background-color: #ffffff;
+    border-color: #000000;
+    color: #000000;
   }
 
   .form-control::placeholder {
-    color: #888888;
+    color: #878774;
   }
 
   .text-muted {

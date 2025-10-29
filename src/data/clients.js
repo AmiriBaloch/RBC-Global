@@ -11,8 +11,29 @@ import umt from '../assets/umt.png';
 import becs from '../assets/becs.png';
 import nova from '../assets/argricultur.png'; // Using agriculture image for Nova
 import shifa from '../assets/shifa.png';
+import who from '../assets/who.png';
+import epi from '../assets/epi.png';
+import neoc from '../assets/neoc.png';
 
 const clients = [
+  {
+    id: 11,
+    name: 'World Health Organization',
+    imageUrl: who,
+    alt: 'World Health Organization Logo'
+  },
+  {
+    id: 12,
+    name: 'Extended Program on Immunization',
+    imageUrl: epi,
+    alt: 'Extended Program on Immunization Logo'
+  },
+  {
+    id: 13,
+    name: 'National Emergency and Operation Center',
+    imageUrl: neoc,
+    alt: 'National Emergency and Operation Center Logo'
+  },
   {
     id: 1,
     name: 'Khyber Medical University',

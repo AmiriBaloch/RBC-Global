@@ -6,8 +6,8 @@ import './OurTrust.css';
 import './AboutUs.css';
 
 const OurTrust = () => {
-  // Get the first 8 clients from the existing clients data
-  const trustedClientsList = clientsData.slice(0, 8);
+  // Show all accredited clients from the existing clients data
+  const trustedClientsList = clientsData;
   
   useEffect(() => {
     document.title = "RBC | OUR CLIENTS";
