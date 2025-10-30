@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col, Card, Button, Form, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Form, Alert, Modal } from 'react-bootstrap';
 import { FaBriefcase } from 'react-icons/fa';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -8,6 +8,7 @@ import './shared.css';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import handleApplyNow from '../utils/applyNowHandler';
+import mlImage from '../assets/ML.jpg';
 
 const COUNTRY_LIST = [
   'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina',
@@ -46,6 +47,7 @@ const Careers = () => {
   const [submitStatus, setSubmitStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [formData, setFormData] = useState({
     // Personal Information
     fullName: '',
@@ -84,6 +86,7 @@ const Careers = () => {
   useEffect(() => {
     document.title = "RBC | JOIN OUR TEAM";
     fetchJobs();
+    setShowWelcomeModal(true);
     
     // Check if mobile on mount and window resize
     const checkMobile = () => {
@@ -390,6 +393,16 @@ const Careers = () => {
 
   return (
     <div className="careers-page" style={{ backgroundColor: 'var(--page-bg)' }}>
+      <Modal show={showWelcomeModal} onHide={() => setShowWelcomeModal(false)} centered={!isMobileView} backdrop="static" dialogClassName={isMobileView ? 'modal-top' : undefined}>
+        <Modal.Body style={{ padding: 0 }}>
+          <img src={mlImage} alt="Join Our Team" style={{ width: '100%', height: 'auto', display: 'block' }} />
+        </Modal.Body>
+        <Modal.Footer style={{ justifyContent: 'center' }}>
+          <Button variant="primary" onClick={() => setShowWelcomeModal(false)} style={{ backgroundColor: '#2AA96B', borderColor: '#2AA96B' }}>
+            Continue
+          </Button>
+        </Modal.Footer>
+      </Modal>
       {/* Hero Section */}
       <div className="careers-hero text-white py-5" style={{ backgroundColor: '#333333' }}>
         <Container>

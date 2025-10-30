@@ -293,6 +293,13 @@ textarea.form-control {
 
 /* Mobile Styles */
 @media (max-width: 767px) {
+  /* Make modal appear near the top on mobile */
+  .modal-dialog.modal-top {
+    margin-top: calc(env(safe-area-inset-top, 0px) + 140px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
   .application-form-section {
     position: relative;
     z-index: 1000;
