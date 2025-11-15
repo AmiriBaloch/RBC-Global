@@ -199,7 +199,8 @@
 #application-form-section {
   scroll-margin-top: 60px;
   visibility: visible !important;
-  display: block !important;
+  display: none !important;
+  /* ....................................MAKE THIS display 'NONE' TO 'BLOCK' FROM FORM SHOWING......... */
   opacity: 1 !important;
   z-index: 1000;
   width: 100%;
@@ -486,7 +487,7 @@ textarea.form-control {
 
 /* Ensure form is always visible */
 .application-form-section {
-  display: block !important;
+  display: none !important;
   visibility: visible !important;
   opacity: 1 !important;
 }

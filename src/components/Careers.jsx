@@ -86,7 +86,8 @@ const Careers = () => {
   useEffect(() => {
     document.title = "RBC | JOIN OUR TEAM";
     fetchJobs();
-    setShowWelcomeModal(true);
+    setShowWelcomeModal(false);
+    // .....make this false to .......................................true for pop up showing.......
     
     // Check if mobile on mount and window resize
     const checkMobile = () => {
@@ -428,8 +429,58 @@ const Careers = () => {
         </div>
         <Container>
 
+          {/* Job Listings */}
+          {loading ? (
+            <div className="text-center py-5">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+              <p className="mt-3">Loading job openings...</p>
+            </div>
+          ) : jobs.length === 0 ? (
+            <Card className="mb-4 shadow-sm" style={{ border: 'none', borderRadius: '8px' }}>
+              <Card.Body className="py-5" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div style={{ marginBottom: '1rem' }}>
+                  <FaBriefcase size={48} style={{ color: '#999' }} />
+                </div>
+                <Card.Title style={{ color: '#333', marginBottom: '1rem', textAlign: 'center', width: '100%' }}>No Positions Available</Card.Title>
+                <p style={{ color: '#666', fontSize: '1rem', textAlign: 'center', margin: '0 auto', maxWidth: '600px', width: '100%' }}>
+                  Please check back later or contact us for more information.
+                </p>
+              </Card.Body>
+            </Card>
+          ) : (
+            <Row className="g-4">
+              {jobs.map((job) => (
+                <Col key={job.id} md={6} lg={4}>
+                  <Card className="h-100 job-card shadow-sm">
+                    <Card.Body>
+                      <Card.Title style={{ color: '#333', marginBottom: '1rem' }}>{job.title || 'Job Title'}</Card.Title>
+                      <Card.Text className="job-description" style={{ color: '#666', fontSize: '0.9rem' }}>
+                        {job.description || 'No description available.'}
+                      </Card.Text>
+                      <div className="job-meta mb-3">
+                        {job.location && (
+                          <span className="badge bg-secondary me-2">
+                            <FaBriefcase size={12} className="me-1" />
+                            {job.location}
+                          </span>
+                        )}
+                        {job.type && (
+                          <span className="badge bg-info me-2">{job.type}</span>
+                        )}
+                      </div>
+                      {renderButton('apply', job.title || 'Apply Now')}
+                      {renderButton('contact')}
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          )}
+
           {/* Application Form Section */}
-          <div id="application-form-section" className="p-4 border rounded mb-4" style={{ backgroundColor: '#ffffff' }}>
+          <div id="application-form-section" className="p-4 border rounded mb-4" style={{ backgroundColor: '#ffffff', display: 'none' }}>
             <h3 className="mb-3" style={{ color: '#2AA96B' }}>Apply Now</h3>
             <p className="text-muted" style={{ marginTop: '-8px' }}>Fill out the form below to apply for a position.</p>
 
