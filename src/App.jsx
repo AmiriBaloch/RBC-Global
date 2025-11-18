@@ -350,7 +350,7 @@ function AppShell() {
           <FacebookButton />
           <InstagramButton />
           <LinkedInButton />
-          {/* <SeeListButton /> */}
+          <SeeListButton />
           <Announcements />
         </>
       )}
