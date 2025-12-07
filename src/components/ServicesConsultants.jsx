@@ -105,7 +105,7 @@ const ServicesConsultants = () => {
             </h2>
           </div>
           <Row className="g-4 justify-content-center">
-            {consultants.map((consultant) => (
+            {consultants.filter(consultant => consultant.id !== 2).map((consultant) => (
               <Col key={consultant.id} lg={consultant.id === 1 ? 12 : 4} md={consultant.id === 1 ? 12 : 6}>
                 <Card className="h-100" style={{
                   borderRadius: '8px',

@@ -95,8 +95,8 @@ const ServicesOverview = () => {
             </Col>
           </Row>
           
-          {/* Managing Director Row */}
-          <Row className="justify-content-center mb-5">
+          {/* Managing Director Row - Hidden */}
+          {/* <Row className="justify-content-center mb-5">
             <Col lg={8} md={7}>
               <div className="leadership-message p-4 rounded-3 h-100" style={{ 
                 backgroundColor: '#ffffff', 
@@ -149,7 +149,7 @@ const ServicesOverview = () => {
                 </div>
               </div>
             </Col>
-          </Row>
+          </Row> */}
         </section>
         
         {/* Service Categories Section */}

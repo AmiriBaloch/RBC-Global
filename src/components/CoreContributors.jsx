@@ -163,8 +163,8 @@ const CoreContributors = () => {
     // Board members removed as requested
   ];
 
-  // Filter out Board members and duplicate the remaining experts to create a seamless loop
-  const filteredExperts = allExperts.filter(expert => expert.category !== "Board");
+  // Filter out Board members and Dr. Hafiz Muhammad Imran, then duplicate the remaining experts to create a seamless loop
+  const filteredExperts = allExperts.filter(expert => expert.category !== "Board" && expert.id !== 4);
   const duplicatedExperts = [...filteredExperts, ...filteredExperts];
 
   return (
