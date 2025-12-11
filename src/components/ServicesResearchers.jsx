@@ -24,6 +24,7 @@ import fatimaAli from '../assets/31.png';
 import areeba from '../assets/33.png';
 import aminaAkram from '../assets/34.png';
 import ahtshamKhan from '../assets/36.jpg';
+import umairAliZain from '../assets/36.png';
 
 const ServicesResearchers = () => {
   // Researchers data from Team.jsx
@@ -227,6 +228,16 @@ const ServicesResearchers = () => {
       linkedin: "#",
       twitter: "#",
       email: "areeba@rosebeltconsultants.com"
+    },
+    {
+      id: 31,
+      name: "Umair Ali Zain",
+      role: "Research Specialist",
+      image: umairAliZain,
+      description: "A dedicated research specialist with expertise in quantitative and qualitative research methodologies, specializing in data-driven insights and evidence-based analysis. Combines analytical rigor with innovative research approaches to address complex social and development challenges. Focuses on developing comprehensive research frameworks that translate findings into actionable strategies for sustainable development.",
+      linkedin: "#",
+      twitter: "#",
+      email: "umair@rosebeltconsultants.com"
     }
   ];
 
