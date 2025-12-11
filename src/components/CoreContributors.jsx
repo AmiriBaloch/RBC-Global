@@ -20,6 +20,7 @@ import Imran from "../assets/3.png";
 import shaguftaShaheen from "../assets/11.png";
 import nabghaHashmi from "../assets/9.png";
 import muhammadShahroze from "../assets/14.png";
+import umairAliZain from "../assets/36.png";
 
 const CoreContributors = () => {
   // All team members from different categories
@@ -159,6 +160,17 @@ const CoreContributors = () => {
       linkedin: "#",
       twitter: "#",
       email: "shahroze@rosebeltconsultants.com"
+    },
+    {
+      id: 13,
+      name: "Umair Ali Zain",
+      role: "Research Specialist",
+      category: "Researcher",
+      image: umairAliZain,
+      description: "A dedicated research specialist with expertise in quantitative and qualitative research methodologies.",
+      linkedin: "#",
+      twitter: "#",
+      email: "umair@rosebeltconsultants.com"
     }
     // Board members removed as requested
   ];
