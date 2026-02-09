@@ -10,7 +10,7 @@ import sunirAshnae from '../assets/6.png';
 import muhammadShahroze from '../assets/14.png';
 import farhatAbbas from '../assets/15.png';
 import maheenNisar from '../assets/16.png';
-import mishaShahbaz from '../assets/17.png';
+import mishaShahbaz from '../assets/99.png';
 import ridaBatool from '../assets/19.png';
 import muskanFatima from '../assets/20.png';
 import bushraMaqsood from '../assets/23.png';
@@ -24,7 +24,7 @@ import fatimaAli from '../assets/31.png';
 import areeba from '../assets/33.png';
 import aminaAkram from '../assets/34.png';
 import ahtshamKhan from '../assets/36.jpg';
-import umairAliZain from '../assets/36.png';
+import umairAliZain from '../assets/99.png';
 
 const ServicesResearchers = () => {
   // Researchers data from Team.jsx
@@ -111,7 +111,7 @@ const ServicesResearchers = () => {
     },
     {
       id: 15,
-      name: "Misha Shahbaz",
+      name: "M Shahbaz",
       role: "Young Researcher",
       image: mishaShahbaz,
       description: "A dedicated data analyst with expertise in socioeconomic research and community dynamics. Specializes in translating complex findings into practical recommendations for sustainable development. Combines analytical skills with research methodologies to drive positive social change. Committed to developing evidence-based solutions that address community needs and promote sustainable development initiatives.",
@@ -231,7 +231,7 @@ const ServicesResearchers = () => {
     },
     {
       id: 31,
-      name: "Umair Ali Zain",
+      name: "UA Zain",
       role: "Research Specialist",
       image: umairAliZain,
       description: "A dedicated research specialist with expertise in quantitative and qualitative research methodologies, specializing in data-driven insights and evidence-based analysis. Combines analytical rigor with innovative research approaches to address complex social and development challenges. Focuses on developing comprehensive research frameworks that translate findings into actionable strategies for sustainable development.",

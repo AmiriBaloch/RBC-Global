@@ -20,7 +20,7 @@ import Imran from "../assets/3.png";
 import shaguftaShaheen from "../assets/11.png";
 import nabghaHashmi from "../assets/9.png";
 import muhammadShahroze from "../assets/14.png";
-import umairAliZain from "../assets/36.png";
+import umairAliZain from "../assets/99.png";
 
 const CoreContributors = () => {
   // All team members from different categories
@@ -163,7 +163,7 @@ const CoreContributors = () => {
     },
     {
       id: 13,
-      name: "Umair Ali Zain",
+      name: "UA Zain",
       role: "Research Specialist",
       category: "Researcher",
       image: umairAliZain,
