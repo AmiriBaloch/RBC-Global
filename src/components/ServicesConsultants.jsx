@@ -8,6 +8,7 @@ import nabghaHashmi from "../assets/9.png";
 import drRubeenaZakar from "../assets/18.png";
 import wakarKhan from "../assets/24.png";
 import ahtshamKhan from "../assets/36.jpg";
+import syedaAnmolJameelHabibi from "../assets/38.jpeg";
 
 const ServicesConsultants = () => {
   // Consultants data from Team.jsx
@@ -61,6 +62,16 @@ const ServicesConsultants = () => {
       linkedin: "#",
       twitter: "#",
       email: "kahtsham@gmail.com"
+    },
+    {
+      id: 38,
+      name: "Syeda Anmol Jameel Habibi",
+      role: "BD & Customer Relationship Manager",
+      image: syedaAnmolJameelHabibi,
+      description: "An experienced Business Developer & Customer Relationship Manager with over 8 years of expertise in lead generation, user acquisition, and client relationship management. Specialized in converting leads through strategic outreach, cold calling, and email campaigns while clearly communicating platform value to drive sign-ups and engagement. Skilled in managing client onboarding, maintaining strong customer relationships, and ensuring smooth user journeys from initial contact to active platform use. Consistently meeting acquisition targets, provides timely updates to management and delivers high-quality customer service to support retention and satisfaction.",
+      linkedin: "#",
+      twitter: "#",
+      email: "syedaanmoljameelhabibi@gmail.com"
     }
   ];
 
