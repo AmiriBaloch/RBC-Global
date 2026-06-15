@@ -5,7 +5,6 @@ import './AboutUs.css';
 // Import consultant images
 import drHafizImran from '../assets/5.png';
 import nabghaHashmi from "../assets/9.png";
-import drRubeenaZakar from "../assets/18.png";
 import wakarKhan from "../assets/24.png";
 import ahtshamKhan from "../assets/36.jpg";
 import syedaAnmolJameelHabibi from "../assets/38.jpeg";
@@ -13,16 +12,6 @@ import syedaAnmolJameelHabibi from "../assets/38.jpeg";
 const ServicesConsultants = () => {
   // Consultants data from Team.jsx
   const consultants = [
-    {
-      id: 1,
-      name: "Dr. Rubeena Zakar",
-      role: "Senior Public Health Consultant",
-      image: drRubeenaZakar,
-      description: "Dr. Rubeena Zakar is currently professor of Public Health at University of the Punjab. She also served as Director of the Institute of Social and Cultural Studies, University of the Punjab, Lahore, Pakistan from Aug 2018 to Dec 2024 and incharge Dean, Faculty of Health Sciences. She was also associated as researcher in the Department of Public Health Medicine, Bielefeld University, Germany from 2006 to 2012 to investigate violence against women as a challenge for global women rights.\nShe earned her Bachelor of Medicine and Bachelor of Surgery (MBBS) from Sindh Medical College, Karachi University with distinction, Master's in Population Sciences from Punjab University with gold medal, and Ph.D in Public Health from Bielefeld University, Germany with distinction (Summa cum laude). In 2022, she was selected for 2-year prestigious fellowship from International Foundation for Advancement of Medical Education and  Research (FAIMER Institute), Philadelphia, USA. She has established the Department of Public Health at University of the Punjab in 2013 and pioneer of community based education in maternal and child health.\n\nHer research interests include gender-based violence, women's health in developing countries, childhood immunization, malnutrition among children, maternal and child health, inequalities in health care utilization, health and human rights, and gender and development.\n\nShe has published more than 165 research papers in international peer reviewed journals. She is also a reviewer of Impact factor journals like Canadian Journal of Behavioural Sciences, Journal of Family Violence, Frontiers in Public Health and British Journal of Gynaecology and Obstetrics. Currently, she is in the editorial board of many Internation flagship journals such as she is working as Section Editor PLOS One, Associate Editor BMC Public Health, and Academic Editor PLOS Global Health and Frontiers in Global Women's Health. Dr. Rubeena Zakar has also various operational research projects in her credit funded by different international and national organizations like USAID, OPM, Thresher Fund USA, UNICEF and OXFAM etc. She frequently appears on national TV channels to spread health awareness messages among masses.",
-      linkedin: "#",
-      twitter: "#",
-      email: "dr.rubeena@rosebeltconsultants.com"
-    },
     {
       id: 2,
       name: "Dr. Hafiz Muhammad Imran",
@@ -116,135 +105,66 @@ const ServicesConsultants = () => {
             </h2>
           </div>
           <Row className="g-4 justify-content-center">
-            {consultants.filter(consultant => consultant.id !== 3).map((consultant) => (
-              <Col key={consultant.id} lg={consultant.id === 1 ? 12 : 4} md={consultant.id === 1 ? 12 : 6}>
+            {consultants.map((consultant) => (
+              <Col key={consultant.id} lg={4} md={6}>
                 <Card className="h-100" style={{
                   borderRadius: '8px',
                   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                   overflow: 'hidden',
                   border: '1px solid #e0e0e0',
                   display: 'flex',
-                  flexDirection: consultant.id === 1 && !isMobile ? 'row' : 'column',
-                  minHeight: consultant.id === 1 && !isMobile ? '350px' : '700px'
+                  flexDirection: 'column',
+                  minHeight: '700px'
                 }}>
-                  {consultant.id === 1 ? (
-                    // Horizontal layout for Dr. Rubeena Zakar
-                    <>
-                      <div style={{ 
-                        width: isMobile ? '100%' : '25%', 
-                        height: isMobile ? '300px' : 'auto',
-                        overflow: 'hidden',
-                        position: 'relative',
-                        backgroundColor: '#f8f8f8'
-                      }}>
-                        <Card.Img 
-                          src={consultant.image} 
-                          alt={consultant.name} 
-                          style={{ 
-                            width: '100%', 
-                            height: '100%', 
-                            objectFit: 'cover',
-                            objectPosition: 'center top'
-                          }}
-                        />
-                      </div>
-                      <div style={{ width: isMobile ? '100%' : '75%' }}>
-                        <div className="p-4" style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                          <div>
-                            <Card.Title 
-                              style={{ 
-                                fontSize: '1.6rem', 
-                                fontWeight: '700', 
-                                color: '#333',
-                                marginBottom: '5px'
-                              }}
-                            >
-                              {consultant.name}
-                            </Card.Title>
-                            <Card.Subtitle 
-                              style={{ 
-                                color: '#f59e0b', 
-                                fontSize: '1.1rem',
-                                marginBottom: '10px'
-                              }}
-                            >
-                              {consultant.role}
-                            </Card.Subtitle>
-                            <Card.Text 
-                              style={{ 
-                                color: '#555', 
-                                fontSize: '0.9rem',
-                                lineHeight: '1.5',
-                                marginBottom: '15px',
-                                whiteSpace: 'pre-line',
-                                textAlign: 'justify',
-                                maxHeight: isMobile ? '200px' : '250px',
-                                overflowY: 'auto',
-                                WebkitOverflowScrolling: 'touch',
-                                padding: '0 5px'
-                              }}
-                              className="biography-scroll"
-                            >
-                              {consultant.description}
-                            </Card.Text>
-                          </div>
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    // Vertical layout for other consultants
-                    <>
-                  <div 
-                    style={{ 
-                      height: '55%', 
+                  <div
+                    style={{
+                      height: '55%',
                       overflow: 'hidden',
                       position: 'relative',
                       backgroundColor: '#f8f8f8'
                     }}
                   >
-                        <Card.Img 
-                          src={consultant.image} 
-                          alt={consultant.name} 
-                      style={{ 
-                        width: '100%', 
-                        height: '100%', 
+                    <Card.Img
+                      src={consultant.image}
+                      alt={consultant.name}
+                      style={{
+                        width: '100%',
+                        height: '100%',
                         objectFit: 'cover',
                       }}
-                        />
-                      </div>
+                    />
+                  </div>
                   <div className="text-center p-4" style={{ height: '45%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                    <Card.Title 
-                      style={{ 
-                        fontSize: '1.5rem', 
-                        fontWeight: '600', 
+                    <Card.Title
+                      style={{
+                        fontSize: '1.5rem',
+                        fontWeight: '600',
                         color: '#333',
                         marginBottom: '5px'
                       }}
                     >
                       {consultant.name}
                     </Card.Title>
-                    <Card.Subtitle 
-                      style={{ 
-                        color: '#f59e0b', 
+                    <Card.Subtitle
+                      style={{
+                        color: '#f59e0b',
                         fontSize: '1.1rem',
                         marginBottom: '15px'
                       }}
                     >
                       {consultant.role}
                     </Card.Subtitle>
-                    <Card.Text 
-                      style={{ 
-                        color: '#555', 
+                    <Card.Text
+                      style={{
+                        color: '#555',
                         fontSize: '0.95rem',
                         lineHeight: '1.6',
-                        marginBottom: '20px' 
+                        marginBottom: '20px'
                       }}
                     >
                       {consultant.description}
                     </Card.Text>
                   </div>
-                    </>
-                  )}
                 </Card>
               </Col>
             ))}
