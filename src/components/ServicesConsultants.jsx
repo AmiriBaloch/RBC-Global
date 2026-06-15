@@ -10,7 +10,7 @@ import wakarKhan from "../assets/24.png";
 import ahtshamKhan from "../assets/36.jpg";
 import syedaAnmolJameelHabibi from "../assets/38.jpeg";
 
-/*const ServicesConsultants = () => {
+const ServicesConsultants = () => {
   // Consultants data from Team.jsx
   const consultants = [
     {
@@ -22,7 +22,7 @@ import syedaAnmolJameelHabibi from "../assets/38.jpeg";
       linkedin: "#",
       twitter: "#",
       email: "dr.rubeena@rosebeltconsultants.com"
-    },*/
+    },
     {
       id: 2,
       name: "Dr. Hafiz Muhammad Imran",
@@ -116,7 +116,7 @@ import syedaAnmolJameelHabibi from "../assets/38.jpeg";
             </h2>
           </div>
           <Row className="g-4 justify-content-center">
-            {consultants.filter(consultant => consultant.id !== 2).map((consultant) => (
+            {consultants.filter(consultant => consultant.id !== 3).map((consultant) => (
               <Col key={consultant.id} lg={consultant.id === 1 ? 12 : 4} md={consultant.id === 1 ? 12 : 6}>
                 <Card className="h-100" style={{
                   borderRadius: '8px',
