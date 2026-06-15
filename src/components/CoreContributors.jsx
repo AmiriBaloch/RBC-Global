@@ -11,7 +11,6 @@ import muhammadAmir from '../assets/1.png';
 import sfButt from '../assets/8.png';
 import drNaveedHaider from '../assets/10.png';
 import drTariqSaif from '../assets/13.png';
-import drHafizImran from '../assets/5.png';
 import muneebRehman from '../assets/12.png';
 import nasikBangash from '../assets/7.png';
 import mudassirAli from '../assets/4.png';
@@ -60,17 +59,6 @@ const CoreContributors = () => {
       email: "dr.tariq@rosebeltconsultants.com"
     },
     // Consultants
-    {
-      id: 4,
-      name: "Dr. Hafiz Muhammad Imran",
-      role: "Public Health Consultant",
-      category: "Consultant",
-      image: drHafizImran,
-      description: "PhD Public Health-PU, M.Phil Public Health-PU, MS Public Policy-UMT.",
-      linkedin: "#",
-      twitter: "#",
-      email: "dr.imran@rosebeltconsultants.com"
-    },
     {
       id: 5,
       name: "Nabgha Najeeb Hashmi",
@@ -175,8 +163,8 @@ const CoreContributors = () => {
     // Board members removed as requested
   ];
 
-  // Filter out Board members and Dr. Hafiz Muhammad Imran, then duplicate the remaining experts to create a seamless loop
-  const filteredExperts = allExperts.filter(expert => expert.category !== "Board" && expert.id !== 4);
+  // Filter out Board members, then duplicate the remaining experts to create a seamless loop
+  const filteredExperts = allExperts.filter(expert => expert.category !== "Board");
   const duplicatedExperts = [...filteredExperts, ...filteredExperts];
 
   return (

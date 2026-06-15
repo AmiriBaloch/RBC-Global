@@ -3,7 +3,6 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import './AboutUs.css';
 
 // Import consultant images
-import drHafizImran from '../assets/5.png';
 import nabghaHashmi from "../assets/9.png";
 import wakarKhan from "../assets/24.png";
 import ahtshamKhan from "../assets/36.jpg";
@@ -12,16 +11,6 @@ import syedaAnmolJameelHabibi from "../assets/38.jpeg";
 const ServicesConsultants = () => {
   // Consultants data from Team.jsx
   const consultants = [
-    {
-      id: 2,
-      name: "Dr. Hafiz Muhammad Imran",
-      role: "Public Health Consultant",
-      image: drHafizImran,
-      description: "Dr. Hafiz Muhammad Imran is a highly qualified Public Health Consultant with PhD and M.Phil degrees from Punjab University, an MS in Public Policy, and an MBA. He specializes in health policy development and implementation, leveraging his extensive background to analyze challenges and design strategic public health interventions for various organizations. His work focuses on evidence-based policy to improve population health and well-being.",
-      linkedin: "#",
-      twitter: "#",
-      email: "dr.imran@rosebeltconsultants.com"
-    },
     {
       id: 27,
       name: "Nabgha Najeeb Hashmi",

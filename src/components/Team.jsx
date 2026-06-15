@@ -5,7 +5,6 @@ import { useLocation } from 'react-router-dom';
 import './Team.css';
 import './shared.css';
 import image2 from '../assets/2.png';
-import drHafizImran from '../assets/5.png';
 import drNaveedHaider from '../assets/10.png';
 import muhammadAmir from '../assets/1.png';
 import drTariqSaif from '../assets/13.png';
@@ -92,16 +91,6 @@ const Team = () => {
 
   // Consultants
   const consultants = [
-    {
-      id: 2,
-      name: "Dr. Hafiz Muhammad Imran",
-      role: "Public Health Consultant",
-      image: drHafizImran,
-      description: "PhD Public Health-PU, M.Phil Public Health-PU, MS Public Policy-UMT, MBA-IBA. Experienced public health consultant with expertise in health policy development and implementation.",
-      linkedin: "#",
-      twitter: "#",
-      email: "dr.imran@rosebeltconsultants.com"
-    },
     {
       id: 27,
       name: "Nabgha Najeeb Hashmi",
