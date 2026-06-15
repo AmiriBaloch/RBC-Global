@@ -10,7 +10,7 @@ import wakarKhan from "../assets/24.png";
 import ahtshamKhan from "../assets/36.jpg";
 import syedaAnmolJameelHabibi from "../assets/38.jpeg";
 
-const ServicesConsultants = () => {
+/*const ServicesConsultants = () => {
   // Consultants data from Team.jsx
   const consultants = [
     {
@@ -22,7 +22,7 @@ const ServicesConsultants = () => {
       linkedin: "#",
       twitter: "#",
       email: "dr.rubeena@rosebeltconsultants.com"
-    },
+    },*/
     {
       id: 2,
       name: "Dr. Hafiz Muhammad Imran",
